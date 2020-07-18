@@ -86,7 +86,7 @@
         </main>
     </div>
 
-    <footer>
+    <footer class="page-footer font-small blue pt-4">
       {{config('app.name')}} | Copyright @ {{date('Y')}}
   </footer>
 </body>

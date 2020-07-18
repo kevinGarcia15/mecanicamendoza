@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->middleware('auth');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 /*user managment routes*/
-Route::get('/usuarios', 'userManagmentController@index')->name('userManagment');
-Route::patch('/usuarios/{user}', 'userManagmentController@update')->name('user.update');
+Route::get('/usuarios', 'userManagmentController@index')->name('userManagment')->middleware('auth');
+Route::patch('/usuarios/{user}', 'userManagmentController@update')->name('user.update')->middleware('auth');
