@@ -8,7 +8,7 @@
         </div>
         <div class="col-12 col-lg-6">
             <h1 class="display-5 text-primary">Bienvenido!!</h1>
-            <p class="lead text-secondary">Puedes elegir lo que deseas 
+            <p class="lead text-secondary">Puedes elegir lo que deseas
               hacer aquí abajo.
             </p>
         </div>
@@ -31,7 +31,7 @@
           <img class="card-img-top" src="./img/worksheet.svg" alt="">
           <div class="card-body">
             <h5 class="card-title">Nueva hoja de trabajo</h5>
-            <a href="#" class="btn btn-primary btn-block">Visitar</a>
+            <a href="{{route('client.index')}}" class="btn btn-primary btn-block">Visitar</a>
           </div>
         </div>
       </div>

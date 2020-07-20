@@ -24,3 +24,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 /*user managment routes*/
 Route::get('/usuarios', 'userManagmentController@index')->name('userManagment')->middleware('auth');
 Route::patch('/usuarios/{user}', 'userManagmentController@update')->name('user.update')->middleware('auth');
+/*Client Routes*/
+Route::resource('client', 'ClientController')->middleware('auth');
