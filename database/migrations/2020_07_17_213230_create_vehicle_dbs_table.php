@@ -14,17 +14,17 @@ class CreateVehicleDbsTable extends Migration
     public function up()
     {
         Schema::create('vehicle_dbs', function (Blueprint $table) {
-            $table->id();
+            $table->id('vehicle_id');
             $table->string('plateNumber')->unique();
-            $table->string('line');
+            $table->string('line')->nullable();
             $table->BigInteger('color_id')->unsigned();
             $table->BigInteger('model_id')->unsigned();
-            $table->foreign('color_id')->references('id')->on('car_color_dbs');
+            $table->foreign('color_id')->references('color_id')->on('car_color_dbs');
             $table->timestamps();
         });
 
         Schema::table('vehicle_dbs', function($table) {
-          $table->foreign('model_id')->references('id')->on('car_model_dbs');
+          $table->foreign('model_id')->references('model_id')->on('car_model_dbs');
       });
     }
 

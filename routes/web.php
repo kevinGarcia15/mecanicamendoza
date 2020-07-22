@@ -24,5 +24,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 /*user managment routes*/
 Route::get('/usuarios', 'userManagmentController@index')->name('userManagment')->middleware('auth');
 Route::patch('/usuarios/{user}', 'userManagmentController@update')->name('user.update')->middleware('auth');
+
 /*Client Routes*/
 Route::resource('client', 'ClientController')->middleware('auth');
+Route::get('clientexist', 'ClientController@show')->name('clientexist.show')->middleware('auth');
+/*Car model route*/
+Route::get('model', 'CarModelController@show')->name('carModel.show')->middleware('auth');
+/*vehicle route*/
+Route::get('vehicle', 'VehicleController@show')->name('vehicle.show')->middleware('auth');

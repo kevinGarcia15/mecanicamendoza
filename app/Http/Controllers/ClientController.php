@@ -1,7 +1,13 @@
 <?php
 namespace App\Http\Controllers;
-use App\{client_db,vehicle_db};
+use App\{client_db,
+        vehicle_db,
+        brand_car_db,
+        car_color_db,
+        User,
+        worksheet_db};
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
@@ -12,7 +18,10 @@ class ClientController extends Controller
      */
     public function index()
     {
-      return view('client/newClient');
+      $brand = brand_car_db::get();
+      $color = car_color_db::get();
+      $responsable = User::get();
+      return view('client/newClient', compact('brand','color','responsable'));
     }
 
     /**
@@ -33,7 +42,9 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
+      
       $newClient = request()->validate([
+        'dpi'=>'required',
         'first_name'=>'required',
         'last_name'=>'required',
         'phone'=>'required',
@@ -41,28 +52,52 @@ class ClientController extends Controller
       ]);
 
       $newVehicle = request()->validate([
-        'plateNumber'=>'required|min:6',
+        'plateNumber'=>'required|min:6|unique:vehicle_dbs',
         'model_id'=>'required',
         'color_id'=>'required',
         'line' => '',
       ]);
+      $userResponsable = request()->validate([
+        'user_id'=>'required'
+      ]);
+      $code = $this->saveNewClientVheicleInWorksheet($newClient,$newVehicle,$userResponsable);
 
-      client_db::create($newClient);
-      vehicle_db::create($newVehicle);
-
-
-      return back()->with('status', 'Cliente creado exitosamente');
+      $messaje = 'Hoja de trabajo '.$code->code.', fue creado exitosamente';
+      return back()->with('status', $messaje);
     }
 
+    private function saveNewClientVheicleInWorksheet($newClient,$newVehicle,$userResponsable){
+          $code = DB::transaction(function()use($newClient,$newVehicle,$userResponsable){
+          $clientCreated = client_db::create($newClient);
+          $vehicleCreated = vehicle_db::create($newVehicle);
+          //obtiene los id para ingresarlo a la tabla Worksheet
+          $getClient_id = client_db::select('client_id')->where('dpi', '=', $newClient['dpi'])->first();
+          $getVehicle_id = vehicle_db::select('vehicle_id')->where('plateNumber', '=', $newVehicle['plateNumber'])->first();
+          //crear codigo unico para la hoja de trabajo
+          $codigo = strtoupper($newVehicle['plateNumber']).'-'.rand(100, 999);
+          $worksheetCreted = worksheet_db::create([
+            "code" => $codigo,
+            "users_id"=> $userResponsable['user_id'],
+            "client_id"=> $getClient_id['client_id'],
+            "vehicle_id"=> $getVehicle_id['vehicle_id'],
+          ]);
+          return $worksheetCreted;
+        });
+        return $code;
+    }
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+      /*Funcion ajax que nos muestra si existe un cliente con un dpi existente*/
+        if ($request->ajax()) {
+          $clienteExist = client_db::where('dpi', $request->dpi)->get();
+          return response()->json($clienteExist);
+      }
     }
 
     /**

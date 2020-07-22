@@ -14,10 +14,10 @@ class CreateCarModelDbsTable extends Migration
     public function up()
     {
         Schema::create('car_model_dbs', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->id('model_id');
+            $table->string('model_name');
             $table->BigInteger('brand_car_id')->unsigned();
-            $table->foreign('brand_car_id')->references('id')->on('brand_car_dbs');
+            $table->foreign('brand_car_id')->references('brand_id')->on('brand_car_dbs');
             $table->timestamps();
         });
     }

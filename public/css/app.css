@@ -10932,3 +10932,7 @@ a.text-dark:focus {
   height: 100vh;
 }
 
+.uppercase {
+  text-transform: uppercase;
+}
+

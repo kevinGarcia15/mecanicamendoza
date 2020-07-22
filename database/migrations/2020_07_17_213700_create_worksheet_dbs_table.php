@@ -14,14 +14,14 @@ class CreateWorksheetDbsTable extends Migration
     public function up()
     {
         Schema::create('worksheet_dbs', function (Blueprint $table) {
-            $table->id();
+            $table->id('worksheet_id');
             $table->string('code');
             $table->BigInteger('users_id')->unsigned();
             $table->BigInteger('client_id')->unsigned();
             $table->BigInteger('vehicle_id')->unsigned();
             $table->foreign('users_id')->references('id')->on('users');
-            $table->foreign('client_id')->references('id')->on('client_dbs');
-            $table->foreign('vehicle_id')->references('id')->on('vehicle_dbs');
+            $table->foreign('client_id')->references('client_id')->on('client_dbs');
+            $table->foreign('vehicle_id')->references('vehicle_id')->on('vehicle_dbs');
             $table->timestamps();
         });
     }

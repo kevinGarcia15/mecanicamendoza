@@ -14,12 +14,12 @@ class CreateReplacementDbsTable extends Migration
     public function up()
     {
         Schema::create('replacement_dbs', function (Blueprint $table) {
-            $table->id();
+            $table->id('remplacement_id');
             $table->integer('quantity');
             $table->string('description');
             $table->double('price', 10, 2);
             $table->BigInteger('worksheet_id')->unsigned();
-            $table->foreign('worksheet_id')->references('id')->on('worksheet_dbs');            
+            $table->foreign('worksheet_id')->references('worksheet_id')->on('worksheet_dbs');
             $table->timestamps();
         });
     }

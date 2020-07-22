@@ -1,5 +1,5 @@
 <div class="col-12 col-sm-10 col-lg-6 mx-auto">
-    <h2 class="display-5 text-primary">Trabajos a realziar</h2>
+    <h2 class="display-5 text-primary">Trabajos a realizar</h2>
 </div>
 <hr>
 <div class="" id="rowWorks">
@@ -11,7 +11,7 @@
                   type="text"
                   name="worksToDo[]"
                   value="{{old('firstName')}}"
-                  placeholder="Nombre..">
+                  placeholder="Trabajo..">
                 {!! $errors->first('firstName', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
             </div>
         </div>

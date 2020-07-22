@@ -14,8 +14,8 @@ class CreateBrandCarDbsTable extends Migration
     public function up()
     {
         Schema::create('brand_car_dbs', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->id('brand_id');
+            $table->string('brand_name');
             $table->timestamps();
         });
     }

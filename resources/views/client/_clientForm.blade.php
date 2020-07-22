@@ -5,13 +5,24 @@
         <div class="d-flex justify-content-between">
             <span>Información personal</span>
             <div class="form-group">
+              <input
+                class="form-control my-2 {{$errors->first('dpi','is-invalid')}}"
+                type="text"
+                required
+                name="dpi"
+                id="dpi"
+                value="{{old('dpi')}}"
+                placeholder="No. de DPI..">
+                {!! $errors->first('dpi', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
+
                 <input
                   class="form-control my-2 {{$errors->first('first_name','is-invalid')}}"
                   type="text"
                   required
                   name="first_name"
                   value="{{old('first_name')}}"
-                  placeholder="Nombre..">
+                  placeholder="Nombre.."
+                  id="first_name">
                   {!! $errors->first('first_name', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
                 <input
                   class="form-control  my-2 {{$errors->first('last_name','is-invalid')}}"
@@ -19,7 +30,8 @@
                   required
                   name="last_name"
                   value="{{old('last_name')}}"
-                  placeholder="Apellido..">
+                  placeholder="Apellido.."
+                  id="last_name">
                   {!! $errors->first('last_name', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
             </div>
         </div>
@@ -34,7 +46,8 @@
                   name="phone"
                   required
                   value="{{old('phone')}}"
-                  placeholder="Teléfono..">
+                  placeholder="Teléfono.."
+                  id="phone">
                   {!! $errors->first('phone', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
                   <input
                     id="address"
@@ -44,9 +57,11 @@
                     rows="8"
                     cols="20"
                     value="{{old('address')}}"
-                    placeholder="Dirección">
+                    placeholder="Dirección"
+                    id="address">
                   {!! $errors->first('address', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
             </div>
+            <input type="hidden" id="id_clientExist" name="id_clientExist" value="0">            
         </div>
     </div>
 </div>

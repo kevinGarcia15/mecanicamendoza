@@ -14,7 +14,8 @@ class CreateClientDbsTable extends Migration
     public function up()
     {
         Schema::create('client_dbs', function (Blueprint $table) {
-            $table->id();
+            $table->id('client_id');
+            $table->string('dpi')->unique();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('address');
