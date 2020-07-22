@@ -32,3 +32,7 @@ Route::get('clientexist', 'ClientController@show')->name('clientexist.show')->mi
 Route::get('model', 'CarModelController@show')->name('carModel.show')->middleware('auth');
 /*vehicle route*/
 Route::get('vehicle', 'VehicleController@show')->name('vehicle.show')->middleware('auth');
+/*Work to do Routes*/
+Route::resource('worktodo', 'WorkToDoController')->middleware('auth');
+/*worksheet route*/
+Route::resource('worksheet', 'WorksheetController')->middleware('auth');

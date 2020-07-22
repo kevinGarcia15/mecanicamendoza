@@ -23,11 +23,8 @@
             @include('client/_vehicleForm')
         </div>
         <div class="bg-white py-3 px-4 my-3 shadow rounded">
-            @include('client/_worksForm')
-        </div>
-        <div class="bg-white py-3 px-4 my-3 shadow rounded">
           <div class="col-12 col-lg-6 my-2 mx-auto">
-            <button class="btn btn-success btn-block" type="submit" name="button">Guardar</button>
+            <button class="btn btn-success btn-block" type="submit" name="button">Siguiente</button>
           </div>
           <div class="col-12 col-lg-6 my-2 mx-auto">
             <button class="btn btn-danger btn-block" type="button" name="button">Cancelar</button>

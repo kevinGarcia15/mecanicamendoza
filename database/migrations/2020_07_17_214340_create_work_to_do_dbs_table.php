@@ -16,6 +16,7 @@ class CreateWorkToDoDbsTable extends Migration
         Schema::create('work_to_do_dbs', function (Blueprint $table) {
             $table->id('worktodo_id');
             $table->string('description');
+            $table->boolean('statusWork')->default(1);
             $table->BigInteger('worksheet_id')->unsigned();
             $table->foreign('worksheet_id')->references('worksheet_id')->on('worksheet_dbs');
             $table->timestamps();

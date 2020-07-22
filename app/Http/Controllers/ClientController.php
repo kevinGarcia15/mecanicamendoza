@@ -47,7 +47,7 @@ class ClientController extends Controller
         //"solo crear worksheet";
         $userResponsable = $this->responsableValidate();
         $flagForInsert = 1;
-        $code = $this->saveNewClientVheicleInWorksheet(
+        $newWorkSheet = $this->saveNewClientVheicleInWorksheet(
           $request->id_clientExist,
           $request->id_vehicleExist,
           $userResponsable, $flagForInsert
@@ -57,7 +57,7 @@ class ClientController extends Controller
         $userResponsable = $this->responsableValidate();
         $newVehicle = $this->vehicleValidate();
         $flagForInsert = 2;
-        $code = $this->saveNewClientVheicleInWorksheet(
+        $newWorkSheet = $this->saveNewClientVheicleInWorksheet(
           $request->id_clientExist,
           $newVehicle,
           $userResponsable, $flagForInsert
@@ -67,7 +67,7 @@ class ClientController extends Controller
         $userResponsable = $this->responsableValidate();
         $newClient = $this->clientValidate();
         $flagForInsert = 3;
-        $code = $this->saveNewClientVheicleInWorksheet(
+        $newWorkSheet = $this->saveNewClientVheicleInWorksheet(
           $newClient,
           $request->id_vehicleExist,
           $userResponsable, $flagForInsert
@@ -78,18 +78,18 @@ class ClientController extends Controller
         $newVehicle = $this->vehicleValidate();
         $userResponsable = $this->responsableValidate();
         $flagForInsert = 4;
-        $code = $this->saveNewClientVheicleInWorksheet(
+        $newWorkSheet = $this->saveNewClientVheicleInWorksheet(
           $newClient,
           $newVehicle,
           $userResponsable, $flagForInsert
         );
       }
-      $message = 'Hoja de trabajo '.$code->code.', fue creado exitosamente';
-      return back()->with('status', $message);
+      $message = 'Hoja de trabajo '.$newWorkSheet->code.', fue creado exitosamente. Llene las tareas a realizar';
+      return redirect()->route('worktodo.show',$newWorkSheet)->with('status', $message);
     }
     private function clientValidate(){
       $newClient = request()->validate([
-        'dpi'=>'required',
+        'dpi'=>'required|unique:client_dbs',
         'first_name'=>'required',
         'last_name'=>'required',
         'phone'=>'required',
@@ -117,6 +117,7 @@ class ClientController extends Controller
     private function saveNewClientVheicleInWorksheet($Client,$Vehicle,$Responsable,$flagForInsert){
           if ($flagForInsert == 1) {
             $code = DB::transaction(function()use($Client,$Vehicle,$Responsable){
+              //"solo crear worksheet";
               //crear codigo unico para la hoja de trabajo
               $getPlateNumber = vehicle_db::select('plateNumber')->where('vehicle_id', '=', $Vehicle)->first();
               $uniqueCode = strtoupper($getPlateNumber['plateNumber']).'-'.rand(100, 999);
@@ -129,6 +130,7 @@ class ClientController extends Controller
               ]);
               return $worksheetCreted;
             });
+
           }elseif ($flagForInsert == 2) {
             $code = DB::transaction(function()use($Client,$Vehicle,$Responsable){
               $vehicleCreated = vehicle_db::create($Vehicle);
