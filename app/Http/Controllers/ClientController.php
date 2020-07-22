@@ -42,7 +42,52 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-      
+      $flagForInsert = 0;
+      if ($request->id_clientExist != "0" and $request->id_vehicleExist != "0") {
+        //"solo crear worksheet";
+        $userResponsable = $this->responsableValidate();
+        $flagForInsert = 1;
+        $code = $this->saveNewClientVheicleInWorksheet(
+          $request->id_clientExist,
+          $request->id_vehicleExist,
+          $userResponsable, $flagForInsert
+        );
+      }elseif ($request->id_clientExist != "0" and $request->id_vehicleExist == "0") {
+        //"ingresar carro y worksheet";
+        $userResponsable = $this->responsableValidate();
+        $newVehicle = $this->vehicleValidate();
+        $flagForInsert = 2;
+        $code = $this->saveNewClientVheicleInWorksheet(
+          $request->id_clientExist,
+          $newVehicle,
+          $userResponsable, $flagForInsert
+        );
+      }elseif ($request->id_clientExist == "0" and $request->id_vehicleExist != "0") {
+        //"ingresar cliente y worksheet";
+        $userResponsable = $this->responsableValidate();
+        $newClient = $this->clientValidate();
+        $flagForInsert = 3;
+        $code = $this->saveNewClientVheicleInWorksheet(
+          $newClient,
+          $request->id_vehicleExist,
+          $userResponsable, $flagForInsert
+        );
+      }else {
+        //"ingresar cliente, carro y worksheet";
+        $newClient = $this->clientValidate();
+        $newVehicle = $this->vehicleValidate();
+        $userResponsable = $this->responsableValidate();
+        $flagForInsert = 4;
+        $code = $this->saveNewClientVheicleInWorksheet(
+          $newClient,
+          $newVehicle,
+          $userResponsable, $flagForInsert
+        );
+      }
+      $message = 'Hoja de trabajo '.$code->code.', fue creado exitosamente';
+      return back()->with('status', $message);
+    }
+    private function clientValidate(){
       $newClient = request()->validate([
         'dpi'=>'required',
         'first_name'=>'required',
@@ -50,39 +95,93 @@ class ClientController extends Controller
         'phone'=>'required',
         'address'=>'required',
       ]);
+      return $newClient;
+    }
 
+    private function vehicleValidate(){
       $newVehicle = request()->validate([
         'plateNumber'=>'required|min:6|unique:vehicle_dbs',
         'model_id'=>'required',
         'color_id'=>'required',
         'line' => '',
       ]);
+      return $newVehicle;
+    }
+
+    private function responsableValidate(){
       $userResponsable = request()->validate([
         'user_id'=>'required'
       ]);
-      $code = $this->saveNewClientVheicleInWorksheet($newClient,$newVehicle,$userResponsable);
-
-      $messaje = 'Hoja de trabajo '.$code->code.', fue creado exitosamente';
-      return back()->with('status', $messaje);
+      return $userResponsable;
     }
+    private function saveNewClientVheicleInWorksheet($Client,$Vehicle,$Responsable,$flagForInsert){
+          if ($flagForInsert == 1) {
+            $code = DB::transaction(function()use($Client,$Vehicle,$Responsable){
+              //crear codigo unico para la hoja de trabajo
+              $getPlateNumber = vehicle_db::select('plateNumber')->where('vehicle_id', '=', $Vehicle)->first();
+              $uniqueCode = strtoupper($getPlateNumber['plateNumber']).'-'.rand(100, 999);
 
-    private function saveNewClientVheicleInWorksheet($newClient,$newVehicle,$userResponsable){
-          $code = DB::transaction(function()use($newClient,$newVehicle,$userResponsable){
-          $clientCreated = client_db::create($newClient);
-          $vehicleCreated = vehicle_db::create($newVehicle);
-          //obtiene los id para ingresarlo a la tabla Worksheet
-          $getClient_id = client_db::select('client_id')->where('dpi', '=', $newClient['dpi'])->first();
-          $getVehicle_id = vehicle_db::select('vehicle_id')->where('plateNumber', '=', $newVehicle['plateNumber'])->first();
-          //crear codigo unico para la hoja de trabajo
-          $codigo = strtoupper($newVehicle['plateNumber']).'-'.rand(100, 999);
-          $worksheetCreted = worksheet_db::create([
-            "code" => $codigo,
-            "users_id"=> $userResponsable['user_id'],
-            "client_id"=> $getClient_id['client_id'],
-            "vehicle_id"=> $getVehicle_id['vehicle_id'],
-          ]);
-          return $worksheetCreted;
-        });
+              $worksheetCreted = worksheet_db::create([
+                "code" => $uniqueCode,
+                "users_id"=> $Responsable['user_id'],
+                "client_id"=> $Client,
+                "vehicle_id"=> $Vehicle,
+              ]);
+              return $worksheetCreted;
+            });
+          }elseif ($flagForInsert == 2) {
+            $code = DB::transaction(function()use($Client,$Vehicle,$Responsable){
+              $vehicleCreated = vehicle_db::create($Vehicle);
+              $getVehicle_id = vehicle_db::select('vehicle_id')->where('plateNumber', '=', $Vehicle['plateNumber'])->first();
+              //crear codigo unico para la hoja de trabajo
+              $uniqueCode = strtoupper($Vehicle['plateNumber']).'-'.rand(100, 999);
+
+              $worksheetCreted = worksheet_db::create([
+                "code" => $uniqueCode,
+                "users_id"=> $Responsable['user_id'],
+                "client_id"=> $Client,
+                "vehicle_id"=> $getVehicle_id['vehicle_id'],
+              ]);
+              return $worksheetCreted;
+            });
+          }
+
+          elseif ($flagForInsert == 3) {
+            $code = DB::transaction(function()use($Client,$Vehicle,$Responsable){
+              $clientCreated = client_db::create($Client);
+              $getClient_id = client_db::select('client_id')->where('dpi', '=', $Client['dpi'])->first();
+              //crear codigo unico para la hoja de trabajo
+              $getPlateNumber = vehicle_db::select('plateNumber')->where('vehicle_id', '=', $Vehicle)->first();
+              $uniqueCode = strtoupper($getPlateNumber['plateNumber']).'-'.rand(100, 999);
+
+              $worksheetCreted = worksheet_db::create([
+                "code" => $uniqueCode,
+                "users_id"=> $Responsable['user_id'],
+                "client_id"=> $getClient_id['client_id'],
+                "vehicle_id"=> $Vehicle,
+              ]);
+              return $worksheetCreted;
+            });
+          }
+
+          elseif($flagForInsert == 4) {
+            $code = DB::transaction(function()use($Client,$Vehicle,$Responsable){
+              $clientCreated = client_db::create($Client);
+              $vehicleCreated = vehicle_db::create($Vehicle);
+              //obtiene los id para ingresarlo a la tabla Worksheet
+              $getClient_id = client_db::select('client_id')->where('dpi', '=', $Client['dpi'])->first();
+              $getVehicle_id = vehicle_db::select('vehicle_id')->where('plateNumber', '=', $Vehicle['plateNumber'])->first();
+              //crear codigo unico para la hoja de trabajo
+              $uniqueCode = strtoupper($Vehicle['plateNumber']).'-'.rand(100, 999);
+              $worksheetCreted = worksheet_db::create([
+                "code" => $uniqueCode,
+                "users_id"=> $Responsable['user_id'],
+                "client_id"=> $getClient_id['client_id'],
+                "vehicle_id"=> $getVehicle_id['vehicle_id'],
+              ]);
+              return $worksheetCreted;
+            });
+          }
         return $code;
     }
     /**
