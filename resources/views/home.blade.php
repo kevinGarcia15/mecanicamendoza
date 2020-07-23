@@ -49,7 +49,7 @@
                 <img class=" card-img-top" src="./img/works_in_progress.svg" alt="">
                 <div class="card-body">
                     <h5 class="card-title">Trabajos en progreso</h5>
-                    <a href="#" class="btn btn-primary btn-block">Visitar</a>
+                    <a href="{{route('worksheet.index')}}" class="btn btn-primary btn-block">Visitar</a>
                 </div>
             </div>
         </div>

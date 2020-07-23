@@ -65,7 +65,7 @@
                     {{$percent.'%'}}
                     <!----------------------------------------------------------------------------->
                 </td>
-                <td> <a href="#">Detalles</a> </td>
+                <td> <a href="{{route('worksheet.show', $key['worksheet_id'])}}">Detalles</a> </td>
             </tr>
             @empty
             <tr>
