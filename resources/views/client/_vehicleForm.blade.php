@@ -33,13 +33,13 @@
                   {!! $errors->first('brand', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
 
                   <select
-                    class="form-control my-2 {{$errors->first('model_id','is-invalid')}}"
-                    name="model_id"
-                    id="model_name"
+                    class="form-control my-2 {{$errors->first('line_id','is-invalid')}}"
+                    name="line_id"
+                    id="line_name"
                     required>
-                    <option value="">Modelo</option>
+                    <option value="">Linea</option>
                   </select>
-                  {!! $errors->first('model_id', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
+                  {!! $errors->first('line_id', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
 
                   <select
                     class="form-control my-2 {{$errors->first('color_id','is-invalid')}}"
@@ -62,11 +62,11 @@
                   <input
                     class="form-control my-2"
                     type="text"
-                    name="line"
-                    value="{{old('line')}}"
+                    name="model"
+                    value="{{old('model')}}"
                     placeholder="Linea.."
-                    id="line">
-                    {!! $errors->first('line', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
+                    id="model">
+                    {!! $errors->first('model', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
 
                     <div id="vehicleInfo">
                     </div>

@@ -101,9 +101,9 @@ class ClientController extends Controller
     private function vehicleValidate(){
       $newVehicle = request()->validate([
         'plateNumber'=>'required|min:6|unique:vehicle_dbs',
-        'model_id'=>'required',
+        'line_id'=>'required',
         'color_id'=>'required',
-        'line' => '',
+        'model' => 'required',
       ]);
       return $newVehicle;
     }

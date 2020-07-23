@@ -46,15 +46,15 @@ $(document).ready(function() {
         if ($.trim(carBrand) != "") {
             //no esta vacio
             $.get(
-                "model", //ruta de la peticion
+                "line", //ruta de la peticion
                 {
                     carBrand_id: carBrand //valores a pasar
                 },
                 function(response) {
-                    $("#model_name").empty();
-                    $("#model_name").append('<option value="">Modelo</option>');
+                    $("#line_name").empty();
+                    $("#line_name").append('<option value="">Linea</option>');
                     $.each(response, function(index, value) {
-                        $("#model_name").append(
+                        $("#line_name").append(
                             '<option value="' +
                                 index +
                                 '">' +
@@ -82,15 +82,15 @@ $(document).ready(function() {
                         $("#line").hide();
                         $("#id_vehicleExist").val(response[0]['vehicle_id'])
                         lookSelectInput(response, "color_name");
-                        lookSelectInput(response, "model_name");
+                        lookSelectInput(response, "line_name");
                         lookSelectInput(response, "brand_name");
                         showInfoInList(response);
                     } else {
                         $("#id_vehicleExist").val(0)
                         unlookSelectImput("color_name");
-                        unlookSelectImput("model_name");
+                        unlookSelectImput("line_name");
                         unlookSelectImput("brand_name");
-                        $("#line").show();
+                        $("#model").show();
                         $("#vehicleInfo").hide();
                     }
                 }
@@ -102,7 +102,7 @@ $(document).ready(function() {
             $("#vehicleInfo").text(
                 response[0]["brand_name"] +
                     " " +
-                    response[0]["model_name"] +
+                    response[0]["line_name"] +
                     " " +
                     response[0]["color_name"]
             ).show();

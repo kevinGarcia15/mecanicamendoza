@@ -28,8 +28,8 @@ Route::patch('/usuarios/{user}', 'userManagmentController@update')->name('user.u
 /*Client Routes*/
 Route::resource('client', 'ClientController')->middleware('auth');
 Route::get('clientexist', 'ClientController@show')->name('clientexist.show')->middleware('auth');
-/*Car model route*/
-Route::get('model', 'CarModelController@show')->name('carModel.show')->middleware('auth');
+/*Car Line route*/
+Route::get('line', 'CarLineController@show')->name('carLine.show')->middleware('auth');
 /*vehicle route*/
 Route::get('vehicle', 'VehicleController@show')->name('vehicle.show')->middleware('auth');
 /*Work to do Routes*/

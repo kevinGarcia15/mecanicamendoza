@@ -27,7 +27,7 @@
             <tr>
                 <th scope="row">{{$key['code']}}</th>
                 <td>
-                    {{$key['brand_name'].' '.$key['model_name'].' '
+                    {{$key['brand_name'].' '.$key['line_name'].' '
                     .$key['color_name'].' Placa '.strtoupper($key['plateNumber'])}}
                 </td>
                 <td>
