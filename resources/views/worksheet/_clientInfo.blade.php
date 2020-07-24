@@ -3,13 +3,20 @@
         <h2 class="display-5 text-primary">Datos del cliente</h2>
         <hr>
         <div class="d-flex justify-content-between">
-            <span>Información personal</span>
-
+          <div class="col-6">
+            <span>Nombre</span><br><br>
+            <span>Apellido</span><br><br>
+            <span>Teléfono</span><br><br>
+            <span>Dirección</span><br><br>
+          </div>
+          <div class="col-6">
+            <p class="lead text-secondary">{{$workSheetDetail[0]['first_name']}}</p>
+            <p class="lead text-secondary">{{$workSheetDetail[0]['last_name']}}</p>
+            <p class="lead text-secondary">{{$workSheetDetail[0]['phone']}}</p>
+            <p class="lead text-secondary">{{$workSheetDetail[0]['address']}}</p>
+          </div>
         </div>
-        <div class="d-flex justify-content-between">
-            <span>Contacto</span>
 
-            <input type="hidden" id="id_clientExist" name="id_clientExist" value="0">
-        </div>
+
     </div>
 </div>

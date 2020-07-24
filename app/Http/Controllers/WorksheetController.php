@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\{worksheet_db, work_to_do_db};
+use App\{worksheet_db, work_to_do_db,replacement_db};
+use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
 class WorksheetController extends Controller
@@ -53,15 +55,47 @@ class WorksheetController extends Controller
      */
     public function show($id)
     {
+      $values = $this->getworksheet($id);
+      $dateCreatedWorksheet = $values[0];
+      $workToDo = $values[1];
+      $remplacement = $values[2];
+      $workSheetDetail = $values[3];
+      return view('worksheet/worksheetDetails',compact(
+        'workSheetDetail','dateCreatedWorksheet','workToDo','remplacement'
+      ));
+    }
+
+    public function download($id){
+      $values = $this->getworksheet($id);
+      $dateCreatedWorksheet = $values[0];
+      $workToDo = $values[1];
+      $remplacement = $values[2];
+      $workSheetDetail = $values[3];
+
+      $pdf = PDF::loadView('worksheet/generatePdf',compact(
+        'workSheetDetail','dateCreatedWorksheet','workToDo','remplacement'
+      ));
+
+      $date = date("d").'/'.date("m").'/'.date("Y");
+      $nameFileDownload = strtoupper($workSheetDetail[0]['plateNumber']).'-'.$date;
+      return $pdf->download($nameFileDownload);
+    }
+
+    private function getworksheet($id){
+      /*Hace la consulta a la base de datos*/
+      $dateCreatedWorksheet = worksheet_db::where('worksheet_id', $id)->get();
+      $workToDo = work_to_do_db::where('worksheet_id', $id)->get();
+      $remplacement = replacement_db::where('worksheet_id', $id)->get();
       $workSheetDetail = worksheet_db::
        join('vehicle_dbs', 'worksheet_dbs.vehicle_id', '=', 'vehicle_dbs.vehicle_id')
        ->join('car_color_dbs', 'vehicle_dbs.color_id', '=', 'car_color_dbs.color_id')
        ->join('car_line_dbs', 'vehicle_dbs.line_id', '=', 'car_line_dbs.line_id')
        ->join('brand_car_dbs', 'car_line_dbs.brand_car_id', '=', 'brand_car_dbs.brand_id')
+       ->join('client_dbs', 'worksheet_dbs.client_id', '=', 'client_dbs.client_id')
+       ->join('users', 'worksheet_dbs.users_id', '=', 'users.id')
        ->where('worksheet_id', $id)->get();
-      return view('worksheet/worksheetDetails',compact('workSheetDetail'));
+       return array($dateCreatedWorksheet,$workToDo,$remplacement,$workSheetDetail);
     }
-
     /**
      * Show the form for editing the specified resource.
      *

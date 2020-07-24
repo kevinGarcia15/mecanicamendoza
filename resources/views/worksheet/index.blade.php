@@ -62,7 +62,7 @@
                           aria-valuemax="100">
                         </div>
                     </div>
-                    {{$percent.'%'}}
+                    {{round($percent).'%'}}
                     <!----------------------------------------------------------------------------->
                 </td>
                 <td> <a href="{{route('worksheet.show', $key['worksheet_id'])}}">Detalles</a> </td>

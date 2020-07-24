@@ -2,7 +2,6 @@
     <div class="col-12 col-sm-10 col-lg-9 mx-auto">
         <h2 class="display-5 text-primary">Repuestos y lubricantes</h2>
         <hr>
-
         <table class="table">
             <thead>
                 <tr>
@@ -12,11 +11,23 @@
                 </tr>
             </thead>
             <tbody>
+              @php
+                $total = 0;
+              @endphp
+              @forelse ($remplacement as $key)
+                @php
+                $total = $total + $key->price;
+                @endphp
                 <tr>
-                    <td>1</td>
-                    <td>Aceite de motor</td>
-                    <td>Q150</td>
+                  <td>{{$key->quantity}}</td>
+                  <td>{{$key->description}}</td>
+                  <td>Q.{{$key->price}}</td>
                 </tr>
+              @empty
+                <tr>
+                  <td>Lista vacia</td>
+                </tr>
+              @endforelse
             </tbody>
         </table>
     </div>
@@ -24,7 +35,7 @@
 <div class="row">
     <div class="col-12 col-sm-10 col-lg-9">
         <div class="d-flex justify-content-end">
-            Total: Q150.00
+            Total: Q.{{$total}}.00
         </div>
     </div>
 </div>

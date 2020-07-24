@@ -36,3 +36,4 @@ Route::get('vehicle', 'VehicleController@show')->name('vehicle.show')->middlewar
 Route::resource('worktodo', 'WorkToDoController')->middleware('auth');
 /*worksheet route*/
 Route::resource('worksheet', 'WorksheetController')->middleware('auth');
+Route::get('worksheet/download/{worksheet}', 'WorksheetController@download')->name('worksheet.download')->middleware('auth');

@@ -19,6 +19,10 @@
         </div>
     </div>
     <div class="bg-white py-3 px-4 my-3 shadow rounded">
+      <span>Codigo de hoja de trabajo: <strong>{{$workSheetDetail[0]['code']}}</strong></span><br>
+      <p class="text-black-50">fecha de ingreso {{$dateCreatedWorksheet[0]['created_at']->format('d/m/y')}}</p>
+    </div>
+    <div class="bg-white py-3 px-4 my-3 shadow rounded">
       @include('worksheet/_clientInfo')
     </div>
     <div class="bg-white py-3 px-4 my-3 shadow rounded">
@@ -29,6 +33,16 @@
     </div>
     <div class="bg-white py-3 px-4 my-3 shadow rounded">
       @include('worksheet/_replacement')
+    </div>
+
+    <div class="bg-white py-3 px-4 my-3 shadow rounded">
+      <div class="row">
+        <div class="col-10">
+        </div>
+        <div class="col-2">
+          <a href="{{route('worksheet.download', $workSheetDetail[0]['worksheet_id'])}}" class="btn btn-secundary">Descargar</a>
+        </div>
+      </div>
     </div>
 </div>
 @endsection
