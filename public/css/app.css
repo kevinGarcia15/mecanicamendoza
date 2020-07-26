@@ -10928,11 +10928,36 @@ a.text-dark:focus {
   }
 }
 
+body {
+  margin: 0;
+}
+
 .h-screen {
   height: 100vh;
 }
 
 .uppercase {
   text-transform: uppercase;
+}
+
+#loading-screen {
+  background-color: rgba(25, 25, 25, 0.7);
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 9999;
+  margin-top: 0;
+  top: 0;
+  text-align: center;
+  left: 0px;
+}
+
+#loading-screen img {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  margin-top: -50px;
+  margin-left: 0px;
+  top: 50%;
 }
 

@@ -14,8 +14,11 @@
             </p>
         </div>
     </div>
+    <div id="loading-screen" style="display:none">
+        <img src="{{asset('img/spinning-circles.svg')}}">
+    </div>
     <form action="{{route('client.store')}}" method="post">
-      @csrf
+        @csrf
         <div class="bg-white py-3 px-4 my-3 shadow rounded">
             @include('client/_clientForm')
         </div>
@@ -23,12 +26,23 @@
             @include('client/_vehicleForm')
         </div>
         <div class="bg-white py-3 px-4 my-3 shadow rounded">
-          <div class="col-12 col-lg-6 my-2 mx-auto">
-            <button class="btn btn-success btn-block" type="submit" name="button">Siguiente</button>
-          </div>
-          <div class="col-12 col-lg-6 my-2 mx-auto">
-            <button class="btn btn-danger btn-block" type="button" name="button">Cancelar</button>
-          </div>
+            <div class="col-12 col-lg-6 my-2 mx-auto">
+                <button
+                  class="btn btn-success btn-block"
+                  type="submit"
+                  name="button">
+                  Siguiente
+                </button>
+            </div>
+            <div class="col-12 col-lg-6 my-2 mx-auto">
+                <a
+                  class="btn btn-danger btn-block"
+                  type="button"
+                  name="button"
+                  href="{{url('/')}}">
+                  Cancelar
+                </a>
+            </div>
         </div>
     </form>
 </div>

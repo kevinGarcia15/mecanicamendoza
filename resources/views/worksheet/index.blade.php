@@ -50,7 +50,11 @@
                     @endphp
                     @endforeach
                     @php
-                    $percent = (100 * $totalWorksFinish) / $totalWorksToDo;
+                      if ($totalWorksToDo > 0) {
+                        $percent = (100 * $totalWorksFinish) / $totalWorksToDo;
+                      }else {
+                        $percent = 0;
+                      }
                     @endphp
                     <div class="progress">
                         <div

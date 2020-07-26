@@ -16,10 +16,11 @@
         justify-content: space-between;
     }
 
-    .imageHead{
-      width: 200px;
-      margin-left: 40%;
+    .imageHead {
+        width: 200px;
+        margin-left: 40%;
     }
+
     table {
         width: 100%;
     }
@@ -47,20 +48,21 @@
     .total {
         margin-left: 77%;
     }
-    #date{
-      margin-left: 80%;
+
+    #date {
+        margin-left: 80%;
     }
 </style>
 
 <body>
-  <div class="title">
-    <span>Código: <strong>{{$workSheetDetail[0]['code']}}</strong> </span>
-    <span id="date">fecha: {{date("d").'/'.date("m").'/'.date("Y")}}</span>
-  </div>
+    <div class="title">
+        <span>Código: <strong>{{$workSheetDetail[0]['code']}}</strong> </span>
+        <span id="date">fecha: {{date("d").'/'.date("m").'/'.date("Y")}}</span>
+    </div>
     <div class="header">
         <div class="img">
-          <h1>MECANICA MENDOZA</h1>
-<!--           <img class="imageHead" src="" alt="logo">-->
+            <h1>MECANICA MENDOZA</h1>
+            <!--           <img class="imageHead" src="" alt="logo">-->
         </div>
     </div><br><br>
     <div class="userAndCarInfo">
@@ -121,15 +123,11 @@
             </thead>
             <tbody>
                 @forelse ($workToDo as $key)
-                  @if ($key->statusWork != 1)
-                    <tr>
-                      <td>{{$key->description}}</td>
-                    </tr>
-                  @else
-                    <tr>
-                      <td>Lista vacía</td>
-                    </tr>                    
-                  @endif
+                @if ($key->statusWork != 1)
+                <tr>
+                    <td>{{$key->description}}</td>
+                </tr>
+                @endif
             </tbody>
             @empty
             @endforelse
@@ -141,9 +139,9 @@
         <table border="1">
             <thead>
                 <tr>
-                    <th>cantidad</th>
-                    <th scope="col">Repuestos y Lubricantes</th>
-                    <th>valor</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Sub-Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -152,23 +150,23 @@
                 @endphp
                 @forelse ($remplacement as $key)
                 @php
-                $total = $total + $key->price;
+                $total = $total + ($key->price * $key->quantity);
                 @endphp
                 <tr>
                     <td>{{$key->quantity}}</td>
-                    <td>{{$key->description}}</td>
-                    <td>Q.{{$key->price}}</td>
+                    <td>{{$key->description.' Q.'.$key->price.'c/u'}}</td>
+                    <td>Q.{{$key->price * $key->quantity}}</td>
                 </tr>
                 @empty
                 <tr>
-                    <td>Lista vacía</td>
+                    <td>Lista vacia</td>
                 </tr>
                 @endforelse
             </tbody>
         </table>
-    </div>
+    </div><br>
     <div class="total">
-        Total: Q.{{$total}}.00
+        <strong>Total: Q.{{$total}}.00</strong>
     </div>
 </body>
 

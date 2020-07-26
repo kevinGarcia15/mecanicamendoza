@@ -5,10 +5,12 @@
         <hr>
         <div class="d-flex justify-content-between">
             <div class="col-6">
-              <span>No. placas</span><br><br>
-              <span>Modelo</span><br><br>
-              <span>Color</span><br><br>
-              <span>Mecanico responsable</span><br><br>
+              @php
+                $titlesVehicle = ['No. placas', 'Modelo','Color','Mecanico responsable'];
+              @endphp
+              @for ($i=0; $i < 4; $i++)
+                <span><strong>{{$titlesVehicle[$i]}}</strong></span><br><br>
+              @endfor
             </div>
             <div class="col-6">
               <p class="lead text-secondary">{{strtoupper($workSheetDetail[0]['plateNumber'])}}</p>

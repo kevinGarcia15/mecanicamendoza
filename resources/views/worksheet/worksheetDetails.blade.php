@@ -37,10 +37,19 @@
 
     <div class="bg-white py-3 px-4 my-3 shadow rounded">
       <div class="row">
-        <div class="col-10">
+        <div class="col-12 col-lg-7 mx-auto my-2">
+          <a
+            href="{{route('worksheet.download', $workSheetDetail[0]['worksheet_id'])}}"
+            class="btn btn-success btn-block">
+            Descargar en PDF
+          </a>
         </div>
-        <div class="col-2">
-          <a href="{{route('worksheet.download', $workSheetDetail[0]['worksheet_id'])}}" class="btn btn-secundary">Descargar</a>
+        <div class="col-12 col-lg-7 mx-auto my-2">
+          <a
+            href="{{route('worksheet.index')}}"
+            class="btn btn-primary btn-block">
+            Regresar
+          </a>
         </div>
       </div>
     </div>

@@ -59,12 +59,18 @@
                   </select>
                   {!! $errors->first('color_id', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
 
+                  @php
+                    $maxYearModel = date('Y');
+                  @endphp
                   <input
                     class="form-control my-2"
-                    type="text"
+                    type="number"
                     name="model"
+                    min="1990"
+                    max="{{$maxYearModel}}"
+                    required
                     value="{{old('model')}}"
-                    placeholder="Linea.."
+                    placeholder="Modelo.."
                     id="model">
                     {!! $errors->first('model', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
 

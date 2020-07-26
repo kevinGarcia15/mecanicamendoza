@@ -115,12 +115,15 @@ class ClientController extends Controller
       return $userResponsable;
     }
     private function saveNewClientVheicleInWorksheet($Client,$Vehicle,$Responsable,$flagForInsert){
+      $currentDate = date('y').date('m').date('d');
+      $uniqueCode = $currentDate.'-'.rand(100, 999);
+
           if ($flagForInsert == 1) {
-            $code = DB::transaction(function()use($Client,$Vehicle,$Responsable){
+            $code = DB::transaction(function()use($Client,$Vehicle,$Responsable,$uniqueCode){
               //"solo crear worksheet";
               //crear codigo unico para la hoja de trabajo
-              $getPlateNumber = vehicle_db::select('plateNumber')->where('vehicle_id', '=', $Vehicle)->first();
-              $uniqueCode = strtoupper($getPlateNumber['plateNumber']).'-'.rand(100, 999);
+//              $getPlateNumber = vehicle_db::select('plateNumber')->where('vehicle_id', '=', $Vehicle)->first();
+//              $uniqueCode = strtoupper($getPlateNumber['plateNumber']).'-'.rand(100, 999);
 
               $worksheetCreted = worksheet_db::create([
                 "code" => $uniqueCode,
@@ -132,11 +135,11 @@ class ClientController extends Controller
             });
 
           }elseif ($flagForInsert == 2) {
-            $code = DB::transaction(function()use($Client,$Vehicle,$Responsable){
+            $code = DB::transaction(function()use($Client,$Vehicle,$Responsable,$uniqueCode){
               $vehicleCreated = vehicle_db::create($Vehicle);
               $getVehicle_id = vehicle_db::select('vehicle_id')->where('plateNumber', '=', $Vehicle['plateNumber'])->first();
               //crear codigo unico para la hoja de trabajo
-              $uniqueCode = strtoupper($Vehicle['plateNumber']).'-'.rand(100, 999);
+//              $uniqueCode = strtoupper($Vehicle['plateNumber']).'-'.rand(100, 999);
 
               $worksheetCreted = worksheet_db::create([
                 "code" => $uniqueCode,
@@ -149,12 +152,12 @@ class ClientController extends Controller
           }
 
           elseif ($flagForInsert == 3) {
-            $code = DB::transaction(function()use($Client,$Vehicle,$Responsable){
+            $code = DB::transaction(function()use($Client,$Vehicle,$Responsable,$uniqueCode){
               $clientCreated = client_db::create($Client);
               $getClient_id = client_db::select('client_id')->where('dpi', '=', $Client['dpi'])->first();
-              //crear codigo unico para la hoja de trabajo
-              $getPlateNumber = vehicle_db::select('plateNumber')->where('vehicle_id', '=', $Vehicle)->first();
-              $uniqueCode = strtoupper($getPlateNumber['plateNumber']).'-'.rand(100, 999);
+              // //crear codigo unico para la hoja de trabajo
+              // $getPlateNumber = vehicle_db::select('plateNumber')->where('vehicle_id', '=', $Vehicle)->first();
+              // $uniqueCode = strtoupper($getPlateNumber['plateNumber']).'-'.rand(100, 999);
 
               $worksheetCreted = worksheet_db::create([
                 "code" => $uniqueCode,
@@ -167,14 +170,14 @@ class ClientController extends Controller
           }
 
           elseif($flagForInsert == 4) {
-            $code = DB::transaction(function()use($Client,$Vehicle,$Responsable){
+            $code = DB::transaction(function()use($Client,$Vehicle,$Responsable,$uniqueCode){
               $clientCreated = client_db::create($Client);
               $vehicleCreated = vehicle_db::create($Vehicle);
               //obtiene los id para ingresarlo a la tabla Worksheet
               $getClient_id = client_db::select('client_id')->where('dpi', '=', $Client['dpi'])->first();
               $getVehicle_id = vehicle_db::select('vehicle_id')->where('plateNumber', '=', $Vehicle['plateNumber'])->first();
-              //crear codigo unico para la hoja de trabajo
-              $uniqueCode = strtoupper($Vehicle['plateNumber']).'-'.rand(100, 999);
+              // //crear codigo unico para la hoja de trabajo
+              // $uniqueCode = strtoupper($Vehicle['plateNumber']).'-'.rand(100, 999);
               $worksheetCreted = worksheet_db::create([
                 "code" => $uniqueCode,
                 "users_id"=> $Responsable['user_id'],

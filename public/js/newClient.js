@@ -1,5 +1,8 @@
 /*Archivo js para las funciones de la vista newClient.blade.php*/
 $(document).ready(function() {
+  var screen = $('#loading-screen');
+  configureLoadingScreen(screen);
+
     $("#addRow").click(function() {
         $("#rowWorks").append(
             $("<div>")
@@ -79,7 +82,7 @@ $(document).ready(function() {
                 },
                 function(response) {
                     if (response.length != 0) {//si hay valores
-                        $("#line").hide();
+                        $("#model").hide();
                         $("#id_vehicleExist").val(response[0]['vehicle_id'])
                         lookSelectInput(response, "color_name");
                         lookSelectInput(response, "line_name");
@@ -149,3 +152,13 @@ $(document).ready(function() {
         }
     });
 });
+
+function configureLoadingScreen(screen){
+    $(document)
+        .ajaxStart(function () {
+            screen.fadeIn();
+        })
+        .ajaxStop(function () {
+            screen.fadeOut();
+        });
+}

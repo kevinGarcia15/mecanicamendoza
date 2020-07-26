@@ -61,7 +61,7 @@
                     id="address">
                   {!! $errors->first('address', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
             </div>
-            <input type="hidden" id="id_clientExist" name="id_clientExist" value="0">            
+            <input type="hidden" id="id_clientExist" name="id_clientExist" value="0">
         </div>
     </div>
 </div>
