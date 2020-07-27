@@ -94,6 +94,7 @@
 
         <main class="py-4">
             @include('partials/_session-status')
+            @include('partials/_session-error')
 
             @yield('content')
         </main>

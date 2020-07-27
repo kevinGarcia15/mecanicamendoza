@@ -15,7 +15,7 @@
     </div>
 <br><hr>
     <div class="row">
-      @if (Auth::user()->rol == 'Master')
+      @if (Auth::user()->rol == 'Master' || Auth::user()->rol == 'Administrador')
         <div class="col-6 col-lg-3 my-3">
           <div class="card">
             <img class="card-img-top" src="./img/userManagment.svg" alt="">
