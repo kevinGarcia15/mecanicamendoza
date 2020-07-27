@@ -84,7 +84,9 @@ class WorkToDoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      work_to_do_db::where('worktodo_id', $id)
+       ->update([ 'statusWork' => $request['statusWork'] ]);
+      return back()->with('status','El elemento fue actualizado exitosamente');
     }
 
     /**

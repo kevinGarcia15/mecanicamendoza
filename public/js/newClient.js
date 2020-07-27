@@ -81,8 +81,8 @@ $(document).ready(function() {
                     plateNumber: plateNumber //valores a pasar
                 },
                 function(response) {
-                    if (response.length != 0) {//si hay valores
-                        $("#model").hide();
+                    if (response.length != 0) {//si hay valores existe vehiculo
+                        $("#model").attr("disabled", "true").hide();
                         $("#id_vehicleExist").val(response[0]['vehicle_id'])
                         lookSelectInput(response, "color_name");
                         lookSelectInput(response, "line_name");
@@ -93,7 +93,7 @@ $(document).ready(function() {
                         unlookSelectImput("color_name");
                         unlookSelectImput("line_name");
                         unlookSelectImput("brand_name");
-                        $("#model").show();
+                        $("#model").removeAttr("disabled").show();
                         $("#vehicleInfo").hide();
                     }
                 }

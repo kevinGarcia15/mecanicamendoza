@@ -1,23 +1,10 @@
 <div class="col-12 col-sm-10 col-lg-9 mx-auto">
-    <h2 class="display-5 text-primary">Tareas creadas</h2>
+    <h2 class="display-5 text-primary">Tareas por cumplir</h2>
 </div>
 <hr>
 <div class="">
     <div class="row">
         <div class="col-12 col-sm-12 col-lg-9 mx-auto">
-          <div class="col-12 col-lg-6 mx-auto">
-            <button
-              type="button"
-              class="btn btn-primary btn-block"
-              data-toggle="modal"
-              data-target="#newTask"
-              data-whatever="@mdo"
-              >
-              Nueva tarea
-            </button>
-            @include('worksheet/_newTaskModal')
-            <br>
-          </div>
             <div class="form-group">
                 <ul class="list-group">
                     @forelse ($workToDo as $key)
@@ -36,7 +23,6 @@
                             Acciones
                           </a>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            @include('worksheet/_deleteWork')
                             @include('worksheet/_statusWork', ['value' => '0', 'btnText' => 'Finalizar tarea'])
                           </div>
                         </div>
@@ -57,7 +43,6 @@
                               Acciones
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                              @include('worksheet/_deleteWork')
                               @include('worksheet/_statusWork', ['value' => '1', 'btnText' => 'Cambiar estado'])
                             </div>
                           </div>

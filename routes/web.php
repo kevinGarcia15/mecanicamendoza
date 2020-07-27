@@ -39,3 +39,5 @@ Route::resource('worksheet', 'WorksheetController')->middleware('auth');
 Route::get('worksheet/download/{worksheet}', 'WorksheetController@download')->name('worksheet.download')->middleware('auth');
 /*replacement Routes*/
 Route::resource('replacement', 'ReplacementController')->middleware('auth');
+/*Mechanical Route*/
+Route::resource('mechanical', 'MechanicalController')->middleware('auth');

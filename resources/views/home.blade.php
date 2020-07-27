@@ -25,7 +25,6 @@
             </div>
           </div>
         </div>
-      @endif
       <div class="col-6 col-lg-3 my-3">
         <div class="card">
           <img class="card-img-top" src="./img/worksheet.svg" alt="">
@@ -53,6 +52,17 @@
                 </div>
             </div>
         </div>
+      @elseif (Auth::user()->rol == 'Mecanico')
+        <div class="col-6 col-lg-3 my-3">
+          <div class="card">
+            <img class=" card-img-top" src="./img/my_tasks.svg" alt="">
+            <div class="card-body">
+              <h5 class="card-title">Mis Tareas</h5>
+              <a href="{{route('mechanical.index')}}" class="btn btn-primary btn-block">Visitar</a>
+            </div>
+          </div>
+        </div>
+      @endif
     </div>
 </div>
 @endsection

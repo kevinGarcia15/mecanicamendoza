@@ -27,6 +27,9 @@
                     <span>
                         {{$key['email']}}
                     </span>
+                    <span>
+                        <strong>Rol: </strong> {{$key['rol']}}
+                    </span>
                 </div>
                 @if ($key['is_enabled'] == 1)
                 <form class="" action="{{route('user.update', $key)}}" method="post">
