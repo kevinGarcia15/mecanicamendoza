@@ -59,7 +59,7 @@
 <div class="row">
     <div class="col-12 col-sm-10 col-lg-9">
         <div class="d-flex justify-content-end">
-            <strong>Total: Q.{{$total}}.00</strong>
+            <strong>Total: Q.{{number_format($total)}}</strong>
         </div>
     </div>
 </div>

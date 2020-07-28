@@ -166,7 +166,7 @@
         </table>
     </div><br>
     <div class="total">
-        <strong>Total: Q.{{$total}}.00</strong>
+        <strong>Total: Q.{{number_format($total)}}</strong>
     </div>
 </body>
 

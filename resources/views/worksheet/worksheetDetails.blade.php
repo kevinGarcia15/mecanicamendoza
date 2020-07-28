@@ -48,7 +48,7 @@
           <a
             href="{{route('worksheet.index')}}"
             class="btn btn-primary btn-block">
-            Regresar
+            Congelar
           </a>
         </div>
       </div>

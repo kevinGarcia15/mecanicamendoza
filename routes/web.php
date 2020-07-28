@@ -27,11 +27,14 @@ Route::patch('/usuarios/{user}', 'userManagmentController@update')->name('user.u
 
 /*Client Routes*/
 Route::resource('client', 'ClientController')->middleware('auth','master','admin');
-Route::get('clientexist', 'ClientController@show')->name('clientexist.show')->middleware('auth','master','admin');
+Route::get('clientexist', 'ClientController@show')->name('clientexist.show')->middleware('auth','admin');
 /*Car Line route*/
 Route::get('line', 'CarLineController@show')->name('carLine.show')->middleware('auth');
 /*vehicle route*/
 Route::get('vehicle', 'VehicleController@show')->name('vehicle.show')->middleware('auth');
+Route::get('vehicle/history', 'VehicleController@index')->name('vehicle.history')->middleware('auth','admin');
+Route::get('vehicle/history/{vehicle}', 'VehicleController@vehicleHistory')->name('vehicle.ShowHistory')->middleware('auth','admin');
+
 /*Work to do Routes*/
 Route::resource('worktodo', 'WorkToDoController')->middleware('auth');
 /*worksheet route*/

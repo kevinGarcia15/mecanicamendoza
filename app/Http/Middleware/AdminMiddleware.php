@@ -16,7 +16,7 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
 
-      if (auth()->check() && auth()->user()->rol == 'Administrador')
+      if (auth()->check() && (auth()->user()->rol == 'Administrador' || auth()->user()->rol == 'Master' ))
         return $next($request);
         return redirect('/');
     }
