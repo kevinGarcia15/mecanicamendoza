@@ -67,6 +67,7 @@
     </div><br><br>
     <div class="userAndCarInfo">
         <div class="client">
+          <strong>Datos del cliente</strong>
             <div class="">
                 <strong>Nombre:</strong>
                 {{$workSheetDetail[0]['first_name']}}
@@ -85,6 +86,7 @@
             </div>
         </div>
         <div class="vehicle">
+          <strong>Datos del vehículo</strong>
             <div class="">
                 <strong>Marca:</strong>
                 {{$workSheetDetail[0]['brand_name']}}

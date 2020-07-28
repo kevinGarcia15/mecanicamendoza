@@ -12,7 +12,7 @@
             >
             Ingresar repuesto
           </button>
-          @include('worksheet/_newReplaceModal')
+          @include('worksheet/_newReplaceModal',['textLabelPrice'=>'Ingrese el precio (opcional)'])
           <br>
         </div>
         <table class="table">

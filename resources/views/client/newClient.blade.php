@@ -46,6 +46,10 @@
         </div>
     </form>
 </div>
+@include('client/_newBrandModal')
+@include('client/_newLineModal')
+@include('client/_newColorModal')
+
 @endsection
 @section('script')
 <script type="text/javascript" src="{{ asset('js/newClient.js') }}" defer></script>

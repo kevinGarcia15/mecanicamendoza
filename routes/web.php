@@ -30,6 +30,8 @@ Route::resource('client', 'ClientController')->middleware('auth','master','admin
 Route::get('clientexist', 'ClientController@show')->name('clientexist.show')->middleware('auth','admin');
 /*Car Line route*/
 Route::get('line', 'CarLineController@show')->name('carLine.show')->middleware('auth');
+Route::post('line', 'CarLineController@store')->name('carLine.store')->middleware('auth');
+
 /*vehicle route*/
 Route::get('vehicle', 'VehicleController@show')->name('vehicle.show')->middleware('auth');
 Route::get('vehicle/history', 'VehicleController@index')->name('vehicle.history')->middleware('auth','admin');
@@ -44,3 +46,7 @@ Route::get('worksheet/download/{worksheet}', 'WorksheetController@download')->na
 Route::resource('replacement', 'ReplacementController')->middleware('auth');
 /*Mechanical Route*/
 Route::resource('mechanical', 'MechanicalController')->middleware('auth');
+/*Brand routes*/
+Route::resource('brand', 'BrandController')->middleware('auth');
+/*Color routes*/
+Route::resource('color', 'ColorController')->middleware('auth');

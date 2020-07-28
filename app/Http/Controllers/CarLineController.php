@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\car_line_db;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class CarLineController extends Controller
@@ -16,5 +17,17 @@ class CarLineController extends Controller
         }
         return response()->json($carLineArray);
       }
+  }
+
+  public function store(Request $request)
+  {
+    $newLine = request()->validate([
+      'brand_car_id'=>'required',
+      'line_name'=> 'required'
+    ]);
+    DB::transaction(function()use($newLine){
+          car_line_db::create($newLine);
+    });
+    return back()->with('status', 'Linea '.$newLine['line_name'].' ingresado exitosamente');
   }
 }
