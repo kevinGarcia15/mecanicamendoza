@@ -105,7 +105,7 @@
                     class="form-control my-2"
                     type="number"
                     name="model"
-                    min="1990"
+                    min="1900"
                     max="{{$maxYearModel}}"
                     required
                     value="{{old('model')}}"
@@ -118,13 +118,13 @@
                     <input type="hidden" id="id_vehicleExist" name="id_vehicleExist" value="0">
             </div>
         </div>
-        <div class="d-flex justify-content-between">
-            <span>Responsable</span>
+        <div class="" style="display:none">
+            <span>Responsable (Puede agregarlo mas tarde)</span>
             <div class="form-group">
               <select
                 class="form-control my-2 {{$errors->first('user_id','is-invalid')}}"
                 name="user_id"
-                required>
+                >
                 <option value="">Seleccionar</option>
                 @foreach ($responsable as $key)
                   <option

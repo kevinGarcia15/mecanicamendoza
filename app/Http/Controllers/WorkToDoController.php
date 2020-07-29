@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\{work_to_do_db,worksheet_db,vehicle_db};
+use App\{work_to_do_db,worksheet_db,vehicle_db,User};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -35,8 +35,6 @@ class WorkToDoController extends Controller
      */
     public function store(Request $request)
     {
-//        var_dump($request['description']);
-//        echo $request['description'][0];
         DB::transaction(function()use($request){
           $countWorks = count($request['description']);
           for ($i=0; $i < $countWorks; $i++) {
@@ -46,7 +44,8 @@ class WorkToDoController extends Controller
             ]);
           }
         });
-        return back()->with('status', 'Datos ingresados exitosamente');
+        $countWorks = count($request['description']);
+        return back()->with('status', 'Haz ingresado '.$countWorks.' tareas exitosamente');
     }
 
     /**
@@ -57,11 +56,12 @@ class WorkToDoController extends Controller
      */
     public function show($newWorkSheet)
     {
+      $responsable = User::get();
       $worksCreated = work_to_do_db::where('worksheet_id', $newWorkSheet)->get();
       $vehicleInfo = worksheet_db::
                 join('vehicle_dbs', 'vehicle_dbs.vehicle_id', '=', 'worksheet_dbs.vehicle_id')
                 ->where('worksheet_id', $newWorkSheet)->get();
-      return view('client/fillWorkToDo', compact('newWorkSheet','worksCreated','vehicleInfo'));
+      return view('client/fillWorkToDo', compact('newWorkSheet','worksCreated','vehicleInfo','responsable'));
     }
 
     /**

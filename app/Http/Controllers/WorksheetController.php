@@ -55,11 +55,17 @@ class WorksheetController extends Controller
      */
     public function show($id)
     {
+      /*Valida si ya se ha seleccionasdo un mecanico responasble*/
+      $verifyUserExist = worksheet_db::findOrFail($id);
+      if ($verifyUserExist['users_id'] === NULL) {
+        return redirect()->route('worktodo.show', $verifyUserExist)->with('error', 'Debe seleccionar un mecanico que se haga responsable de la hoja de trabajo');
+      }
       $values = $this->getworksheet($id);
       $dateCreatedWorksheet = $values[0];
       $workToDo = $values[1];
       $remplacement = $values[2];
       $workSheetDetail = $values[3];
+
       return view('worksheet/worksheetDetails',compact(
         'workSheetDetail','dateCreatedWorksheet','workToDo','remplacement'
       ));
@@ -116,7 +122,9 @@ class WorksheetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      worksheet_db::where('worksheet_id', $id)
+       ->update([ 'users_id' => $request['user_id']]);
+      return back()->with('status','El usuario fue asignado exitosamente');
     }
 
     /**

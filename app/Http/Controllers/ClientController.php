@@ -110,7 +110,7 @@ class ClientController extends Controller
 
     private function responsableValidate(){
       $userResponsable = request()->validate([
-        'user_id'=>'required'
+        'user_id'=>''
       ]);
       return $userResponsable;
     }

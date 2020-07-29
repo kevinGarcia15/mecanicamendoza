@@ -8,7 +8,7 @@
         </div>
         <div class="col-12 col-lg-6">
             <h1 class="display-5 text-primary">Tareas a relizar</h1>
-            <p class="lead text-secondary">Ingrese las tareas a realziar para el vehiculo No. placa
+            <p class="lead text-secondary">Ingrese las tareas a relizar para el vehiculo No. placa
                 <strong>{{$vehicleInfo[0]['plateNumber']}}</strong>.
             </p>
             <p class="lead text-secondary">Puede
@@ -26,27 +26,22 @@
                 <button class="btn btn-success btn-block" type="submit" name="button">Agregar tarea(s)</button>
             </div>
         </div>
-        <div class="bg-white py-3 px-4 my-3 shadow rounded">
+      </form>
+        @if ($vehicleInfo[0]['users_id'])
+          <div class="bg-white py-3 px-4 my-3 shadow rounded">
           <div class="col-12 col-lg-6 my-2 mx-auto">
               <a
-                href="{{route('worksheet.show', $newWorkSheet)}}"
+                href="{{route('home')}}"
                 class="btn btn-info btn-block"
                 type="button"
                 name="button">
-                Ver hoja de trabajo
+                Terminar
               </a>
           </div>
-            <div class="col-12 col-lg-6 my-2 mx-auto">
-                <a
-                  href="{{route('home')}}"
-                  class="btn btn-warning btn-block"
-                  type="button"
-                  name="button">
-                  Ir a inicio
-                </a>
-            </div>
         </div>
-    </form>
+        @else
+          @include('client/_assignUserToWorksheet')
+  @endif
 </div>
 @endsection
 @section('script')
