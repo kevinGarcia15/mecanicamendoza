@@ -28,6 +28,7 @@ Route::patch('/usuarios/{user}', 'userManagmentController@update')->name('user.u
 /*Client Routes*/
 Route::resource('client', 'ClientController')->middleware('auth','master','admin');
 Route::get('clientexist', 'ClientController@show')->name('clientexist.show')->middleware('auth','admin');
+Route::get('clientexistWhitName', 'ClientController@clienteExistWithName')->middleware('auth','admin');
 /*Car Line route*/
 Route::get('line', 'CarLineController@show')->name('carLine.show')->middleware('auth');
 Route::post('line', 'CarLineController@store')->name('carLine.store')->middleware('auth');

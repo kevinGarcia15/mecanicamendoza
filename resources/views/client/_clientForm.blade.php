@@ -8,7 +8,6 @@
               <input
                 class="form-control my-2 {{$errors->first('dpi','is-invalid')}}"
                 type="text"
-                required
                 name="dpi"
                 id="dpi"
                 value="{{old('dpi')}}"
@@ -24,6 +23,8 @@
                   placeholder="Nombre.."
                   id="first_name">
                   {!! $errors->first('first_name', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
+                  <div class="" id="FilterName">
+                  </div>
                 <input
                   class="form-control  my-2 {{$errors->first('last_name','is-invalid')}}"
                   type="text"

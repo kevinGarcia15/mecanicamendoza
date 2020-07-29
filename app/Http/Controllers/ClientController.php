@@ -89,7 +89,7 @@ class ClientController extends Controller
     }
     private function clientValidate(){
       $newClient = request()->validate([
-        'dpi'=>'required|unique:client_dbs',
+        'dpi'=>'unique:client_dbs',
         'first_name'=>'required',
         'last_name'=>'required',
         'phone'=>'required',
@@ -204,6 +204,21 @@ class ClientController extends Controller
       }
     }
 
+    public function clienteExistWithName(Request $request){
+      if ($request->ajax()) {
+        if ($request->name) {
+          $filter = client_db::where('first_name','LIKE',$request->name.'%')->get();
+          foreach ($filter as $key) {
+            $clientArray[$key->client_id] = $key->first_name.' '.$key->last_name;
+          }
+          return response()->json($clientArray);
+        }
+        if ($request->cliente_id) {
+          $client = client_db::findOrFail($request->cliente_id);
+          return response()->json($client);
+        }
+      }
+    }
     /**
      * Show the form for editing the specified resource.
      *

@@ -1,4 +1,27 @@
 /*Archivo js para las funciones de la vista newClient.blade.php*/
+/*Funcoin para establecer valores en inputs con relzacion al nombre del cliente*/
+function setValuesClientInput(id_cliente) {
+  if ($.trim(id_cliente) != "") {
+      $.get(
+          "clientexistWhitName", //ruta de la peticion
+          {
+              cliente_id: id_cliente //valores a pasar
+          },
+          function(response) {
+            console.log(response)
+            $("#FilterName").empty();
+            $("#id_clientExist").val(response['client_id'])
+            $('#first_name').val(response['first_name'])
+            $('#last_name').val(response['last_name']).attr("disabled", "true")
+            $('#address').val(response['address']).attr("disabled", "true")
+            $('#phone').val(response['phone']).attr("disabled", "true")
+          }
+      );
+  } else {
+      $("#FilterName").empty();
+  }
+}
+
 $(document).ready(function() {
   var screen = $('#loading-screen');
   configureLoadingScreen(screen);
@@ -151,14 +174,42 @@ $(document).ready(function() {
             );
         }
     });
-});
 
-function configureLoadingScreen(screen){
+    /*Funcion para busqueda de cliente mediante el nombre-------------------------*/
+    $("#first_name").keyup(function() {
+        var args = $(this).val();
+        if ($.trim(args) != "") {
+            $.get(
+                "clientexistWhitName", //ruta de la peticion
+                {
+                    name: args //valores a pasar
+                },
+                function(response) {
+                    $("#FilterName").empty();
+                    $.each(response, function(index, value) {
+                        $("#FilterName").append(
+                            "<a href='#' onclick='setValuesClientInput(" +
+                                index +
+                                ")'>" +
+                                value +
+                                "</a><br>"
+                        );
+                    });
+                }
+            );
+        } else {
+            $("#FilterName").empty();
+        }
+
+    });
+});
+/*Funcion para mostrar la carga de peticion en bd-----------------------------*/
+function configureLoadingScreen(screen) {
     $(document)
-        .ajaxStart(function () {
+        .ajaxStart(function() {
             screen.fadeIn();
         })
-        .ajaxStop(function () {
+        .ajaxStop(function() {
             screen.fadeOut();
         });
 }
