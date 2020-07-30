@@ -5,6 +5,19 @@
 <div class="">
     <div class="row">
         <div class="col-12 col-sm-12 col-lg-9 mx-auto">
+          <div class="col-12 col-lg-6 mx-auto">
+            <button
+              type="button"
+              class="btn btn-primary btn-block"
+              data-toggle="modal"
+              data-target="#newTask"
+              data-whatever="@mdo"
+              >
+              Nueva tarea
+            </button>
+            @include('worksheet/_newTaskModal')
+            <br>
+          </div>
             <div class="form-group">
                 <ul class="list-group">
                     @forelse ($workToDo as $key)

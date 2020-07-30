@@ -18,7 +18,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">Cantidad</th>
                     <th scope="col">Descripcion</th>
                     <th scope="col">Sub-Total</th>
                 </tr>

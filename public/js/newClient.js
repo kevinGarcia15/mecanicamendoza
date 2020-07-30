@@ -1,6 +1,8 @@
 /*Archivo js para las funciones de la vista newClient.blade.php*/
 /*Funcoin para establecer valores en inputs con relzacion al nombre del cliente*/
 function setValuesClientInput(id_cliente) {
+  var screen = $('#loading-screen');
+  configureLoadingScreen(screen);
   if ($.trim(id_cliente) != "") {
       $.get(
           "clientexistWhitName", //ruta de la peticion
@@ -23,8 +25,8 @@ function setValuesClientInput(id_cliente) {
 }
 
 $(document).ready(function() {
-  var screen = $('#loading-screen');
-  configureLoadingScreen(screen);
+  // var screen = $('#loading-screen');
+  // configureLoadingScreen(screen);
 
     $("#addRow").click(function() {
         $("#rowWorks").append(
@@ -95,6 +97,8 @@ $(document).ready(function() {
 
     /*funcion para buscar si existe un vheiculo con ese numero de placa*/
     $("#plateNumber").on("change", function() {
+      var screen = $('#loading-screen');
+      configureLoadingScreen(screen);
         var plateNumber = $(this).val();
         if ($.trim(plateNumber) != "") {
             //no esta vacio
@@ -147,6 +151,8 @@ $(document).ready(function() {
 
     /*funcion para buscar si existe un cliente con numero de dpi existente*/
     $("#dpi").on("change", function() {
+      var screen = $('#loading-screen');
+      configureLoadingScreen(screen);
         var dpi = $(this).val();
         if ($.trim(dpi) != "") {
             //no esta vacio

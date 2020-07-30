@@ -15,7 +15,7 @@ class CreateWorksheetDbsTable extends Migration
     {
         Schema::create('worksheet_dbs', function (Blueprint $table) {
             $table->id('worksheet_id');
-            $table->string('code');
+            $table->string('code')->unique();
             $table->boolean('statusWorksheet')->default(1);
             $table->BigInteger('users_id')->unsigned()->nullable();
             $table->BigInteger('client_id')->unsigned();

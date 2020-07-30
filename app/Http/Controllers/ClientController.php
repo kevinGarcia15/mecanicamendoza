@@ -89,7 +89,7 @@ class ClientController extends Controller
     }
     private function clientValidate(){
       $newClient = request()->validate([
-        'dpi'=>'unique:client_dbs',
+        'dpi'=>'',
         'first_name'=>'required',
         'last_name'=>'required',
         'phone'=>'required',
@@ -114,9 +114,11 @@ class ClientController extends Controller
       ]);
       return $userResponsable;
     }
+
     private function saveNewClientVheicleInWorksheet($Client,$Vehicle,$Responsable,$flagForInsert){
-      $currentDate = date('y').date('m').date('d');
-      $uniqueCode = $currentDate.'-'.rand(100, 999);
+      // $currentDate = date('y').date('m').date('d');
+      // $uniqueCode = $currentDate.'-'.rand(100, 999);
+      $uniqueCode = $this->generateUniqueCode();
 
           if ($flagForInsert == 1) {
             $code = DB::transaction(function()use($Client,$Vehicle,$Responsable,$uniqueCode){
@@ -188,6 +190,20 @@ class ClientController extends Controller
             });
           }
         return $code;
+    }
+    private function generateUniqueCode(){
+      $currentDate = date('y');
+      $uniqueCode = $currentDate.'-'.rand(1000,9999);
+      $ifExist = worksheet_db::where('code', '=', $uniqueCode)->get();
+
+      if (count($ifExist) >= 1) {
+        while (count($ifExist) >= 1) {
+          $uniqueCode = $currentDate.'-'.rand(1000,9999);
+          $ifExist = worksheet_db::where('code', '=', $uniqueCode)->get();
+        }
+        return $uniqueCode;
+      }
+      return $uniqueCode;
     }
     /**
      * Display the specified resource.

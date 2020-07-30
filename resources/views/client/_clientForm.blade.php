@@ -11,7 +11,7 @@
                 name="dpi"
                 id="dpi"
                 value="{{old('dpi')}}"
-                placeholder="No. de DPI..">
+                placeholder="No. de DPI (Opcional)">
                 {!! $errors->first('dpi', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
 
                 <input
