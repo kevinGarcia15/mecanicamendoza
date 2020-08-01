@@ -84,15 +84,15 @@ class BalanceCustomerController extends Controller
      */
     public function show($id)
     {
-      $listBalanceWorksheet = worksheet_db::
-       join('client_dbs', 'worksheet_dbs.client_id', '=', 'client_dbs.client_id')
-       ->join('balance_custumer_dbs', 'balance_custumer_dbs.worksheet_id', '=', 'worksheet_dbs.worksheet_id')
-       ->join('vehicle_dbs', 'worksheet_dbs.vehicle_id', '=', 'vehicle_dbs.vehicle_id')
-       ->join('car_color_dbs', 'vehicle_dbs.color_id', '=', 'car_color_dbs.color_id')
-       ->join('car_line_dbs', 'vehicle_dbs.line_id', '=', 'car_line_dbs.line_id')
-       ->join('brand_car_dbs', 'car_line_dbs.brand_car_id', '=', 'brand_car_dbs.brand_id')
+      $listBalanceWorksheet = balanceCustumer_db::
+       join('client_dbs', 'balance_custumer_dbs.client_id', '=', 'client_dbs.client_id')
+//       ->join('worksheet_dbs', 'balance_custumer_dbs.worksheet_id', '=', 'worksheet_dbs.worksheet_id')
+       // ->join('vehicle_dbs', 'worksheet_dbs.vehicle_id', '=', 'vehicle_dbs.vehicle_id')
+       // ->join('car_color_dbs', 'vehicle_dbs.color_id', '=', 'car_color_dbs.color_id')
+       // ->join('car_line_dbs', 'vehicle_dbs.line_id', '=', 'car_line_dbs.line_id')
+       // ->join('brand_car_dbs', 'car_line_dbs.brand_car_id', '=', 'brand_car_dbs.brand_id')
        ->where('balance_custumer_dbs.client_id', '=', $id)
-       ->orderBy('worksheet_dbs.workSheetUpdated_at', 'ASC')->get();
+       ->orderBy('balance_custumer_dbs.created_at', 'ASC')->get();
 
       return view('balanceCustomer/balance_detail', compact('listBalanceWorksheet','abonos'));
   //   return $listBalanceWorksheet;

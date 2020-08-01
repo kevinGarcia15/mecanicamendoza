@@ -28,6 +28,7 @@
                           type="number"
                           step="any"
                           min="0"
+                          max="{{$listBalanceWorksheet[0]['total_balance']}}"
                           class="form-control"
                           id="pasive"
                           name="pasive"
@@ -44,7 +45,7 @@
                             Cerrar
                         </button>
                         <button type="submit" class="btn btn-primary" name="guardar" value="Guardar">
-                            Congelar
+                            Abonar
                         </button>
                     </div>
                 </form>

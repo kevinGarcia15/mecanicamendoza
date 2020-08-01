@@ -35,6 +35,7 @@ Route::post('line', 'CarLineController@store')->name('carLine.store')->middlewar
 
 /*vehicle route*/
 Route::get('vehicle', 'VehicleController@show')->name('vehicle.show')->middleware('auth');
+Route::get('vehicle/search', 'VehicleController@search')->name('vehicle.search')->middleware('auth','admin');
 Route::get('vehicle/history', 'VehicleController@index')->name('vehicle.history')->middleware('auth','admin');
 Route::get('vehicle/history/{vehicle}', 'VehicleController@vehicleHistory')->name('vehicle.ShowHistory')->middleware('auth','admin');
 

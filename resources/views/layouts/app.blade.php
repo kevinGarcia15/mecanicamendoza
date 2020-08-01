@@ -40,7 +40,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                      <form class="form-inline" action="{{route('vehicle.search')}}">
+                        <input class="form-control mr-sm-2" type="text" name="arg" placeholder="Ingrese la placa del vehículo">
+                        <button class="btn btn-outline-success" type="submit">Buscar</button>
+                      </form>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -70,6 +73,40 @@
                             href="{{route('userManagment')}}">
                             Gestion de usuarios
                           </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a
+                              id="navbarDropdown"
+                              class="nav-link dropdown-toggle"
+                              href="#"
+                              role="button"
+                              data-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false"
+                              v-pre>
+                              Informes
+                                <span class="caret"></span>
+                            </a>
+
+                            <div
+                              class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a
+                                  class="dropdown-item"
+                                  href="{{route('vehicle.history')}}" >
+                                  Historial de vehículos
+                                </a>
+                                <a
+                                  class="dropdown-item"
+                                  href="{{route('worksheet.index')}}" >
+                                  Trabajos en progreso
+                                </a>
+                                <a
+                                  class="dropdown-item"
+                                  href="{{route('balance.index')}}" >
+                                  Clientes deudores
+                                </a>
+
+                            </div>
                         </li>
                       @endif
                         <li class="nav-item dropdown">

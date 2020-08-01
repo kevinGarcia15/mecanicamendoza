@@ -9,19 +9,32 @@
         </h3>
     </div>
     @forelse ($vehicleWorksheetHistory as $key)
-      <div class="card" style="width: 100%">
+      @php
+        //manejador del estado de la hoja de trabajo
+        if ($key->statusWorksheet == 0) {
+          $alertHandler = 'alert-light';
+          $textHandler = '(Hoja de trabajo finalizada)';
+        }else {
+          $alertHandler = 'alert-dark';
+          $textHandler = '<strong>(Hoja de trabajo en progreso)</strong>';
+        }
+      @endphp
+      <div class="card alert {{$alertHandler}}" style="width: 100%">
         <div class="card-body">
-          <h5 class="card-title">{{$key->workSheetUpdated_at->diffForHumans()}}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Tareas realizadas</h6>
-          @forelse ($workToDo as $a)
-            @if ($a->worksheet_id == $key->worksheet_id)
-              <p class="card-text">
-                {{$a->description}}
-              </p>
-            @endif
+          <h5
+            class="card-title">
+            Tareas realizadas {!!$textHandler!!}
+          </h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{$key->workSheetUpdated_at->diffForHumans()}}</h6>
+          <ol>
+            @forelse ($workToDo as $a)
+              @if ($a->worksheet_id == $key->worksheet_id)
+                  <li>{{$a->description}}</li>
+              @endif
           @empty
             <p>Lista vacia</p>
           @endforelse
+        </ol>
           <a href="{{route('worksheet.show', $key['worksheet_id'])}}" class="card-link">Ver mas</a>
         </div>
       </div>

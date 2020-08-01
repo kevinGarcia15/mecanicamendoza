@@ -32,13 +32,12 @@
         <tbody>
           @forelse ($listBalanceWorksheet as $key)
             <tr>
-              <td>{{$key->workSheetUpdated_at->format('d/m/y')}}</td>
+              <td>{{$key->created_at->format('d/m/y')}}</td>
               @if ($key->active == 0)
                 <td>Abono</td>
               @else
                 <td>
-                  {{$key->brand_name.' '.$key->line_name
-                    .' '.$key->model.' Placa: '.strtoupper($key->plateNumber)}}
+                  <a href="{{route('worksheet.show', $key['worksheet_id'])}}">Ver información</a>
                 </td>
               @endif
               <td>{{'Q.'.$key->active}}</td>
