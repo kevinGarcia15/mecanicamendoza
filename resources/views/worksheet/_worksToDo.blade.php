@@ -8,7 +8,10 @@
           <div class="col-12 col-lg-6 mx-auto">
             <button
               type="button"
-              class="btn btn-primary btn-block"
+              class="btn btn-primary btn-block
+              @if ($workSheetDetail[0]['statusWorksheet'] == 0)
+              btn-hide
+              @endif"
               data-toggle="modal"
               data-target="#newTask"
               data-whatever="@mdo"
@@ -30,7 +33,11 @@
                         title="Tarea en progreso">
                         {{$key->description}}
                       </div>
-                      <div class="buttons">
+                      <div class="buttons
+                      @if ($workSheetDetail[0]['statusWorksheet'] == 0)
+                      btn-hide
+                      @endif
+                      ">
                         <div class="dropdown show">
                           <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Acciones
@@ -51,7 +58,11 @@
                           title="Tarea terminada">
                           {{$key->description}}
                         </div>
-                        <div class="buttons">
+                        <div class="buttons
+                          @if ($workSheetDetail[0]['statusWorksheet'] == 0)
+                          btn-hide
+                          @endif
+                        ">
                           <div class="dropdown show">
                             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               Acciones

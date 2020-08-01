@@ -10961,3 +10961,7 @@ body {
   top: 50%;
 }
 
+.btn-hide {
+  display: none;
+}
+

@@ -20,6 +20,7 @@ class CreateClientDbsTable extends Migration
             $table->string('last_name');
             $table->string('address');
             $table->string('phone');
+            $table->double('total_balance', 11, 2)->default(0);
             $table->timestamps();
         });
     }

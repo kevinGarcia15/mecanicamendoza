@@ -52,6 +52,16 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-6 col-lg-3 my-3">
+            <div class="card">
+                <img class=" card-img-top" src="{{asset('img/balanceCustomer.svg')}}" alt="">
+                <div class="card-body">
+                    <h5 class="card-title">Clientes deudores</h5>
+                    <a href="{{route('balance.index')}}" class="btn btn-primary btn-block">Visitar</a>
+                </div>
+            </div>
+        </div>
       @elseif (Auth::user()->rol == 'Mecanico')
         <div class="col-6 col-lg-3 my-3">
           <div class="card">

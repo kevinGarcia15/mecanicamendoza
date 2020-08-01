@@ -13,6 +13,7 @@
     <!-- Scripts -->
     <script type="text/javascript" src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/materialize.min.js') }}" defer></script>
 
 
     <!-- Fonts -->
@@ -22,6 +23,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/materialize.min.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -95,6 +97,33 @@
         <main class="py-4">
             @include('partials/_session-status')
             @include('partials/_session-error')
+            @guest
+            @else
+              @if (Auth::user()->rol == 'Mecanico')
+                <div class="fixed-action-btn">
+                  <a href="{{route('mechanical.index')}}" class="btn-floating btn-large red">
+                    <img
+                    class="large material-icons"
+                    src="{{asset('img/my-task.png')}}"
+                    alt="task"
+                    style="margin-left: 15px; margin-top: 15px">
+                  </a>
+                </div>
+              @else
+                <div class="fixed-action-btn">
+                  <a
+                    href="{{route('client.index')}}"
+                    class="btn-floating btn-large red">
+                    <img
+                    class="large material-icons"
+                    src="{{asset('img/plus-white.png')}}"
+                    alt="plus"
+                    style="margin-left: 15px; margin-top: 15px">
+                  </a>
+                </div>
+              @endif
+
+            @endguest
 
             @yield('content')
         </main>

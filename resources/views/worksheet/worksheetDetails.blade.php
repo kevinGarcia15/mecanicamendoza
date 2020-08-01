@@ -45,15 +45,23 @@
           </a>
         </div>
         <div class="col-12 col-lg-7 mx-auto my-2">
-          <a
-            href="{{route('worksheet.index')}}"
-            class="btn btn-primary btn-block">
+          <button
+          type="button"
+          class="btn btn-primary btn-block
+          @if ($workSheetDetail[0]['statusWorksheet'] == 0)
+          btn-hide
+          @endif"
+          data-toggle="modal"
+          data-target="#freezWorksheet"
+          data-whatever="@mdo"
+          >
             Congelar
-          </a>
+          </button>
         </div>
       </div>
     </div>
 </div>
 @endsection
 @section('script')
+  <script type="text/javascript" src="{{ asset('js/worksheetDetail.js') }}" defer></script>
 @endsection

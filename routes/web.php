@@ -51,3 +51,6 @@ Route::resource('mechanical', 'MechanicalController')->middleware('auth');
 Route::resource('brand', 'BrandController')->middleware('auth');
 /*Color routes*/
 Route::resource('color', 'ColorController')->middleware('auth');
+/*balance customer*/
+Route::resource('balance', 'BalanceCustomerController')->middleware('auth','admin');
+Route::post('balance/payment', 'BalanceCustomerController@payment')->name('balance.payment')->middleware('auth','admin');

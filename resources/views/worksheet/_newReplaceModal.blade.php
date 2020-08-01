@@ -39,7 +39,7 @@
                           class="form-control"
                           id="quantity"
                           name="quantity[]"
-                          value="{{old('quantity[]')}}">
+                          value="1">
                           {!! $errors->first('quantity[]', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
 
                           <label

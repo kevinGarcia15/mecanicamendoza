@@ -139,7 +139,7 @@ class ClientController extends Controller
           }elseif ($flagForInsert == 2) {
             $code = DB::transaction(function()use($Client,$Vehicle,$Responsable,$uniqueCode){
               $vehicleCreated = vehicle_db::create($Vehicle);
-              $getVehicle_id = vehicle_db::select('vehicle_id')->where('plateNumber', '=', $Vehicle['plateNumber'])->first();
+//              $getVehicle_id = vehicle_db::select('vehicle_id')->where('plateNumber', '=', $Vehicle['plateNumber'])->first();
               //crear codigo unico para la hoja de trabajo
 //              $uniqueCode = strtoupper($Vehicle['plateNumber']).'-'.rand(100, 999);
 
@@ -147,7 +147,7 @@ class ClientController extends Controller
                 "code" => $uniqueCode,
                 "users_id"=> $Responsable['user_id'],
                 "client_id"=> $Client,
-                "vehicle_id"=> $getVehicle_id['vehicle_id'],
+                "vehicle_id"=> $vehicleCreated['vehicle_id'],
               ]);
               return $worksheetCreted;
             });
@@ -156,7 +156,7 @@ class ClientController extends Controller
           elseif ($flagForInsert == 3) {
             $code = DB::transaction(function()use($Client,$Vehicle,$Responsable,$uniqueCode){
               $clientCreated = client_db::create($Client);
-              $getClient_id = client_db::select('client_id')->where('dpi', '=', $Client['dpi'])->first();
+//              $getClient_id = client_db::select('client_id')->where('dpi', '=', $Client['dpi'])->first();
               // //crear codigo unico para la hoja de trabajo
               // $getPlateNumber = vehicle_db::select('plateNumber')->where('vehicle_id', '=', $Vehicle)->first();
               // $uniqueCode = strtoupper($getPlateNumber['plateNumber']).'-'.rand(100, 999);
@@ -164,7 +164,7 @@ class ClientController extends Controller
               $worksheetCreted = worksheet_db::create([
                 "code" => $uniqueCode,
                 "users_id"=> $Responsable['user_id'],
-                "client_id"=> $getClient_id['client_id'],
+                "client_id"=> $clientCreated['client_id'],
                 "vehicle_id"=> $Vehicle,
               ]);
               return $worksheetCreted;
@@ -176,15 +176,15 @@ class ClientController extends Controller
               $clientCreated = client_db::create($Client);
               $vehicleCreated = vehicle_db::create($Vehicle);
               //obtiene los id para ingresarlo a la tabla Worksheet
-              $getClient_id = client_db::select('client_id')->where('dpi', '=', $Client['dpi'])->first();
-              $getVehicle_id = vehicle_db::select('vehicle_id')->where('plateNumber', '=', $Vehicle['plateNumber'])->first();
+//              $getClient_id = client_db::select('client_id')->where('dpi', '=', $Client['dpi'])->first();
+//              $getVehicle_id = vehicle_db::select('vehicle_id')->where('plateNumber', '=', $Vehicle['plateNumber'])->first();
               // //crear codigo unico para la hoja de trabajo
               // $uniqueCode = strtoupper($Vehicle['plateNumber']).'-'.rand(100, 999);
               $worksheetCreted = worksheet_db::create([
                 "code" => $uniqueCode,
                 "users_id"=> $Responsable['user_id'],
-                "client_id"=> $getClient_id['client_id'],
-                "vehicle_id"=> $getVehicle_id['vehicle_id'],
+                "client_id"=> $clientCreated['client_id'],
+                "vehicle_id"=> $vehicleCreated['vehicle_id'],
               ]);
               return $worksheetCreted;
             });

@@ -5,7 +5,10 @@
         <div class="col-12 col-lg-6 mx-auto">
           <button
             type="button"
-            class="btn btn-primary btn-block"
+            class="btn btn-primary btn-block
+            @if ($workSheetDetail[0]['statusWorksheet'] == 0)
+            btn-hide
+            @endif"
             data-toggle="modal"
             data-target="#newReplace"
             data-whatever="@mdo"
@@ -40,7 +43,10 @@
                       @csrf
                       @method('DELETE')
                       <button
-                      class="btn btn-danger"
+                      class="btn btn-danger
+                      @if ($workSheetDetail[0]['statusWorksheet'] == 0)
+                      btn-hide
+                      @endif"
                       type="submit">
                       Eliminar
                     </button>
@@ -56,6 +62,7 @@
         </table>
     </div>
 </div>
+@include('worksheet/_freezeWorksheetModal')
 <div class="row">
     <div class="col-12 col-sm-10 col-lg-9">
         <div class="d-flex justify-content-end">

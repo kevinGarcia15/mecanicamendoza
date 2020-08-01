@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class vehicle_db extends Model
+class balanceCustumer_db extends Model
 {
   protected $guarded = [];
-  protected $primaryKey = 'vehicle_id';
+  protected $primaryKey = 'balance_custumer_id';
 }
