@@ -224,10 +224,14 @@ class ClientController extends Controller
       if ($request->ajax()) {
         if ($request->name) {
           $filter = client_db::where('first_name','LIKE',$request->name.'%')->get();
-          foreach ($filter as $key) {
-            $clientArray[$key->client_id] = $key->first_name.' '.$key->last_name;
+          if (count($filter) > 0) {
+            foreach ($filter as $key) {
+              $clientArray[$key->client_id] = $key->first_name.' '.$key->last_name;
+            }
+            return response()->json($clientArray);
+          }else {
+            return response('0');
           }
-          return response()->json($clientArray);
         }
         if ($request->cliente_id) {
           $client = client_db::findOrFail($request->cliente_id);

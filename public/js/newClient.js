@@ -135,17 +135,19 @@ $(document).ready(function() {
                     response[0]["line_name"] +
                     " " +
                     response[0]["color_name"]
-            ).show();
+            ).show().addClass('alert alert-success');
         }
         function lookSelectInput(response, name) {
             $("#" + name)
                 .hide()
                 .attr("disabled", "true");
+            $("."+name).hide()
         }
         function unlookSelectImput(name) {
             $("#" + name)
                 .show()
                 .removeAttr("disabled");
+            $("."+name).show()
         }
     });
 
@@ -191,16 +193,20 @@ $(document).ready(function() {
                     name: args //valores a pasar
                 },
                 function(response) {
-                    $("#FilterName").empty();
+                  $("#FilterName").empty();
+                  if (response != '0') {
                     $.each(response, function(index, value) {
-                        $("#FilterName").append(
-                            "<a href='#' onclick='setValuesClientInput(" +
-                                index +
-                                ")'>" +
-                                value +
-                                "</a><br>"
-                        );
+                      $("#FilterName").append(
+                        "<a href='#' onclick='setValuesClientInput(" +
+                        index +
+                        ")'>" +
+                        value +
+                        "</a><br>"
+                      );
                     });
+                  }else {
+                    $("#FilterName").text('No hay coincidencias');
+                  }
                 }
             );
         } else {

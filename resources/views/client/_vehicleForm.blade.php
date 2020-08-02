@@ -17,7 +17,7 @@
                   id="plateNumber">
                   {!! $errors->first('plateNumber', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
 <!--Marca---------------------------------------------------------------------->
-                  <div class="row">
+                  <div class="row brand_name">
                       <div class="col-8 col-sm-8 col-lg-8">
                           <select
                             class="form-control my-2
@@ -46,7 +46,7 @@
                   </div>
 
 <!--Line---------------------------------------------------------------------->
-                <div class="row">
+                <div class="row line_name">
                     <div class="col-8 col-sm-8 col-lg-8">
                       <select
                       class="form-control my-2 {{$errors->first('line_id','is-invalid')}}"
@@ -68,7 +68,7 @@
                     </div>
                 </div>
 <!--Color---------------------------------------------------------------------->
-                <div class="row">
+                <div class="row color_name">
                     <div class="col-8 col-sm-8 col-lg-8">
                         <select
                           class="form-control my-2

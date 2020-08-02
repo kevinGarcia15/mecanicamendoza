@@ -4,9 +4,9 @@
 <div class="container">
     <div class="row">
         <div class="col-12 col-lg-6">
-            <img class="img-fluid mb-4" src="./img/home.svg" alt="Home">
+            <img class="img-fluid mb-4 rounded" src="{{asset('img/logoMecanicaMendoza.jpeg')}}" alt="Home">
         </div>
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6 text-center">
             <h1 class="display-5 text-primary">Bienvenido!!</h1>
             <p class="lead text-secondary">Puedes elegir lo que deseas
               hacer aquí abajo.

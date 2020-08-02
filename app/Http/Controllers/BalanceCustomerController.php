@@ -15,8 +15,8 @@ class BalanceCustomerController extends Controller
     public function index()
     {
       $balanceCustomer = client_db::
-       where('total_balance', '>', 0)
-       ->orderBy('total_balance', 'DESC')->get();
+//       where('total_balance', '>', 0)
+       orderBy('total_balance', 'DESC')->get();
        return view('balanceCustomer/index', compact('balanceCustomer'));
     }
 
