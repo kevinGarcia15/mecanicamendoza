@@ -15,8 +15,7 @@ class BalanceCustomerController extends Controller
     public function index()
     {
       $balanceCustomer = client_db::
-//       where('total_balance', '>', 0)
-       orderBy('total_balance', 'DESC')->get();
+       orderBy('total_balance', 'DESC')->paginate(10);
        return view('balanceCustomer/index', compact('balanceCustomer'));
     }
 
@@ -96,6 +95,13 @@ class BalanceCustomerController extends Controller
 
       return view('balanceCustomer/balance_detail', compact('listBalanceWorksheet','abonos'));
   //   return $listBalanceWorksheet;
+    }
+
+    public function search(Request $request)
+    {
+      $clientName = $request['arg'];
+      $balanceCustomer = client_db::clientName($clientName)->paginate(10);
+      return view('balanceCustomer/index',compact('balanceCustomer'));
     }
 
     /**

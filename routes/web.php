@@ -55,3 +55,4 @@ Route::resource('color', 'ColorController')->middleware('auth');
 /*balance customer*/
 Route::resource('balance', 'BalanceCustomerController')->middleware('auth','admin');
 Route::post('balance/payment', 'BalanceCustomerController@payment')->name('balance.payment')->middleware('auth','admin');
+Route::get('balanceCustomer/search', 'BalanceCustomerController@search')->name('balanceCustomer.search')->middleware('auth','admin');
