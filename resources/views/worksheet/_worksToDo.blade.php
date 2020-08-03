@@ -1,3 +1,10 @@
+@php
+  if ($workSheetDetail[0]['statusWorksheet'] == 0) {
+    $btnHiden = 'btn-hide';
+  }else {
+    $btnHiden = '';
+  }
+@endphp
 <div class="col-12 col-sm-10 col-lg-9 mx-auto">
     <h2 class="display-5 text-primary">Tareas creadas</h2>
 </div>
@@ -8,10 +15,7 @@
           <div class="col-12 col-lg-6 mx-auto">
             <button
               type="button"
-              class="btn btn-primary btn-block
-              @if ($workSheetDetail[0]['statusWorksheet'] == 0)
-              btn-hide
-              @endif"
+              class="btn btn-primary btn-block {{$btnHiden}}"
               data-toggle="modal"
               data-target="#newTask"
               data-whatever="@mdo"
@@ -33,18 +37,21 @@
                         title="Tarea en progreso">
                         {{$key->description}}
                       </div>
-                      <div class="buttons
-                      @if ($workSheetDetail[0]['statusWorksheet'] == 0)
-                      btn-hide
-                      @endif
-                      ">
+                      <div class="buttons {{$btnHiden}}">
                         <div class="dropdown show">
-                          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <a
+                            class="btn btn-secondary dropdown-toggle"
+                            href=""
+                            role="button"
+                            id="dropdownMenuLink"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
                             Acciones
                           </a>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            @include('worksheet/_changeStatusWork', ['value' => '0', 'btnText' => 'Finalizar tarea'])
                             @include('worksheet/_deleteWork')
-                            @include('worksheet/_statusWork', ['value' => '0', 'btnText' => 'Finalizar tarea'])
                           </div>
                         </div>
                       </div>
@@ -58,18 +65,21 @@
                           title="Tarea terminada">
                           {{$key->description}}
                         </div>
-                        <div class="buttons
-                          @if ($workSheetDetail[0]['statusWorksheet'] == 0)
-                          btn-hide
-                          @endif
-                        ">
+                        <div class="buttons {{$btnHiden}}">
                           <div class="dropdown show">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a
+                              class="btn btn-secondary dropdown-toggle"
+                              href="#"
+                              role="button"
+                              id="dropdownMenuLink"
+                              data-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false">
                               Acciones
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                              @include('worksheet/_changeStatusWork', ['value' => '1', 'btnText' => 'Cambiar estado'])
                               @include('worksheet/_deleteWork')
-                              @include('worksheet/_statusWork', ['value' => '1', 'btnText' => 'Cambiar estado'])
                             </div>
                           </div>
                     </li>

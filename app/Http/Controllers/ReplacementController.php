@@ -80,7 +80,13 @@ class ReplacementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      replacement_db::where('remplacement_id', $id)
+       ->update(['quantity' => $request['quantity'],
+                 'description' => $request['description'],
+                 'price' => $request['price']
+                ]);
+
+      return back()->with('status','el elemento fué actualizado exitosamente');
     }
 
     /**
