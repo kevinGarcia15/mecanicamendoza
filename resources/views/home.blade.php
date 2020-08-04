@@ -38,7 +38,7 @@
             <div class="card">
                 <img class=" card-img-top" src="./img/works_history.svg" alt="">
                 <div class="card-body">
-                    <h5 class="card-title">Historial de vehiculos</h5>
+                    <h5 class="card-title">Historial de vehículos</h5>
                     <a href="{{route('vehicle.history')}}" class="btn btn-primary btn-block">Visitar</a>
                 </div>
             </div>

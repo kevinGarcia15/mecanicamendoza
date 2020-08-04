@@ -8,7 +8,15 @@
             <div class="form-group">
                 <ul class="list-group">
                 @forelse ($worksCreated as $key)
-                    <li class="list-group-item">{{$key['description']}}</li>
+                    <li class="list-group-item d-flex justify-content-between">{{$key['description']}}
+                      <form
+                        action="{{route('worktodo.destroy', $key->worktodo_id)}}"
+                        method="post">
+                          @csrf
+                          @method('DELETE')
+                        <button class="btn btn-danger">Eliminar</button>
+                      </form>
+                    </li>
                 </ul>
                 @empty
                   <li class="list-group-item">Lista vacia</li>

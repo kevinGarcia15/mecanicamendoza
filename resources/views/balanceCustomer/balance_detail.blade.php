@@ -32,7 +32,9 @@
         <tbody>
           @forelse ($listBalanceWorksheet as $key)
             <tr>
-              <td>{{$key->created_at->format('d/m/y')}}</td>
+              <td>{{$key->balanceCreated_at->format('d/m/y')}}</td>
+              <!--si el campo Active de activo una cuenta en contablilidad  es 0
+              significa que la transaccion es de tipo abono -------------->
               @if ($key->active == 0)
                 <td>Abono</td>
               @else

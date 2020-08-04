@@ -17,14 +17,18 @@
     }
 
     .imageHead {
-        width: 200px;
-        margin-left: 40%;
+        width: 300px;
+        margin-left: 30%;
+        border-radius: 10px;
     }
 
     table {
         width: 100%;
+        border-collapse: collapse;
     }
-
+    caption{
+      caption-side: top;
+    }
     .userAndCarInfo {
         display: flex;
         margin: 0 0 0 0;
@@ -61,8 +65,7 @@
     </div>
     <div class="header">
         <div class="img">
-            <h1>MECANICA MENDOZA</h1>
-            <!--           <img class="imageHead" src="" alt="logo">-->
+            <img class="imageHead" src="{{asset('img/logoMecanicaMendoza.jpeg')}}" alt="logo">
         </div>
     </div><br><br>
     <div class="userAndCarInfo">
@@ -117,7 +120,7 @@
     </div>
 
     <div class="works">
-        <table border="1">
+        <table border="2">
             <thead>
                 <tr>
                     <th scope="col">Trabajos realizados</th>
@@ -135,15 +138,15 @@
             @endforelse
         </table>
     </div><br>
-    <hr>
 
     <div class="remplacement">
-        <table border="1">
+        <table border="2">
+          <caption><strong>Repuestos y Lubricantes</strong></caption>
             <thead>
                 <tr>
-                    <th scope="col">Cantidad</th>
+                    <th style="width:15%">Cantidad</th>
                     <th scope="col">Descripción</th>
-                    <th scope="col">Sub-Total</th>
+                    <th style="width:15%">Sub-Total</th>
                 </tr>
             </thead>
             <tbody>

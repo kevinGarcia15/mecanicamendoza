@@ -29,10 +29,19 @@
       </form>
         @if ($vehicleInfo[0]['users_id'])
           <div class="bg-white py-3 px-4 my-3 shadow rounded">
+            <div class="col-12 col-lg-6 my-2 mx-auto">
+              <a
+              href="{{route('worksheet.show', $vehicleInfo[0]['worksheet_id'])}}"
+              class="btn btn-primary btn-block"
+              type="button"
+              name="button">
+              Ir a la hoja de trabajo
+            </a>
+          </div>
           <div class="col-12 col-lg-6 my-2 mx-auto">
               <a
                 href="{{route('home')}}"
-                class="btn btn-info btn-block"
+                class="btn btn-outline-primary btn-block"
                 type="button"
                 name="button">
                 Terminar

@@ -7,11 +7,11 @@
             <img class="img-fluid mb-4" src="./img/userManagment.svg" alt="Home">
         </div>
         <div class="col-12 col-lg-6">
-            <h1 class="display-5 text-primary">Gestion de usuarios</h1>
+            <h1 class="display-5 text-primary">Gestión de usuarios</h1>
             <p class="lead text-secondary">Puedes activar o suspender a uno o
               varios usuarios para tener un control de quienes acceden al sistema.
             </p>
-            <p class="lead text-secondary">Puedes ingresar nuevos usuarios clickando el boton "Nuevo usuario"</p>
+            <p class="lead text-secondary">Puedes ingresar nuevos usuarios clicando el botón "Nuevo usuario"</p>
             <a class="btn btn-lg btn-primary" href="{{ route('register') }}">Nuevo usuario</a>
         </div>
     </div>

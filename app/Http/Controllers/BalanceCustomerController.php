@@ -86,7 +86,7 @@ class BalanceCustomerController extends Controller
       $listBalanceWorksheet = balanceCustumer_db::
        join('client_dbs', 'balance_custumer_dbs.client_id', '=', 'client_dbs.client_id')
        ->where('balance_custumer_dbs.client_id', '=', $id)
-       ->orderBy('balance_custumer_dbs.created_at', 'ASC')->get();
+       ->orderBy('balance_custumer_dbs.balanceCreated_at', 'ASC')->get();
 
       return view('balanceCustomer/balance_detail', compact('listBalanceWorksheet','abonos'));
   //   return $listBalanceWorksheet;
