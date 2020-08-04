@@ -1,5 +1,11 @@
 @extends('layouts.app')
-
+@section('script')
+  <!--datatables-->
+  <link rel="stylesheet" href="{{asset('css/dataTables.bootstrap4.css')}}">
+  <link rel="stylesheet" href="{{asset('css/dataTables.bootstrap4.min.css')}}">
+  <script src="{{asset('js/datatables.js')}}" defer charset="utf-8"></script>
+  <script src="{{asset('js/datatables.min.js')}}" defer charset="utf-8"></script>
+@endsection
 @section('content')
 <div class="container">
     <div class="row">
@@ -7,13 +13,13 @@
             <img class="img-fluid mb-4" src="{{ asset('img/worksheets_list.svg') }}" alt="Home">
         </div>
         <div class="col-12 col-lg-6">
-            <h1 class="display-5 text-primary">Hojas de trabajo</h1>
-            <p class="lead text-secondary">Aqui se listaran todas las hojas de trabajo ordenado en base al ultimo agragado.
+            <h1 class="display-5 text-primary">Historial de vehículos</h1>
+            <p class="lead text-secondary">Aquí se listarán todos los vehículos.
+              Puedes ver el detalle de los trabajos que se le han realizado pulsando “Historial”
             </p>
-            <p class="lead text-secondary">Puede ver el detalle de las hojas de trabajo pulsando en "Detalles"</p>
         </div>
     </div>
-    <table class="table">
+    <table class="table" id="example">
         <thead>
             <tr>
                 <th scope="col">Placa</th>
@@ -44,5 +50,26 @@
 </div>
 
 @endsection
-@section('script')
+@section('scriptFooter')
+  <script type="text/javascript">
+  $(document).ready(function() {
+      $('#example').DataTable({
+        "language": {
+    					"lengthMenu": "_MENU_",
+    					"zeroRecords": "Ningún registro",
+    					"searchPlaceholder": "Buscar",
+    					"info": "_TOTAL_ registro(s)",
+    					"infoEmpty": "Ningun registro",
+    					"infoFiltered": "(Busqueda en _MAX_ registros)",
+    					"search": "",
+    					"paginate": {
+    							"first": "Primero",
+    							"last": "Último",
+    							"next": "Siguiente",
+    							"previous": "Anterior"
+    					},
+    			},
+      });
+  });
+  </script>
 @endsection

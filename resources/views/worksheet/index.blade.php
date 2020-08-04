@@ -1,5 +1,11 @@
 @extends('layouts.app')
-
+@section('script')
+  <!--datatables-->
+  <link rel="stylesheet" href="{{asset('css/dataTables.bootstrap4.css')}}">
+  <link rel="stylesheet" href="{{asset('css/dataTables.bootstrap4.min.css')}}">
+  <script src="{{asset('js/datatables.js')}}" defer charset="utf-8"></script>
+  <script src="{{asset('js/datatables.min.js')}}" defer charset="utf-8"></script>
+@endsection
 @section('content')
 <div class="container">
     <div class="row">
@@ -13,7 +19,7 @@
             <p class="lead text-secondary">Puede ver el detalle de las hojas de trabajo pulsando en "Detalles"</p>
         </div>
     </div>
-    <table class="table">
+    <table class="table" id="worksheetTable">
         <thead>
             <tr>
                 <th scope="col">Codigo</th>
@@ -78,9 +84,29 @@
             @endforelse
         </tbody>
     </table>
-    {{$listworksheet->links()}}
 </div>
 
 @endsection
-@section('script')
+@section('scriptFooter')
+  <script type="text/javascript">
+  $(document).ready(function() {
+      $('#worksheetTable').DataTable({
+        "language": {
+    					"lengthMenu": "_MENU_",
+    					"zeroRecords": "Ningún registro",
+    					"searchPlaceholder": "Buscar",
+    					"info": "_TOTAL_ registro(s)",
+    					"infoEmpty": "Ningun registro",
+    					"infoFiltered": "(Busqueda en _MAX_ registros)",
+    					"search": "",
+    					"paginate": {
+    							"first": "Primero",
+    							"last": "Último",
+    							"next": "Siguiente",
+    							"previous": "Anterior"
+    					},
+    			},
+      });
+  });
+  </script>
 @endsection

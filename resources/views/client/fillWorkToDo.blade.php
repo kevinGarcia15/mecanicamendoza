@@ -7,12 +7,14 @@
             <img class="img-fluid mb-4" src="{{ asset('img/works_to_do.svg') }}" alt="Home">
         </div>
         <div class="col-12 col-lg-6">
-            <h1 class="display-5 text-primary">Tareas a relizar</h1>
-            <p class="lead text-secondary">Ingrese las tareas a relizar para el vehiculo No. placa
-                <strong>{{$vehicleInfo[0]['plateNumber']}}</strong>.
+            <h1 class="display-5 text-primary">Tareas a realizar</h1>
+            <p class="lead text-secondary">Ingrese las tareas a realizar para el vehículo Placa
+                <strong>{{strtoupper($vehicleInfo[0]['plateNumber'])}}</strong>.
             </p>
-            <p class="lead text-secondary">Puede
-                agregar mas filas pulsando el boton "+". Cunado finalice presione el boton "Guardar".</p>
+            <p class="lead text-secondary">Puede agregar más filas pulsando el
+              botón "+". Cuando finalice presione el botón "Agregar tarea(s)".
+            </p>
+            <p class="lead text-secondary">Recuerde asignar a un mecánico responsable para esta hoja de trabajo </p>
         </div>
     </div>
     <div class="bg-white py-3 px-4 my-3 shadow rounded">

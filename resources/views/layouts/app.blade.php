@@ -24,6 +24,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/materialize.min.css') }}" rel="stylesheet">
+    @yield('script')
 </head>
 
 <body>
@@ -168,7 +169,7 @@
 
     <footer class="page-footer font-small blue pt-4">
   </footer>
-  @yield('script')
+  @yield('scriptFooter')
 </body>
 
 </html>

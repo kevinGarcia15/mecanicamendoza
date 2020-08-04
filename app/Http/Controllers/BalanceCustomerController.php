@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\{balanceCustumer_db,worksheet_db,client_db,payment_db};
+use App\{balanceCustumer_db,
+          worksheet_db,
+          client_db,payment_db,
+          work_to_do_db,
+          replacement_db};
 class BalanceCustomerController extends Controller
 {
     /**
@@ -37,6 +41,16 @@ class BalanceCustomerController extends Controller
      */
     public function store(Request $request)
     {
+      //valida si existe alguna tarea o no y si existe algun repuesto o no.
+      $EmptyWorkToDo = work_to_do_db::where('worksheet_id', $request['worksheet_id'])->get();
+      $EmptyReplacement = replacement_db::where('worksheet_id', $request['worksheet_id'])->get();
+      if (count($EmptyWorkToDo) <= 0) {
+        return back()->with('error', 'Debe ingresar al menos una tarea');
+      }
+      if (count($EmptyReplacement) <= 0) {
+        return back()->with('error', 'Debe ingresar al menos un repuesto o lubricante');
+      }
+
       DB::transaction(function()use($request){
         $balance = client_db::where('client_id', $request['client_id'])->get('total_balance');
         $newBalance = ($balance[0]['total_balance'] + $request['active'])- $request['pasive'];
@@ -87,16 +101,12 @@ class BalanceCustomerController extends Controller
        join('client_dbs', 'balance_custumer_dbs.client_id', '=', 'client_dbs.client_id')
        ->where('balance_custumer_dbs.client_id', '=', $id)
        ->orderBy('balance_custumer_dbs.balanceCreated_at', 'ASC')->get();
+       if (count($listBalanceWorksheet) <= 0) {
+         return back()->with('error', 'No hay ninguna cuenta asociada a él');
+       }
 
       return view('balanceCustomer/balance_detail', compact('listBalanceWorksheet','abonos'));
   //   return $listBalanceWorksheet;
-    }
-
-    public function search(Request $request)
-    {
-      $clientName = $request['arg'];
-      $balanceCustomer = client_db::clientName($clientName)->paginate(10);
-      return view('balanceCustomer/index',compact('balanceCustomer'));
     }
 
     /**

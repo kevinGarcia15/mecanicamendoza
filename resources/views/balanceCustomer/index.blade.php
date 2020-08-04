@@ -1,5 +1,11 @@
 @extends('layouts.app')
-
+@section('script')
+  <!--datatables-->
+  <link rel="stylesheet" href="{{asset('css/dataTables.bootstrap4.css')}}">
+  <link rel="stylesheet" href="{{asset('css/dataTables.bootstrap4.min.css')}}">
+  <script src="{{asset('js/datatables.js')}}" defer charset="utf-8"></script>
+  <script src="{{asset('js/datatables.min.js')}}" defer charset="utf-8"></script>
+@endsection
 @section('content')
 <div class="container">
     <div class="row">
@@ -13,20 +19,9 @@
             <p class="lead text-secondary">Puede ver el detalle pulsando en "Detalles"</p>
         </div>
     </div>
-    <div class="row">
-      <div class="col-12 col-lg-4">
-        <form class="form-inline" action="{{route('balanceCustomer.search')}}">
-          <div class="col-9 col-lg-9">
-            <input class="form-control mr-sm-2" type="text" name="arg" placeholder="Nombre del cliente">
-          </div>
-          <div class="col-3 col-lg-3">
-            <button class="btn btn-outline-success" type="submit">Buscar</button>
-          </div>
-        </form>
-      </div>
-    </div>
+
     <br>
-    <table class="table" id="customer">
+    <table class="table" id="balanceCustomerTable">
         <thead>
             <tr>
                 <th scope="col">Nombre</th>
@@ -61,4 +56,27 @@
     </table>
     {{$balanceCustomer->links()}}
 </div>
+@endsection
+@section('scriptFooter')
+  <script type="text/javascript">
+  $(document).ready(function() {
+      $('#balanceCustomerTable').DataTable({
+        "language": {
+    					"lengthMenu": "_MENU_",
+    					"zeroRecords": "Ningún registro",
+    					"searchPlaceholder": "Buscar",
+    					"info": "_TOTAL_ registro(s)",
+    					"infoEmpty": "Ningun registro",
+    					"infoFiltered": "(Busqueda en _MAX_ registros)",
+    					"search": "",
+    					"paginate": {
+    							"first": "Primero",
+    							"last": "Último",
+    							"next": "Siguiente",
+    							"previous": "Anterior"
+    					},
+    			},
+      });
+  });
+  </script>
 @endsection

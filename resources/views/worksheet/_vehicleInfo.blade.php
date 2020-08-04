@@ -9,7 +9,7 @@
         <div class="d-flex justify-content-between">
             <div class="col-6">
               @php
-                $titlesVehicle = ['No. placas', 'Modelo','Color','Mecanico responsable'];
+                $titlesVehicle = ['No. placas', 'Modelo','Color','Mecánico responsable'];
               @endphp
               @for ($i=0; $i < 4; $i++)
                 <span><strong>{{$titlesVehicle[$i]}}</strong></span><br><br>

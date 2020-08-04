@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-12 col-sm-10 col-lg-9 mx-auto">
-        <h2 class="display-5 text-primary">Repuestos y lubricantes</h2>
+        <h2 class="display-5 text-primary">Repuestos y Lubricantes</h2>
         <hr>
         <div class="col-12 col-lg-6 mx-auto">
           <button

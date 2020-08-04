@@ -9,8 +9,8 @@
         <div class="col-12 col-lg-6">
             <h1 class="display-5 text-primary">Nuevo ingreso</h1>
             <p class="lead text-secondary">Llene el formulario en la parte de abajo para
-                crear una nueva "Hoja de Trabajo" con sus respectivas tareas a realizar y
-                el mecánico responsable.
+                crear una nueva "Hoja de Trabajo", luego presione el botón "Siguiente" para
+                crear las tareas.
             </p>
         </div>
     </div>

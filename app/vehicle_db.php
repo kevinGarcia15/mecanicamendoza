@@ -11,7 +11,7 @@ class vehicle_db extends Model
 
   public function scopePlateNumber($query, $plateNumber){
     if ($plateNumber) {
-      return $query->where('plateNumber', 'LIKE', "%$plateNumber%"); 
+      return $query->where('plateNumber', 'LIKE', "%$plateNumber%");
     }
   }
 }
