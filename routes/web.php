@@ -38,6 +38,8 @@ Route::get('vehicle', 'VehicleController@show')->name('vehicle.show')->middlewar
 Route::get('vehicle/search', 'VehicleController@search')->name('vehicle.search')->middleware('auth','admin');
 Route::get('vehicle/history', 'VehicleController@index')->name('vehicle.history')->middleware('auth','admin');
 Route::get('vehicle/history/{vehicle}', 'VehicleController@vehicleHistory')->name('vehicle.ShowHistory')->middleware('auth','admin');
+Route::get('vehicle/{vehicle}/edit', 'VehicleController@edit')->name('vehicle.edit')->middleware('auth','admin');
+Route::patch('vehicle/{vehicle}', 'VehicleController@update')->name('vehicle.update')->middleware('auth','master');
 
 /*Work to do Routes*/
 Route::resource('worktodo', 'WorkToDoController')->middleware('auth');

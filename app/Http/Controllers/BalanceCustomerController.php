@@ -19,7 +19,7 @@ class BalanceCustomerController extends Controller
     public function index()
     {
       $balanceCustomer = client_db::
-       orderBy('total_balance', 'DESC')->paginate(10);
+       orderBy('total_balance', 'DESC')->get();
        return view('balanceCustomer/index', compact('balanceCustomer'));
     }
 

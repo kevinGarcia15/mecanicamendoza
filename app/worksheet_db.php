@@ -10,4 +10,5 @@ class worksheet_db extends Model
     protected $guarded = [];
     protected $primaryKey = 'worksheet_id';
     const UPDATED_AT = 'workSheetUpdated_at';
+    const CREATED_AT = 'workSheetCreated_at';
 }

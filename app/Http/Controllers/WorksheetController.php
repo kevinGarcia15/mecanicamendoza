@@ -21,8 +21,8 @@ class WorksheetController extends Controller
        ->join('car_color_dbs', 'vehicle_dbs.color_id', '=', 'car_color_dbs.color_id')
        ->join('car_line_dbs', 'vehicle_dbs.line_id', '=', 'car_line_dbs.line_id')
        ->join('brand_car_dbs', 'car_line_dbs.brand_car_id', '=', 'brand_car_dbs.brand_id')
-       ->where('statusWorksheet', '=', 1)
-       ->orderBy('worksheet_dbs.created_at', 'DESC')->paginate(10);
+//       ->where('statusWorksheet', '=', 1)
+       ->orderBy('worksheet_dbs.workSheetCreated_at', 'DESC')->get();
 
       return view('worksheet/index', compact('listworksheet','work_to_do'));
     }

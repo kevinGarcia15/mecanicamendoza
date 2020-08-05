@@ -37,7 +37,10 @@
                     .$key['color_name']}}
                 </td>
                 <td>{{$key['model']}}</td>
-                <td> <a href="{{route('vehicle.ShowHistory', $key['vehicle_id'])}}">Historial</a> </td>
+                <td class="d-flex">
+                  <a class="btn btn-primary mx-1" href="{{route('vehicle.ShowHistory', $key->vehicle_id)}}">Historial</a>
+                  <a class="btn btn-outline-info" href="{{route('vehicle.edit', $key->vehicle_id )}}">Editar</a>
+                </td>
             </tr>
             @empty
             <tr>
@@ -46,7 +49,6 @@
             @endforelse
         </tbody>
     </table>
-    {{$vehicleList->links()}}
 </div>
 
 @endsection

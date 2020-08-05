@@ -22,20 +22,32 @@
     <table class="table" id="worksheetTable">
         <thead>
             <tr>
+                <th scope="col">Ingresó</th>
                 <th scope="col">Codigo</th>
                 <th scope="col">Vehiculo</th>
+                <th scope="col">Estado</th>
                 <th scope="col">Progreso</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
             @forelse ($listworksheet as $key)
+              @php
+                if ($key['statusWorksheet'] == 0) {
+                  $status = 'Congelado';
+                }else {
+                  $status = 'Activo';
+                }
+              @endphp
             <tr>
+                <th scope="row">{{$key['workSheetCreated_at']->format('d/m/y')}}</th>
                 <th scope="row">{{$key['code']}}</th>
                 <td>
                     {{$key['brand_name'].' '.$key['line_name'].' '
                     .$key['color_name'].' Placa '.strtoupper($key['plateNumber'])}}
                 </td>
+                <th scope="row">{{$status}}</th>
+
                 <td>
                     <!--calculos para obtener el porcentaje de tareas terminadas------------------->
                     @php
@@ -106,6 +118,7 @@
     							"previous": "Anterior"
     					},
     			},
+        "order": [[ 0, 'desc' ]],
       });
   });
   </script>

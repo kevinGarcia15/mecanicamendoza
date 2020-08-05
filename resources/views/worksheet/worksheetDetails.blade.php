@@ -25,7 +25,10 @@
     </div>
     <div class="bg-white py-3 px-4 my-3 shadow rounded">
       <span>Código de hoja de trabajo: <strong>{{$workSheetDetail[0]['code']}}</strong></span><br>
-      <p class="text-black-50">fecha de ingreso {{$dateCreatedWorksheet[0]['created_at']->format('d/m/y')}}</p>
+      <p class="text-black-50 my-0">fecha de ingreso {{$dateCreatedWorksheet[0]['workSheetCreated_at']->format('d/m/y')}}</p>
+      @if ($workSheetDetail[0]['statusWorksheet'] == 0)
+      <p class="text-black-50">fecha de egreso {{$dateCreatedWorksheet[0]['workSheetUpdated_at']->format('d/m/y')}}</p>
+      @endif
     </div>
     <div class="bg-white py-3 px-4 my-3 shadow rounded">
       @include('worksheet/_clientInfo')

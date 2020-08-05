@@ -247,7 +247,9 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        //
+      return view('client/editClient', [
+        'client' => client_db::findOrFail($id)
+      ]);
     }
 
     /**
@@ -259,7 +261,10 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $UpdateClient = $this->clientValidate();
+      client_db::where('client_id', $id)
+      ->update($UpdateClient);
+      return redirect()->route('balance.index')->with('status','El cliente fué actualizado exitosamente');
     }
 
     /**

@@ -1,8 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\{vehicle_db,worksheet_db,work_to_do_db};
+use App\{vehicle_db,
+         worksheet_db,
+         work_to_do_db,
+         car_color_db,
+         brand_car_db,
+         car_line_db};
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VehicleController extends Controller
 {
@@ -12,7 +18,7 @@ class VehicleController extends Controller
      join('car_color_dbs', 'vehicle_dbs.color_id', '=', 'car_color_dbs.color_id')
      ->join('car_line_dbs', 'vehicle_dbs.line_id', '=', 'car_line_dbs.line_id')
      ->join('brand_car_dbs', 'car_line_dbs.brand_car_id', '=', 'brand_car_dbs.brand_id')
-     ->orderBy('brand_car_dbs.brand_name', 'ASC')->paginate(10);
+     ->orderBy('brand_car_dbs.brand_name', 'ASC')->get();
     return view('vehicle/index', compact('vehicleList'));
   }
 
@@ -54,5 +60,33 @@ class VehicleController extends Controller
            ->join('brand_car_dbs', 'car_line_dbs.brand_car_id', '=', 'brand_car_dbs.brand_id')
            ->plateNumber($plateNumber)->get();
     return view('vehicle/search',compact('plateFind'));
+  }
+
+  public function edit($id)
+  {
+    $brand = brand_car_db::get();
+    $line = car_line_db::get();
+    $color = car_color_db::get();
+    $vehicle = vehicle_db::
+    join('car_line_dbs', 'vehicle_dbs.line_id', '=', 'car_line_dbs.line_id')
+    ->join('brand_car_dbs', 'car_line_dbs.brand_car_id', '=', 'brand_car_dbs.brand_id')
+    ->findOrFail($id);
+    return view('vehicle/editVehicle', compact('brand','color','vehicle','line'));
+  }
+
+  public function update(Request $request, $id)
+  {
+    $updateVehicle = request()->validate([
+      'plateNumber'=>'required',
+      'line_id'=>'required',
+      'color_id'=>'required',
+      'model' => 'required',
+    ]);
+    DB::transaction(function()use($updateVehicle,$id){
+      vehicle_db::where('vehicle_id', $id)
+      ->update($updateVehicle);
+    });
+    return redirect()->route('vehicle.history')
+          ->with('status','El vehículo con placa '.strtoupper($updateVehicle['plateNumber']).' fué actualizado exitosamente');
   }
 }

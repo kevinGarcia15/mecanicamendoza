@@ -21,31 +21,35 @@
     </div>
 
     <br>
-    <table class="table" id="balanceCustomerTable">
+    <div class="table-responsive">
+      <table class="table" id="balanceCustomerTable">
         <thead>
-            <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Telefono</th>
-                <th scope="col">Direccion</th>
-                <th scope="col">Deuda</th>
-                <th scope="col">Acciones</th>
-            </tr>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Telefono</th>
+            <th scope="col">Direccion</th>
+            <th scope="col">Deuda (GTQ)</th>
+            <th scope="col">Acciones</th>
+          </tr>
         </thead>
         <tbody id="items">
           @forelse ($balanceCustomer as $key)
             @php
-              if ($key->total_balance > 0) {
-                $debtorCustomer = 'table-danger';
-              }else {
-                $debtorCustomer = '';
-              }
+            if ($key->total_balance > 0) {
+              $debtorCustomer = 'text-danger';
+            }else {
+              $debtorCustomer = '';
+            }
             @endphp
-            <tr class="{{$debtorCustomer}}">
+            <tr>
               <th>{{$key->first_name.' '.$key->last_name}}</th>
               <td>{{$key->phone}}</td>
               <td>{{$key->address}}</td>
-              <td>{{'Q.'.$key->total_balance}}</td>
-              <td> <a href="{{route('balance.show', $key->client_id )}}">Detalles</a></td>
+              <td class="{{$debtorCustomer}}">{{$key->total_balance}}</td>
+              <td class="d-flex">
+                <a class="btn btn-primary mx-1" href="{{route('balance.show', $key->client_id )}}">Detalles</a>
+                <a class="btn btn-outline-info" href="{{route('client.edit', $key->client_id )}}">Editar</a>
+              </td>
             </tr>
           @empty
             <tr>
@@ -53,8 +57,9 @@
             </tr>
           @endforelse
         </tbody>
-    </table>
-    {{$balanceCustomer->links()}}
+      </table>
+
+    </div>
 </div>
 @endsection
 @section('scriptFooter')
@@ -76,6 +81,7 @@
     							"previous": "Anterior"
     					},
     			},
+          "order": [[ 3, 'desc' ]],
       });
   });
   </script>
