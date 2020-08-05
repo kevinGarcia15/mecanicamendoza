@@ -19,7 +19,7 @@ class ClientController extends Controller
     public function index()
     {
       $brand = brand_car_db::get();
-      $color = car_color_db::get();
+      $color = car_color_db::orderBy('color_name', 'ASC')->get();
       $responsable = User::get();
       return view('client/newClient', compact('brand','color','responsable'));
     }

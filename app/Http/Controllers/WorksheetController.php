@@ -134,8 +134,9 @@ class WorksheetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(worksheet_db $worksheet)
     {
-        //
+      $worksheet->delete();
+      return back()->with('status','Hoja de trabajo fué eliminado exitosamente');//nombre de la ruta
     }
 }

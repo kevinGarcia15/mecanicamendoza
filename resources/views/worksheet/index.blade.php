@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('script')
+  <script src="{{asset('js/sweetalert2.min.js')}}"></script>
+  <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}" id="theme-styles">
   <!--datatables-->
   <link rel="stylesheet" href="{{asset('css/dataTables.bootstrap4.css')}}">
   <link rel="stylesheet" href="{{asset('css/dataTables.bootstrap4.min.css')}}">
@@ -19,7 +21,8 @@
             <p class="lead text-secondary">Puede ver el detalle de las hojas de trabajo pulsando en "Detalles"</p>
         </div>
     </div>
-    <table class="table" id="worksheetTable">
+    <div class="table-responsive">
+      <table class="table" id="worksheetTable">
         <thead>
             <tr>
                 <th scope="col">Ingresó</th>
@@ -87,7 +90,17 @@
                     {{round($percent).'%'}}
                     <!----------------------------------------------------------------------------->
                 </td>
-                <td> <a href="{{route('worksheet.show', $key['worksheet_id'])}}">Detalles</a> </td>
+                <td>
+                  <div class="d-flex">
+                    <a class="btn btn-primary mx-1" href="{{route('worksheet.show', $key['worksheet_id'])}}">Detalles</a>
+                    @if ($key['statusWorksheet'] == 1)
+                      <button class="btn btn-danger btn_delete ">
+                        <input type="hidden"  value="{{$key['worksheet_id']}}">
+                        Eliminar
+                      </button>                      
+                    @endif
+                  </div>
+                </td>
             </tr>
             @empty
             <tr>
@@ -96,6 +109,11 @@
             @endforelse
         </tbody>
     </table>
+    </div>
+    <form id="delete_worksheet" method="post">
+      @csrf
+      @method('DELETE')
+    </form>
 </div>
 
 @endsection
@@ -120,6 +138,23 @@
     			},
         "order": [[ 0, 'desc' ]],
       });
+
+      $(".btn_delete").click(function(){
+        var worksheet_id = $(this).children().eq(0).val()
+        Swal.fire({
+          title: '¿Está seguro?',
+          text: "No podrá revertir esta acción",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Si, eliminar!'
+        }).then((result) => {
+          if (result.value) {
+            $("#delete_worksheet").attr('action', 'worksheet/'+worksheet_id+'').submit()
+          }
+        })
+      })
   });
   </script>
 @endsection

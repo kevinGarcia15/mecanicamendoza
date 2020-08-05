@@ -22,6 +22,7 @@ function refreshPayment() {
     /*fija los totales tanto en texto como en el input*/
     $("#totalText").text(total);
     $("#active").val(total);
+    $("#pasive").attr('max', total)
     var balance = total - pasive;
     $("#balanceText").text(balance);
     $("#balance").val(balance);

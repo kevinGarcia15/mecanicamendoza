@@ -19,7 +19,7 @@ class CreateBalanceCustumerDbsTable extends Migration
             $table->double('balance', 11, 2);
             $table->double('pasive', 11, 2);
             $table->BigInteger('worksheet_id')->unsigned()->nullable();
-            $table->foreign('worksheet_id')->references('worksheet_id')->on('worksheet_dbs');
+            $table->foreign('worksheet_id')->references('worksheet_id')->on('worksheet_dbs')->onDelete('cascade');
             $table->BigInteger('client_id')->unsigned();
             $table->foreign('client_id')->references('client_id')->on('client_dbs');
             $table->timestamps();

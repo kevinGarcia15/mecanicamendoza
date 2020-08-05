@@ -75,40 +75,28 @@
                             Gestion de usuarios
                           </a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a
-                              id="navbarDropdown"
-                              class="nav-link dropdown-toggle"
-                              href="#"
-                              role="button"
-                              data-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                              v-pre>
-                              Informes
-                                <span class="caret"></span>
-                            </a>
-
-                            <div
-                              class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a
-                                  class="dropdown-item"
-                                  href="{{route('vehicle.history')}}" >
-                                  Historial de vehículos
-                                </a>
-                                <a
-                                  class="dropdown-item"
-                                  href="{{route('worksheet.index')}}" >
-                                  Trabajos en progreso
-                                </a>
-                                <a
-                                  class="dropdown-item"
-                                  href="{{route('balance.index')}}" >
-                                  Clientes deudores
-                                </a>
-
-                            </div>
+                        <li  class="nav-item">
+                          <a
+                            class="nav-link"
+                            href="{{route('vehicle.history')}}" >
+                            Historial de vehículos
+                          </a>
                         </li>
+                        <li  class="nav-item">
+                          <a
+                            class="nav-link"
+                            href="{{route('worksheet.index')}}" >
+                            Hojas de trabajo
+                          </a>
+                        </li>
+                        <li  class="nav-item">
+                          <a
+                            class="nav-link"
+                            href="{{route('balance.index')}}" >
+                            Clientes
+                          </a>
+                        </li>
+
                       @endif
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
