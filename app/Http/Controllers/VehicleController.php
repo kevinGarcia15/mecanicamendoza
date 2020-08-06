@@ -65,12 +65,12 @@ class VehicleController extends Controller
   public function edit($id)
   {
     $brand = brand_car_db::get();
-    $line = car_line_db::get();
     $color = car_color_db::get();
     $vehicle = vehicle_db::
     join('car_line_dbs', 'vehicle_dbs.line_id', '=', 'car_line_dbs.line_id')
     ->join('brand_car_dbs', 'car_line_dbs.brand_car_id', '=', 'brand_car_dbs.brand_id')
     ->findOrFail($id);
+    $line = car_line_db::where('brand_car_id', $vehicle['brand_id'] )->get();
     return view('vehicle/editVehicle', compact('brand','color','vehicle','line'));
   }
 

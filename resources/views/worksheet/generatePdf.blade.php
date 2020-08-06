@@ -29,24 +29,31 @@
     caption{
       caption-side: top;
     }
+    .align-td {
+      text-align: center;
+    }
     .userAndCarInfo {
         display: flex;
-        margin: 0 0 0 0;
+        margin-bottom: 0px;
+        margin-top: 0px;
         border: 5px solid;
     }
 
     .client {
         width: 30%;
+        height: 50px;
     }
 
     .vehicle {
         width: 30%;
         margin-left: 40%;
+        height: 50px;
     }
 
     .user {
         width: 30%;
         margin-left: 65%;
+        height: 50px;
     }
 
     .total {
@@ -55,6 +62,10 @@
 
     #date {
         margin-left: 80%;
+    }
+    .works{
+      margin-top: 0px;
+      margin-bottom: 0px;
     }
 </style>
 
@@ -119,25 +130,24 @@
         </div>
     </div>
 
-    <div class="works">
-        <table border="2">
-            <thead>
-                <tr>
-                    <th scope="col">Trabajos realizados</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($workToDo as $key)
-                @if ($key->statusWork != 1)
-                <tr>
-                    <td>{{$key->description}}</td>
-                </tr>
-                @endif
-            </tbody>
-            @empty
-            @endforelse
-        </table>
-    </div><br>
+      <table border="2">
+        <thead>
+          <tr>
+            <th scope="col">Trabajos realizados</th>
+          </tr>
+        </thead>
+        <tbody>
+          @forelse ($workToDo as $key)
+            @if ($key->statusWork != 1)
+              <tr>
+                <td>{{$key->description}}</td>
+              </tr>
+            @endif
+          </tbody>
+        @empty
+        @endforelse
+      </table>
+      <br>
 
     <div class="remplacement">
         <table border="2">
@@ -146,7 +156,7 @@
                 <tr>
                     <th style="width:15%">Cantidad</th>
                     <th scope="col">Descripción</th>
-                    <th style="width:15%">Sub-Total</th>
+                    <th style="width:15%"></th>
                 </tr>
             </thead>
             <tbody>
@@ -158,21 +168,61 @@
                 $total = $total + ($key->price * $key->quantity);
                 @endphp
                 <tr>
-                    <td>{{$key->quantity}}</td>
+                    <td class="align-td">{{$key->quantity}}</td>
                     <td>{{$key->description.' Q.'.$key->price.'c/u'}}</td>
-                    <td>Q.{{$key->price * $key->quantity}}</td>
+                    <td class="align-td">Q.{{$key->price * $key->quantity}}</td>
                 </tr>
                 @empty
                 <tr>
                     <td>Lista vacia</td>
                 </tr>
                 @endforelse
+                <tr>
+                  <th>-</td>
+                  <th>Sub-Total</td>
+                  <th>Q.{{number_format($total)}}</td>
+                </tr>
             </tbody>
         </table>
     </div><br>
-    <div class="total">
-        <strong>Total: Q.{{number_format($total)}}</strong>
-    </div>
+    @if ($workSheetDetail[0]['statusWorksheet'] != 1)
+      @php
+        $totalWithDisconts =
+          ($total + $balanceCustomer[0]['otherExpenses'])-
+          ($balanceCustomer[0]['discont'] + $balanceCustomer[0]['pasive']);
+      @endphp
+
+      <div class="d-flex-column">
+          <div class="col-8">
+            <strong>Detalle de movimiento</strong>
+          </div>
+          <div class="col-4">
+            Sub-Total------Q.{{number_format($total)}}
+          </div>
+          <div class="col-4">
+            Descuento----{{'<Q.'.$balanceCustomer[0]['discont'].'>'}}
+          </div>
+
+          <div class="col-4">
+            Otros recargos Q.{{$balanceCustomer[0]['otherExpenses']}}
+          </div>
+
+          <div class="col-4">
+            Total----------
+            <strong>
+              Q.{{number_format(($total+$balanceCustomer[0]['otherExpenses'])-
+                $balanceCustomer[0]['discont'])}}
+              </strong>
+          </div>
+
+          <div class="col-4">
+            Abono inicial {{'<Q.'.$balanceCustomer[0]['pasive'].'>'}}
+          </div>
+          <div class="col-4">
+            Saldo------------<strong>Q.{{number_format($totalWithDisconts)}}</strong>
+          </div>
+      </div>
+    @endif
 </body>
 
 </html>

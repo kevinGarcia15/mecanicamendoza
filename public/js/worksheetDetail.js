@@ -62,3 +62,19 @@ $(".editBtn").click(function() {
     $("#edtihFormReplacement").attr("action", path);
 });
 //------------------------------------------------------------------------------
+//Eliminar hoja de trabajo
+$(".btn_delete").click(function(){
+  Swal.fire({
+    title: '¿Está seguro?',
+    text: "No podrá revertir esta acción",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Si, eliminar!'
+  }).then((result) => {
+    if (result.value) {
+      $("#delete_worksheet").submit()
+    }
+  })
+})

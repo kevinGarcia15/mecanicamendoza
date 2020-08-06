@@ -31,7 +31,7 @@
                           min="0"
                           class="form-control"
                           id="descont"
-                          name="descont"
+                          name="discont"
                           value="0">
                         {!! $errors->first('descont', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
 
@@ -54,7 +54,7 @@
                         </h5>
 
                         <label for="recipient-name" class="col-form-label ml-auto">
-                            Anticipo
+                            Abono inicial
                         </label>
                         <input
                           type="number"

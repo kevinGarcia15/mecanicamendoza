@@ -62,6 +62,8 @@ class BalanceCustomerController extends Controller
             "active" => $request['active'],
             "balance" => $newBalance,
             "pasive" => $request['pasive'],
+            "discont" => $request['discont'],
+            "otherExpenses" => $request['otherExpenses'],
             "worksheet_id"=> $request['worksheet_id'],
             "client_id"=> $request['client_id'],
             ]);

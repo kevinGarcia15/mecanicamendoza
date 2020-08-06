@@ -80,19 +80,86 @@
               <tr>
                 <td>Lista vacia</td>
               </tr>
+
             @endforelse
+            <tr>
+              <td>--</td>
+              <th scope="row">Sub-Total: </th>
+              <th scope="row">Q.{{number_format($total)}}</th>
+            </tr>
           </tbody>
         </table>
+
+        @if ($workSheetDetail[0]['statusWorksheet'] != 1)
+          @php
+            $totalWithDisconts =
+              ($total + $balanceCustomer[0]['otherExpenses'])-
+              ($balanceCustomer[0]['discont'] + $balanceCustomer[0]['pasive']);
+          @endphp
+
+          <div class="d-flex-column justify-content-rigth">
+            <div class="row">
+              <div class="col-8">
+                <strong>Detalle de movimiento</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                Sub-Total
+              </div>
+              <div class="col-4">
+                &nbsp&nbspQ.{{number_format($total)}}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-4">
+                Descuento
+              </div>
+              <div class="col-4">
+                {{'<Q.'.$balanceCustomer[0]['discont'].'>'}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                Otros recargos
+              </div>
+              <div class="col-4">
+                &nbsp&nbspQ.{{$balanceCustomer[0]['otherExpenses']}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                Total
+              </div>
+              <div class="col-4">
+                <strong>
+                  &nbsp&nbspQ.{{number_format(($total+$balanceCustomer[0]['otherExpenses'])-
+                  $balanceCustomer[0]['discont'])}}
+                </strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                Abono inicial
+              </div>
+              <div class="col-4">
+                {{'<Q.'.$balanceCustomer[0]['pasive'].'>'}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                Saldo
+              </div>
+              <div class="col-4">
+                <strong>&nbsp&nbspQ.{{number_format($totalWithDisconts)}}</strong>
+              </div>
+            </div>
+          </div>
+        @endif
         </div>
     </div>
 </div>
 
 @include('worksheet/_edithReplaceModal')
 @include('worksheet/_freezeWorksheetModal')
-<div class="row">
-    <div class="col-12 col-sm-10 col-lg-9">
-        <div class="d-flex justify-content-end">
-            <strong>Total: Q.{{number_format($total)}}</strong>
-        </div>
-    </div>
-</div>

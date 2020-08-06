@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\{worksheet_db, work_to_do_db,replacement_db};
+use App\{worksheet_db, work_to_do_db,replacement_db,balanceCustumer_db};
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
@@ -66,9 +66,11 @@ class WorksheetController extends Controller
       $workToDo = $values[1];
       $remplacement = $values[2];
       $workSheetDetail = $values[3];
+      $balanceCustomer = $values[4];
 
       return view('worksheet/worksheetDetails',compact(
         'workSheetDetail','dateCreatedWorksheet','workToDo','remplacement'
+        ,'balanceCustomer'
       ));
     }
 
@@ -78,9 +80,10 @@ class WorksheetController extends Controller
       $workToDo = $values[1];
       $remplacement = $values[2];
       $workSheetDetail = $values[3];
-
+      $balanceCustomer = $values[4];
       $pdf = PDF::loadView('worksheet/generatePdf',compact(
         'workSheetDetail','dateCreatedWorksheet','workToDo','remplacement'
+        ,'balanceCustomer'
       ));
 
       $date = date("d").'/'.date("m").'/'.date("Y");
@@ -90,6 +93,7 @@ class WorksheetController extends Controller
 
     private function getworksheet($id){
       /*Hace la consulta a la base de datos*/
+      $balanceCustomer = balanceCustumer_db::where('worksheet_id', $id)->get();
       $dateCreatedWorksheet = worksheet_db::where('worksheet_id', $id)->get();
       $workToDo = work_to_do_db::where('worksheet_id', $id)->get();
       $remplacement = replacement_db::where('worksheet_id', $id)->get();
@@ -101,7 +105,7 @@ class WorksheetController extends Controller
        ->join('client_dbs', 'worksheet_dbs.client_id', '=', 'client_dbs.client_id')
        ->join('users', 'worksheet_dbs.users_id', '=', 'users.id')
        ->where('worksheet_id', $id)->get();
-       return array($dateCreatedWorksheet,$workToDo,$remplacement,$workSheetDetail);
+       return array($dateCreatedWorksheet,$workToDo,$remplacement,$workSheetDetail,$balanceCustomer);
     }
     /**
      * Show the form for editing the specified resource.
@@ -137,6 +141,6 @@ class WorksheetController extends Controller
     public function destroy(worksheet_db $worksheet)
     {
       $worksheet->delete();
-      return back()->with('status','Hoja de trabajo fué eliminado exitosamente');//nombre de la ruta
+      return redirect()->route('worksheet.index')->with('status','Hoja de trabajo fué eliminado exitosamente');//nombre de la ruta
     }
 }

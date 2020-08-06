@@ -1,5 +1,8 @@
 @extends('layouts.app')
-
+@section('script')
+  <script src="{{asset('js/sweetalert2.min.js')}}"></script>
+  <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}" id="theme-styles">
+@endsection
 @section('content')
 <div class="container">
     <div class="row">
@@ -45,20 +48,8 @@
 
     <div class="bg-white py-3 px-4 my-3 shadow rounded">
       <div class="row">
-        <div class="col-12 col-lg-7 mx-auto my-2">
-          <button
-          type="button"
-          class="btn btn-primary btn-block
-          @if ($workSheetDetail[0]['statusWorksheet'] == 0)
-          btn-hide
-          @endif"
-          data-toggle="modal"
-          data-target="#freezWorksheet"
-          data-whatever="@mdo"
-          >
-            Congelar
-          </button>
-        </div>
+
+        @if ($workSheetDetail[0]['statusWorksheet'] == 0)
         <div class="col-12 col-lg-7 mx-auto my-2">
           <a
             href="{{route('worksheet.download', $workSheetDetail[0]['worksheet_id'])}}"
@@ -66,10 +57,37 @@
             Descargar en PDF
           </a>
         </div>
+        @else
+          <div class="col-12 col-lg-7 mx-auto my-2">
+            <button
+            type="button"
+            class="btn btn-primary btn-block"
+            data-toggle="modal"
+            data-target="#freezWorksheet"
+            data-whatever="@mdo"
+            >
+              Congelar
+            </button>
+          </div>
+          <div class="col-12 col-lg-7 mx-auto my-2">
+            <button
+            class="btn btn-danger btn-block btn_delete">
+            Eliminar hoja de trabajo
+          </button>
+        </div>
+        @endif
       </div>
     </div>
 </div>
+<form
+  id="delete_worksheet"
+  method="post"
+  action="{{route('worksheet.destroy', $workSheetDetail[0]['worksheet_id'])}}"
+  >
+  @csrf
+  @method('DELETE')
+</form>
 @endsection
-@section('script')
+@section('scriptFooter')
   <script type="text/javascript" src="{{ asset('js/worksheetDetail.js') }}" defer></script>
 @endsection
