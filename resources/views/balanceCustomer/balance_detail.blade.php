@@ -24,9 +24,9 @@
             <tr>
                 <th scope="col">Fecha</th>
                 <th scope="col">Descripción</th>
-                <th scope="col">Deuda</th>
+                <th scope="col">Clientes</th>
                 <th scope="col">Abono</th>
-                <th scope="col">Saldo</th>
+                <th scope="col">Saldo actual</th>
             </tr>
         </thead>
         <tbody>

@@ -24,6 +24,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 /*user managment routes*/
 Route::get('/usuarios', 'userManagmentController@index')->name('userManagment')->middleware('auth','master');
 Route::patch('/usuarios/{user}', 'userManagmentController@update')->name('user.update')->middleware('auth','master');
+Route::patch('/usuariosUpdate/{user}', 'userManagmentController@updateUser')->name('userUpdate.update')->middleware('auth','master');
+Route::get('usuarios/{user}/edit', 'userManagmentController@edit')->name('user.edit')->middleware('auth','admin');
 
 /*Client Routes*/
 Route::resource('client', 'ClientController')->middleware('auth','master','admin');
@@ -43,6 +45,7 @@ Route::patch('vehicle/{vehicle}', 'VehicleController@update')->name('vehicle.upd
 
 /*Work to do Routes*/
 Route::resource('worktodo', 'WorkToDoController')->middleware('auth');
+Route::patch('worktodoUpdate/{work}', 'WorkToDoController@updateWork')->name('worktodoUpdate.update')->middleware('auth');
 /*worksheet route*/
 Route::resource('worksheet', 'WorksheetController')->middleware('auth');
 Route::get('worksheet/download/{worksheet}', 'WorksheetController@download')->name('worksheet.download')->middleware('auth');

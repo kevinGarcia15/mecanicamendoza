@@ -36,6 +36,7 @@
                         <input
                           type="number"
                           required
+                          min="1"
                           class="form-control"
                           id="quantity"
                           name="quantity[]"

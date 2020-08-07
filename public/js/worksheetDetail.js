@@ -27,7 +27,7 @@ function refreshPayment() {
     $("#balanceText").text(balance);
     $("#balance").val(balance);
 }
-//fija todos los valores en el modal para poder ser enviado
+//fija todos los valores en el modal para poder ser enviado y editar el repuesto
 $(".editBtn").click(function() {
     let select_tr = $(this)
         .parents()
@@ -78,3 +78,32 @@ $(".btn_delete").click(function(){
     }
   })
 })
+
+/*Funcin para editar una tarea*/
+$(".btnEditWork").click(function() {
+    let select_tr = $(this)
+        .parents()
+        .eq(3);
+    let select_div = select_tr
+        .children()
+        .eq(0)
+    let description = select_div
+        .children()
+        .eq(1)
+        .text();
+    let worktodo_id = select_div
+        .children()
+        .eq(2)
+        .val();
+    let path =
+        "http://" +
+        window.location.host +
+        "/mecanicamendoza/public/worktodoUpdate/" +
+        worktodo_id +
+        "";
+        console.log(description)
+        console.log(worktodo_id)
+    $("#editWorkId").val(worktodo_id);
+    $("#edithDescriptionWork").val(description);
+    $("#edtihFormWork").attr("action", path);
+});

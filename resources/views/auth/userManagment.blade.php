@@ -37,6 +37,7 @@
                     @csrf
                     <input type="hidden" name="changeStatus" value="0">
                     <button type="submit" name="button" class="btn btn-danger">Suspender</button>
+                    <a href="{{route('user.edit', $key)}}" class="btn btn-primary">Editar</a>
                 </form>
                 @else
                 <form class="" action="{{route('user.update', $key)}}" method="post">

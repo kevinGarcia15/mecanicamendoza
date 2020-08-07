@@ -35,7 +35,9 @@
                         src="{{asset('img/warning.png')}}"
                         alt="warning"
                         title="Tarea en progreso">
-                        {{$key->description}}
+                        <span>{{$key->description}}</span>
+                        <!--Input hiden utilizado para obtener el valor worktodo_id para poder editar-->
+                        <input type="hidden" id="editWorkId" name="worktodo_id" value="{{$key['worktodo_id']}}">
                       </div>
                       <div class="buttons {{$btnHiden}}">
                         <div class="dropdown show">
@@ -51,6 +53,14 @@
                           </a>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             @include('worksheet/_changeStatusWork', ['value' => '0', 'btnText' => 'Finalizar tarea'])
+                            <button
+                            type="button"
+                            class="dropdown-item btnEditWork"
+                            data-toggle="modal"
+                            data-target="#edithWork"
+                            data-whatever="@mdo">
+                            Editar tarea
+                          </button>
                             @include('worksheet/_deleteWork')
                           </div>
                         </div>
@@ -63,7 +73,7 @@
                           src="{{asset('img/checked.png')}}"
                           alt="success"
                           title="Tarea terminada">
-                          {{$key->description}}
+                          <span>{{$key->description}}</span>
                         </div>
                         <div class="buttons {{$btnHiden}}">
                           <div class="dropdown show">
@@ -79,6 +89,14 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                               @include('worksheet/_changeStatusWork', ['value' => '1', 'btnText' => 'Cambiar estado'])
+                              <button
+                              type="button"
+                              class="dropdown-item btnEditWork"
+                              data-toggle="modal"
+                              data-target="#edithWork"
+                              data-whatever="@mdo">
+                              Editar tarea
+                            </button>
                               @include('worksheet/_deleteWork')
                             </div>
                           </div>
@@ -92,3 +110,4 @@
         </div>
     </div>
 </div>
+@include('worksheet/_editWorksModal')

@@ -106,7 +106,7 @@
                     type="number"
                     name="model"
                     min="1900"
-                    max="{{$maxYearModel}}"
+                    max="{{$maxYearModel + 1}}"
                     required
                     value="{{old('model')}}"
                     placeholder="Modelo.."

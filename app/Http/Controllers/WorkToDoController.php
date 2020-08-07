@@ -87,9 +87,22 @@ class WorkToDoController extends Controller
      */
     public function update(Request $request, $id)
     {
+      if ($request['statusWork'] == 1) {
+/*cada vez que se le cambia el estado a una tarea a en progreso, cambiar el estado del worksheet*/
+        worksheet_db::where('worksheet_id', $request['worksheet_id'])
+         ->update([ 'statusWorksheet' => 1]);
+      }
       work_to_do_db::where('worktodo_id', $id)
        ->update([ 'statusWork' => $request['statusWork'] ]);
       return back()->with('status','El elemento fue actualizado exitosamente');
+    }
+
+    public function updateWork(Request $request, $id)
+    {
+      work_to_do_db::where('worktodo_id', $id)
+       ->update(['description' => $request['description']]);
+
+      return back()->with('status','el elemento fué actualizado exitosamente');
     }
 
     /**

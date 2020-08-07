@@ -13,7 +13,7 @@
               <option value="">Seleccionar</option>
               @foreach ($responsable as $key)
                 <option value="{{$key['id']}}" {{old('user_id') == $key['id'] ? 'selected': ''}}>
-                  {{$key['name']}}
+                  {{$key['name'].' ('.$key['rol'].')'}}
                 </option>
               @endforeach
             </select>
