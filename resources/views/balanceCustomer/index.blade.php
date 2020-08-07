@@ -10,11 +10,11 @@
 <div class="container">
     <div class="row">
         <div class="col-12 col-lg-6">
-            <img class="img-fluid mb-4" src="{{ asset('img/balanceCustomer.svg') }}" alt="Home">
+            <img class="img-fluid mb-4" src="{{ asset('img/balanceCustomer.jpg') }}" alt="Home">
         </div>
         <div class="col-12 col-lg-6">
-            <h1 class="display-5 text-primary">Clientes deudores</h1>
-            <p class="lead text-secondary">Aqui se mostraran los clientes que tiene una deuda con la empresa.
+            <h1 class="display-5 text-primary">Clientes</h1>
+            <p class="lead text-secondary">Aqui se mostraran los clientes que confian en nosotros.
             </p>
             <p class="lead text-secondary">Puede ver el detalle pulsando en "Detalles"</p>
         </div>

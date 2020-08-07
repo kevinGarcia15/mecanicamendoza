@@ -35,6 +35,10 @@ class VehicleController extends Controller
       join('worksheet_dbs', 'worksheet_dbs.vehicle_id', '=', 'vehicle_dbs.vehicle_id')
       ->join('work_to_do_dbs', 'worksheet_dbs.worksheet_id', '=', 'work_to_do_dbs.worksheet_id')
       ->where('worksheet_dbs.vehicle_id', $request->vehicle)->get();
+
+      if (count($vehicleWorksheetHistory) <= 0) {
+        return back()->with('error', 'No hay hoja de trabajo asociado a este vehículo');
+      }
     return view('vehicle/history',compact('vehicleWorksheetHistory','workToDo'));
   }
 

@@ -1,3 +1,10 @@
+@php
+  if ($workSheetDetail[0]['statusWorksheet'] == 0 || $workSheetDetail[0]['statusWorksheet'] == 2) {
+    $btnHiden = 'btn-hide';
+  }else {
+    $btnHiden = '';
+  }
+@endphp
 <div class="col-12 col-sm-10 col-lg-9 mx-auto">
     <h2 class="display-5 text-primary">Tareas por cumplir</h2>
 </div>
@@ -8,7 +15,7 @@
           <div class="col-12 col-lg-6 mx-auto">
             <button
               type="button"
-              class="btn btn-primary btn-block"
+              class="btn btn-primary btn-block {{$btnHiden}}"
               data-toggle="modal"
               data-target="#newTask"
               data-whatever="@mdo"
@@ -32,11 +39,11 @@
                       </div>
                       <div class="buttons">
                         <div class="dropdown show">
-                          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <a class="btn btn-secondary dropdown-toggle {{$btnHiden}}" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Acciones
                           </a>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            @include('worksheet/_statusWork', ['value' => '0', 'btnText' => 'Finalizar tarea'])
+                            @include('worksheet/_changeStatusWork', ['value' => '0', 'btnText' => 'Finalizar tarea'])
                           </div>
                         </div>
                       </div>
@@ -52,11 +59,11 @@
                         </div>
                         <div class="buttons">
                           <div class="dropdown show">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="btn btn-secondary dropdown-toggle {{$btnHiden}}" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               Acciones
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                              @include('worksheet/_statusWork', ['value' => '1', 'btnText' => 'Cambiar estado'])
+                              @include('worksheet/_changeStatusWork', ['value' => '1', 'btnText' => 'Cambiar estado'])
                             </div>
                           </div>
                     </li>

@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12 col-lg-6">
-            <img class="img-fluid mb-4" src="./img/worksheet.svg" alt="Home">
+            <img class="img-fluid mb-4" src="./img/worksheet.jpg" alt="Home">
         </div>
         <div class="col-12 col-lg-6">
             <h1 class="display-5 text-primary">Nuevo ingreso</h1>

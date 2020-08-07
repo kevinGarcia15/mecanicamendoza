@@ -1,3 +1,10 @@
+@php
+  if ($workSheetDetail[0]['statusWorksheet'] == 0 || $workSheetDetail[0]['statusWorksheet'] == 2) {
+    $btnHiden = 'btn-hide';
+  }else {
+    $btnHiden = '';
+  }
+@endphp
 <div class="row">
     <div class="col-12 col-sm-10 col-lg-9 mx-auto">
         <h2 class="display-5 text-primary">Repuestos y lubricantes</h2>
@@ -5,7 +12,7 @@
         <div class="col-12 col-lg-6 mx-auto">
           <button
             type="button"
-            class="btn btn-primary btn-block"
+            class="btn btn-primary btn-block {{$btnHiden}}"
             data-toggle="modal"
             data-target="#newReplace"
             data-whatever="@mdo"
@@ -40,7 +47,7 @@
                       @csrf
                       @method('DELETE')
                       <button
-                      class="btn btn-danger"
+                      class="btn btn-danger {{$btnHiden}}"
                       type="submit">
                       Eliminar
                     </button>

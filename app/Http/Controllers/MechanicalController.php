@@ -21,7 +21,8 @@ class MechanicalController extends Controller
        ->join('car_line_dbs', 'vehicle_dbs.line_id', '=', 'car_line_dbs.line_id')
        ->join('brand_car_dbs', 'car_line_dbs.brand_car_id', '=', 'brand_car_dbs.brand_id')
        ->where('users_id', $user_id )
-       ->orderBy('worksheet_dbs.created_at', 'DESC')->paginate(10);
+       ->where('statusWorksheet', '!=', 0)
+       ->orderBy('worksheet_dbs.workSheetCreated_at', 'DESC')->paginate(10);
       return view('mechanical/index',compact('listworksheet'));
     }
 
@@ -64,6 +65,10 @@ class MechanicalController extends Controller
        ->join('brand_car_dbs', 'car_line_dbs.brand_car_id', '=', 'brand_car_dbs.brand_id')
        ->join('users', 'worksheet_dbs.users_id', '=', 'users.id')
        ->where('worksheet_id', $id)->get();
+
+       if ($workSheetDetail[0]['statusWorksheet'] == 0) {
+         return redirect()->route('mechanical.index');
+       }
        return view('mechanical/worksheetDetail',compact(
          'workSheetDetail','dateCreatedWorksheet','workToDo','remplacement'
        ));
@@ -89,7 +94,19 @@ class MechanicalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      if ($request['verifyEmptyWorks'] == 0) {
+        return back()->with('error', 'No se pudo enviar la hoja de trabajo porque no tiene ninguna tarea asignada');
+      }
+/*valida si hay tareas activas-----------------------------------------------*/
+      $worksNoFinished = work_to_do_db::where('worksheet_id', $id)
+        ->where('statusWork', 1)->get();
+        if (count($worksNoFinished) > 0) {
+          return back()->with('error', 'No se pudo enviar la hoja de trabajo porque tiene tareas activas');
+        }
+      //cambia el staus a 2 el trabajo esta terminado----------
+        worksheet_db::where('worksheet_id', $id)
+         ->update([ 'statusWorksheet' => 2]);
+         return redirect()->route('mechanical.index')->with('status', 'Hoja de trabajo enviada exitosamente');
     }
 
     /**

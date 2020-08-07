@@ -16,12 +16,13 @@
             </p>
         </div>
     </div>
+
     <table class="table">
         <thead>
             <tr>
                 <th scope="col">Codigo</th>
                 <th scope="col">Vehiculo</th>
-                <th scope="col">Status</th>
+                <th scope="col">Estado</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
@@ -32,11 +33,24 @@
                 <td>{{$key->brand_name.' '.$key->line_name.' '.$key->color_name.
                   ' Placa: '.strtoupper($key->plateNumber)}}
                 </td>
-                <td>En progreso</td>
+                {{$key->statusWorksheet}}
+                @if ($key->statusWorksheet == 1)
+                <td class="alert alert-warning">
+                    En progreso
+                    <p>{{$key['workSheetUpdated_at']->diffForHumans()}}</p>
+                </td>
+                @else
+                  <td class="alert alert-success">
+                      Enviado
+                      <p>{{$key['workSheetUpdated_at']->diffForHumans()}}</p>
+                  </td>
+                @endif
                 <td><a href="{{route('mechanical.show', $key['worksheet_id'])}}">Detalles</a> </td>
             </tr>
             @empty
-
+              <tr>
+                <td>No tienes ninguna tarea</td>
+              </tr>
             @endforelse
             <tr>
             </tr>

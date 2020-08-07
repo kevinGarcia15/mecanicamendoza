@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12 col-lg-6">
-            <img class="img-fluid mb-4" src="{{ asset('img/vehicleDetail.svg') }}" alt="Home">
+            <img class="img-fluid mb-4" src="{{ asset('img/vehicleDetail.jpg') }}" alt="Home">
         </div>
         <div class="col-12 col-lg-6">
             <h1 class="display-5 text-primary">Detalle de hoja de trabajo</h1>
@@ -57,7 +57,7 @@
             Descargar en PDF
           </a>
         </div>
-        @else
+      @elseif ($workSheetDetail[0]['statusWorksheet'] == 2)
           <div class="col-12 col-lg-7 mx-auto my-2">
             <button
             type="button"
@@ -75,6 +75,10 @@
             Eliminar hoja de trabajo
           </button>
         </div>
+        @else
+          <div class="d-flex justify-content-center  mx-auto">
+            <p class="alert alert-warning">Hoja de trabajo en progreso</p>
+          </div>
         @endif
       </div>
     </div>

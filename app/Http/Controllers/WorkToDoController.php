@@ -43,6 +43,9 @@ class WorkToDoController extends Controller
               "worksheet_id"=> $request['worksheet_id'],
             ]);
           }
+/*cada vez que se agrega una tarea es fijado el status del worksheet como 1 osea en progreso*/
+          worksheet_db::where('worksheet_id', $request['worksheet_id'])
+           ->update([ 'statusWorksheet' => 1]);
         });
         $countWorks = count($request['description']);
         return back()->with('status', 'Haz ingresado '.$countWorks.' tareas exitosamente');

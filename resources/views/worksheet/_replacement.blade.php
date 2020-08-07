@@ -90,7 +90,7 @@
           </tbody>
         </table>
 
-        @if ($workSheetDetail[0]['statusWorksheet'] != 1)
+        @if ($workSheetDetail[0]['statusWorksheet'] == 0)
           @php
             $totalWithDisconts =
               ($total + $balanceCustomer[0]['otherExpenses'])-

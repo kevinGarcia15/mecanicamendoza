@@ -36,9 +36,6 @@
                           value="">
                         {!! $errors->first('pasive', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
 
-                        <h5 class="modal-title">
-                            Saldo: Q.<strong id="balanceText"></strong>
-                        </h5>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">

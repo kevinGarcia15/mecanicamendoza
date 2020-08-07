@@ -12,7 +12,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12 col-lg-6">
-            <img class="img-fluid mb-4" src="{{ asset('img/worksheets_list.svg') }}" alt="Home">
+            <img class="img-fluid mb-4 rounded" src="{{ asset('img/worksheets_list.jpg') }}" alt="Home">
         </div>
         <div class="col-12 col-lg-6">
             <h1 class="display-5 text-primary">Hojas de trabajo</h1>
@@ -38,18 +38,28 @@
               @php
                 if ($key['statusWorksheet'] == 0) {
                   $status = 'Congelado';
+                  $alert = 'alert alert-secondary';
+                }elseif ($key['statusWorksheet'] == 1) {
+                  $alert = 'alert alert-warning';
+                  $status = 'En progreso';
                 }else {
-                  $status = 'Activo';
+                  $status = 'Terminado';
+                  $alert = 'alert alert-success';
                 }
               @endphp
             <tr>
-                <th scope="row">{{$key['workSheetCreated_at']->format('d/m/y')}}</th>
+                <th scope="row">{{$key['workSheetCreated_at']->format('d-m-y')}}</th>
                 <th scope="row">{{$key['code']}}</th>
                 <td>
                     {{$key['brand_name'].' '.$key['line_name'].' '
                     .$key['color_name'].' Placa '.strtoupper($key['plateNumber'])}}
                 </td>
-                <th scope="row">{{$status}}</th>
+                <th
+                  class="{{$alert}}"
+                  scope="row">{{$status}}
+                  <p class="text-body my-0">Responsable: {{$key['name']}}</p>
+                  <p class="text-black-50 my-0">{{$key['workSheetUpdated_at']->diffForHumans()}}</p>
+                </th>
 
                 <td>
                     <!--calculos para obtener el porcentaje de tareas terminadas------------------->
@@ -93,11 +103,11 @@
                 <td>
                   <div class="d-flex">
                     <a class="btn btn-primary mx-1" href="{{route('worksheet.show', $key['worksheet_id'])}}">Detalles</a>
-                    @if ($key['statusWorksheet'] == 1)
+                    @if ($key['statusWorksheet'] == 1 ||$key['statusWorksheet'] == 2)
                       <button class="btn btn-danger btn_delete ">
                         <input type="hidden"  value="{{$key['worksheet_id']}}">
                         Eliminar
-                      </button>                      
+                      </button>
                     @endif
                   </div>
                 </td>

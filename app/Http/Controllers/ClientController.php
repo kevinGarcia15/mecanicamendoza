@@ -40,6 +40,7 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+/*----------------------------------------------------------------------------*/
     public function store(Request $request)
     {
       $flagForInsert = 0;
@@ -87,6 +88,7 @@ class ClientController extends Controller
       $message = 'Hoja de trabajo '.$newWorkSheet->code.', fue creado exitosamente. Llene las tareas a realizar';
       return redirect()->route('worktodo.show',$newWorkSheet)->with('status', $message);
     }
+/*----------------------------------------------------------------------------*/
     private function clientValidate(){
       $newClient = request()->validate([
         'dpi'=>'',
@@ -98,6 +100,7 @@ class ClientController extends Controller
       return $newClient;
     }
 
+/*----------------------------------------------------------------------------*/
     private function vehicleValidate(){
       $newVehicle = request()->validate([
         'plateNumber'=>'required|min:6|unique:vehicle_dbs',
@@ -107,26 +110,20 @@ class ClientController extends Controller
       ]);
       return $newVehicle;
     }
-
+/*----------------------------------------------------------------------------*/
     private function responsableValidate(){
       $userResponsable = request()->validate([
         'user_id'=>''
       ]);
       return $userResponsable;
     }
-
+/*----------------------------------------------------------------------------*/
     private function saveNewClientVheicleInWorksheet($Client,$Vehicle,$Responsable,$flagForInsert){
-      // $currentDate = date('y').date('m').date('d');
-      // $uniqueCode = $currentDate.'-'.rand(100, 999);
       $uniqueCode = $this->generateUniqueCode();
 
           if ($flagForInsert == 1) {
+            //"solo crear worksheet";
             $code = DB::transaction(function()use($Client,$Vehicle,$Responsable,$uniqueCode){
-              //"solo crear worksheet";
-              //crear codigo unico para la hoja de trabajo
-//              $getPlateNumber = vehicle_db::select('plateNumber')->where('vehicle_id', '=', $Vehicle)->first();
-//              $uniqueCode = strtoupper($getPlateNumber['plateNumber']).'-'.rand(100, 999);
-
               $worksheetCreted = worksheet_db::create([
                 "code" => $uniqueCode,
                 "users_id"=> $Responsable['user_id'],
@@ -137,12 +134,9 @@ class ClientController extends Controller
             });
 
           }elseif ($flagForInsert == 2) {
+            //"ingresar carro y worksheet";
             $code = DB::transaction(function()use($Client,$Vehicle,$Responsable,$uniqueCode){
               $vehicleCreated = vehicle_db::create($Vehicle);
-//              $getVehicle_id = vehicle_db::select('vehicle_id')->where('plateNumber', '=', $Vehicle['plateNumber'])->first();
-              //crear codigo unico para la hoja de trabajo
-//              $uniqueCode = strtoupper($Vehicle['plateNumber']).'-'.rand(100, 999);
-
               $worksheetCreted = worksheet_db::create([
                 "code" => $uniqueCode,
                 "users_id"=> $Responsable['user_id'],
@@ -154,13 +148,9 @@ class ClientController extends Controller
           }
 
           elseif ($flagForInsert == 3) {
+            //"ingresar cliente y worksheet";
             $code = DB::transaction(function()use($Client,$Vehicle,$Responsable,$uniqueCode){
               $clientCreated = client_db::create($Client);
-//              $getClient_id = client_db::select('client_id')->where('dpi', '=', $Client['dpi'])->first();
-              // //crear codigo unico para la hoja de trabajo
-              // $getPlateNumber = vehicle_db::select('plateNumber')->where('vehicle_id', '=', $Vehicle)->first();
-              // $uniqueCode = strtoupper($getPlateNumber['plateNumber']).'-'.rand(100, 999);
-
               $worksheetCreted = worksheet_db::create([
                 "code" => $uniqueCode,
                 "users_id"=> $Responsable['user_id'],
@@ -172,14 +162,10 @@ class ClientController extends Controller
           }
 
           elseif($flagForInsert == 4) {
+            //"ingresar cliente, carro y worksheet";
             $code = DB::transaction(function()use($Client,$Vehicle,$Responsable,$uniqueCode){
               $clientCreated = client_db::create($Client);
               $vehicleCreated = vehicle_db::create($Vehicle);
-              //obtiene los id para ingresarlo a la tabla Worksheet
-//              $getClient_id = client_db::select('client_id')->where('dpi', '=', $Client['dpi'])->first();
-//              $getVehicle_id = vehicle_db::select('vehicle_id')->where('plateNumber', '=', $Vehicle['plateNumber'])->first();
-              // //crear codigo unico para la hoja de trabajo
-              // $uniqueCode = strtoupper($Vehicle['plateNumber']).'-'.rand(100, 999);
               $worksheetCreted = worksheet_db::create([
                 "code" => $uniqueCode,
                 "users_id"=> $Responsable['user_id'],
@@ -191,6 +177,7 @@ class ClientController extends Controller
           }
         return $code;
     }
+/*----------------------------------------------------------------------------*/
     private function generateUniqueCode(){
       $currentDate = date('y');
       $uniqueCode = $currentDate.'-'.rand(1000,9999);
@@ -219,7 +206,7 @@ class ClientController extends Controller
           return response()->json($clienteExist);
       }
     }
-
+/*----------------------------------------------------------------------------*/
     public function clienteExistWithName(Request $request){
       if ($request->ajax()) {
         if ($request->name) {
@@ -245,6 +232,7 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+/*----------------------------------------------------------------------------*/    
     public function edit($id)
     {
       return view('client/editClient', [
