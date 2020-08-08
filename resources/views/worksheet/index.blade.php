@@ -58,7 +58,7 @@
                 <td class="hideDisplayIfSmall">{{$key['color_name']}}</td>
                 <td>{{strtoupper($key['plateNumber'])}}</td>
                 <th
-                  class="{{$alert}} hideDisplayIfSmall"
+                  class="{{$alert}} text-body hideDisplayIfSmall"
                   scope="row">{{$status}}
                   <p class="text-body my-0">Responsable: {{$key['name']}}</p>
                   <p class="text-black-50 my-0">{{$key['workSheetUpdated_at']->diffForHumans()}}</p>
