@@ -27,8 +27,10 @@
             <tr>
                 <th scope="col">Ingresó</th>
                 <th scope="col">Codigo</th>
-                <th scope="col">Vehiculo</th>
-                <th scope="col">Estado</th>
+                <th scope="col">Vehículo</th>
+                <th class="hideDisplayIfSmall" scope="col">Color</th>
+                <th scope="col">Placa</th>
+                <th class="hideDisplayIfSmall" scope="col">Estado</th>
                 <th scope="col">Progreso</th>
                 <th scope="col">Acciones</th>
             </tr>
@@ -48,14 +50,15 @@
                 }
               @endphp
             <tr>
-                <th scope="row">{{$key['workSheetCreated_at']->format('d-m-y')}}</th>
+                <th scope="row">{{$key['workSheetCreated_at']->format('d/m/y')}}</th>
                 <th scope="row">{{$key['code']}}</th>
                 <td>
-                    {{$key['brand_name'].' '.$key['line_name'].' '
-                    .$key['color_name'].' Placa '.strtoupper($key['plateNumber'])}}
+                    {{$key['brand_name'].' '.$key['line_name']}}
                 </td>
+                <td class="hideDisplayIfSmall">{{$key['color_name']}}</td>
+                <td>{{strtoupper($key['plateNumber'])}}</td>
                 <th
-                  class="{{$alert}}"
+                  class="{{$alert}} hideDisplayIfSmall"
                   scope="row">{{$status}}
                   <p class="text-body my-0">Responsable: {{$key['name']}}</p>
                   <p class="text-black-50 my-0">{{$key['workSheetUpdated_at']->diffForHumans()}}</p>
@@ -166,5 +169,5 @@
         })
       })
   });
-  </script>
+</script>
 @endsection

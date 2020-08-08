@@ -33,3 +33,12 @@ const app = new Vue({
 $(document).ready(function(){
   $('.fixed-action-btn').floatingActionButton();
 });
+
+$(window).resize(function(){
+  var win = $(this); //this = window
+  if (win.width() <= 820) {
+    $('.hideDisplayIfSmall').hide();
+  }else {
+    $('.hideDisplayIfSmall').show();
+  }
+});

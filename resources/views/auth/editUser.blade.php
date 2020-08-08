@@ -60,15 +60,17 @@
 
                           <div class="col-md-6">
                             <select class="custom-select" name="rol" required>
-                              <option
-                              value="{{$user->rol}}"
-                              {{$user->rol == $user->rol ? 'selected': ''}}
-                              >
-                              {{$user->rol}}
+                              @php
+                                $userRol = array('Master','Mecanico','Administrador');
+                              @endphp
+                              @foreach ($userRol as $key)
+                                <option
+                                value="{{$key}}"
+                                {{$user->rol == $key ? 'selected': ''}}
+                                >
+                                {{$key}}
                               </option>
-                              <option value="Master">Master</option>
-                              <option value="Mecanico">Mecanico</option>
-                              <option value="Administrador">Administrador</option>
+                              @endforeach
                             </select>
                             @if ($errors->has('email'))
                             <span class="invalid-feedback" role="alert">
