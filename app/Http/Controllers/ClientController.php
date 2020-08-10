@@ -5,7 +5,9 @@ use App\{client_db,
         brand_car_db,
         car_color_db,
         User,
-        worksheet_db};
+        worksheet_db,
+        client_vehicle_db
+  };
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -124,6 +126,10 @@ class ClientController extends Controller
           if ($flagForInsert == 1) {
             //"solo crear worksheet";
             $code = DB::transaction(function()use($Client,$Vehicle,$Responsable,$uniqueCode){
+              client_vehicle_db::updateOrCreate([
+                  'client_id' => $Client,
+                  'vehicle_id' => $Vehicle
+                ]);
               $worksheetCreted = worksheet_db::create([
                 "code" => $uniqueCode,
                 "users_id"=> $Responsable['user_id'],
@@ -137,6 +143,10 @@ class ClientController extends Controller
             //"ingresar carro y worksheet";
             $code = DB::transaction(function()use($Client,$Vehicle,$Responsable,$uniqueCode){
               $vehicleCreated = vehicle_db::create($Vehicle);
+              client_vehicle_db::updateOrCreate([
+                  'client_id' => $Client,
+                  'vehicle_id' => $vehicleCreated['vehicle_id']
+                ]);
               $worksheetCreted = worksheet_db::create([
                 "code" => $uniqueCode,
                 "users_id"=> $Responsable['user_id'],
@@ -151,6 +161,11 @@ class ClientController extends Controller
             //"ingresar cliente y worksheet";
             $code = DB::transaction(function()use($Client,$Vehicle,$Responsable,$uniqueCode){
               $clientCreated = client_db::create($Client);
+              client_vehicle_db::updateOrCreate([
+                  'client_id' => $clientCreated['client_id'],
+                  'vehicle_id' => $Vehicle
+                ]);
+
               $worksheetCreted = worksheet_db::create([
                 "code" => $uniqueCode,
                 "users_id"=> $Responsable['user_id'],
@@ -166,6 +181,11 @@ class ClientController extends Controller
             $code = DB::transaction(function()use($Client,$Vehicle,$Responsable,$uniqueCode){
               $clientCreated = client_db::create($Client);
               $vehicleCreated = vehicle_db::create($Vehicle);
+
+              client_vehicle_db::updateOrCreate([
+                  'client_id' => $clientCreated['client_id'],
+                  'vehicle_id' => $vehicleCreated['vehicle_id']
+                ]);
               $worksheetCreted = worksheet_db::create([
                 "code" => $uniqueCode,
                 "users_id"=> $Responsable['user_id'],
@@ -220,9 +240,17 @@ class ClientController extends Controller
             return response('0');
           }
         }
+        /*Buesqueda cuando el usuario le da click al link de sugerencias*/
         if ($request->cliente_id) {
-          $client = client_db::findOrFail($request->cliente_id);
-          return response()->json($client);
+//          $client = client_db::findOrFail($request->cliente_id);
+          $sugestionOfVehicles = client_vehicle_db::
+          join('client_dbs', 'client_dbs.client_id', '=', 'client_vehicle_dbs.client_id')
+          ->join('vehicle_dbs', 'vehicle_dbs.vehicle_id', '=', 'client_vehicle_dbs.vehicle_id')
+          ->join('car_color_dbs', 'vehicle_dbs.color_id', '=', 'car_color_dbs.color_id')
+          ->join('car_line_dbs', 'vehicle_dbs.line_id', '=', 'car_line_dbs.line_id')
+          ->join('brand_car_dbs', 'car_line_dbs.brand_car_id', '=', 'brand_car_dbs.brand_id')
+          ->where('client_vehicle_dbs.client_id', $request->cliente_id)->get();
+          return response()->json($sugestionOfVehicles);
         }
       }
     }

@@ -10,18 +10,105 @@ function setValuesClientInput(id_cliente) {
               cliente_id: id_cliente //valores a pasar
           },
           function(response) {
-            console.log(response)
             $("#FilterName").empty();
-            $("#id_clientExist").val(response['client_id'])
-            $('#first_name').val(response['first_name'])
-            $('#last_name').val(response['last_name']).attr("disabled", "true")
-            $('#address').val(response['address']).attr("disabled", "true")
-            $('#phone').val(response['phone']).attr("disabled", "true")
+            $("#checkboxContainers").empty();
+            $("#id_clientExist").val(response[0]['client_id'])
+            $('#first_name').val(response[0]['first_name'])
+            $('#last_name').val(response[0]['last_name']).attr("disabled", "true")
+            $('#address').val(response[0]['address']).attr("disabled", "true")
+            $('#phone').val(response[0]['phone']).attr("disabled", "true")
+            $("#checkboxContainers")
+              .append(
+                $('<h3>')
+                  .addClass('display-5 text-primary')
+                  .text('Vehículos asociados a este cliente')
+              )
+            /*Muestra los vehiculos que le pertenecen al cliente seleccionado*/
+            for (var i = 0; i < response.length; i++) {
+              var plateNumber = response[i]["plateNumber"].toUpperCase()
+                $("#checkboxContainers")
+                  .append(
+                    $("<a>")
+                        .attr("href", "#vehicleForm")
+                        .attr(
+                            "onclick",
+                            'setValuesIntoPlateNumber("' + response[i]["plateNumber"] + '")'
+                        )
+                        .text(
+                            `${response[i]["brand_name"]} ${response[i]["line_name"]}
+                             ${response[i]["color_name"]} ${response[i]["model"]} PLACA: ${plateNumber}`
+                        )
+                        .append($("<br>"))
+                );
+            }
           }
       );
   } else {
+    $("#id_clientExist").val(0)
       $("#FilterName").empty();
   }
+}
+/*Al seleccionar el enlace de vehiculos asociados lo fija en el input plateNumber*/
+function setValuesIntoPlateNumber(plateNumber){
+  console.log(plateNumber)
+  $('#plateNumber').val(plateNumber)
+  findPlateNumber()
+}
+
+/*funcion para buscar si existe un vheiculo con ese numero de placa*/
+ function findPlateNumber() {
+  var screen = $('#loading-screen');
+  configureLoadingScreen(screen);
+    var plateNumber = $('#plateNumber').val();
+    if ($.trim(plateNumber) != "") {
+        //no esta vacio
+        $.get(
+            "vehicle", //ruta de la peticion
+            {
+                plateNumber: plateNumber //valores a pasar
+            },
+            function(response) {
+                if (response.length != 0) {//si hay valores existe vehiculo
+                    $("#model").attr("disabled", "true").hide();
+                    $("#id_vehicleExist").val(response[0]['vehicle_id'])
+                    lookSelectInput(response, "color_name");
+                    lookSelectInput(response, "line_name");
+                    lookSelectInput(response, "brand_name");
+                    showInfoInList(response);
+                } else {
+                    $("#id_vehicleExist").val(0)
+                    unlookSelectImput("color_name");
+                    unlookSelectImput("line_name");
+                    unlookSelectImput("brand_name");
+                    $("#model").removeAttr("disabled").show();
+                    $("#vehicleInfo").hide();
+                }
+            }
+        );
+    }
+
+    function showInfoInList(response) {
+        $("#vehicleInfo").text("");
+        $("#vehicleInfo").text(
+            response[0]["brand_name"] +
+                " " +
+                response[0]["line_name"] +
+                " " +
+                response[0]["color_name"]
+        ).show().addClass('alert alert-success');
+    }
+    function lookSelectInput(response, name) {
+        $("#" + name)
+            .hide()
+            .attr("disabled", "true");
+        $("."+name).hide()
+    }
+    function unlookSelectImput(name) {
+        $("#" + name)
+            .show()
+            .removeAttr("disabled");
+        $("."+name).show()
+    }
 }
 
 $(document).ready(function() {
@@ -95,62 +182,6 @@ $(document).ready(function() {
         }
     });
 
-    /*funcion para buscar si existe un vheiculo con ese numero de placa*/
-    $("#plateNumber").on("change", function() {
-      var screen = $('#loading-screen');
-      configureLoadingScreen(screen);
-        var plateNumber = $(this).val();
-        if ($.trim(plateNumber) != "") {
-            //no esta vacio
-            $.get(
-                "vehicle", //ruta de la peticion
-                {
-                    plateNumber: plateNumber //valores a pasar
-                },
-                function(response) {
-                    if (response.length != 0) {//si hay valores existe vehiculo
-                        $("#model").attr("disabled", "true").hide();
-                        $("#id_vehicleExist").val(response[0]['vehicle_id'])
-                        lookSelectInput(response, "color_name");
-                        lookSelectInput(response, "line_name");
-                        lookSelectInput(response, "brand_name");
-                        showInfoInList(response);
-                    } else {
-                        $("#id_vehicleExist").val(0)
-                        unlookSelectImput("color_name");
-                        unlookSelectImput("line_name");
-                        unlookSelectImput("brand_name");
-                        $("#model").removeAttr("disabled").show();
-                        $("#vehicleInfo").hide();
-                    }
-                }
-            );
-        }
-
-        function showInfoInList(response) {
-            $("#vehicleInfo").text("");
-            $("#vehicleInfo").text(
-                response[0]["brand_name"] +
-                    " " +
-                    response[0]["line_name"] +
-                    " " +
-                    response[0]["color_name"]
-            ).show().addClass('alert alert-success');
-        }
-        function lookSelectInput(response, name) {
-            $("#" + name)
-                .hide()
-                .attr("disabled", "true");
-            $("."+name).hide()
-        }
-        function unlookSelectImput(name) {
-            $("#" + name)
-                .show()
-                .removeAttr("disabled");
-            $("."+name).show()
-        }
-    });
-
     /*funcion para buscar si existe un cliente con numero de dpi existente*/
     $("#dpi").on("change", function() {
       var screen = $('#loading-screen');
@@ -211,6 +242,11 @@ $(document).ready(function() {
             );
         } else {
             $("#FilterName").empty();
+            $("#id_clientExist").val(0)
+            $('#first_name').val("").removeAttr("disabled")
+            $('#last_name').val("").removeAttr("disabled")
+            $('#address').val("").removeAttr("disabled")
+            $('#phone').val("").removeAttr("disabled")
         }
 
     });

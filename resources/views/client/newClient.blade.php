@@ -23,6 +23,7 @@
             @include('client/_clientForm')
         </div>
         <div class="bg-white py-3 px-4 my-3 shadow rounded">
+            @include('client/_suggestionOfVehicles')
             @include('client/_vehicleForm')
         </div>
         <div class="bg-white py-3 px-4 my-3 shadow rounded">

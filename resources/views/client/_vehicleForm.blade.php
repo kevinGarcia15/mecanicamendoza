@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" id="vehicleForm">
     <div class="col-12 col-sm-10 col-lg-6 mx-auto">
         <h3 class="display-5 text-primary">Datos del vehículo</h3>
         <hr>
@@ -10,6 +10,7 @@
                   type="text"
                   minlength="7"
                   maxlength="7"
+                  oninput="findPlateNumber()"
                   name="plateNumber"
                   required
                   value="{{old('plateNumber')}}"
