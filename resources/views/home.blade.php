@@ -29,7 +29,7 @@
         <div class="card">
           <img class="card-img-top" src="./img/worksheet.svg" alt="">
           <div class="card-body">
-            <h5 class="card-title">Nueva hoja de trabajo</h5>
+            <h5 class="card-title">Ingresar una nueva hoja de trabajo</h5>
             <a href="{{route('client.index')}}" class="btn btn-primary btn-block">Visitar</a>
           </div>
         </div>
@@ -47,7 +47,7 @@
             <div class="card">
                 <img class=" card-img-top" src="./img/works_in_progress.svg" alt="">
                 <div class="card-body">
-                    <h5 class="card-title">Hojas de trabajo</h5>
+                    <h5 class="card-title">Todas las hojas de trabajo</h5>
                     <a href="{{route('worksheet.index')}}" class="btn btn-primary btn-block">Visitar</a>
                 </div>
             </div>

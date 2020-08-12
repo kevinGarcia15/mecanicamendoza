@@ -46,7 +46,8 @@ class ReplacementController extends Controller
           ]);
         }
       });
-      return back()->with('status', 'Elemento creado exitosamente');
+      $countReplacement = count($request['quantity']);
+      return back()->with('status', 'Se han ingresado '.$countReplacement.' repusetos y lubricantes');
     }
 
     /**

@@ -31,7 +31,8 @@
                 </td>
                 <td>{{$key['model']}}</td>
                 <td>
-                  <a href="{{route('vehicle.ShowHistory', $key['vehicle_id'])}}">Historial</a>
+                  <a class="btn btn-primary" href="{{route('vehicle.ShowHistory', $key['vehicle_id'])}}">Historial</a>
+                  <a class="btn btn-success" href="{{route('worksheet.create', $key->vehicle_id )}}">Nueva hoja</a>
                 </td>
             </tr>
             @empty

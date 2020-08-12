@@ -19,36 +19,40 @@
             </p>
         </div>
     </div>
-    <table class="table" id="example">
+    <div class="table-responsive">
+      <table class="table" id="example">
         <thead>
-            <tr>
-                <th scope="col">Placa</th>
-                <th scope="col">Descripción</th>
-                <th scope="col">Modelo</th>
-                <th scope="col">Acciones</th>
-            </tr>
+          <tr>
+            <th scope="col">Placa</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Modelo</th>
+            <th style="width:300px">Acciones</th>
+          </tr>
         </thead>
         <tbody>
-            @forelse ($vehicleList as $key)
+          @forelse ($vehicleList as $key)
             <tr>
-                <td>{{strtoupper($key['plateNumber'])}}</td>
-                <td>
-                    {{$key['brand_name'].' '.$key['line_name'].' '
-                    .$key['color_name']}}
+              <td>{{strtoupper($key['plateNumber'])}}</td>
+              <td>
+                {{$key['brand_name'].' '.$key['line_name'].' '
+                  .$key['color_name']}}
                 </td>
                 <td>{{$key['model']}}</td>
                 <td class="d-flex">
                   <a class="btn btn-primary mx-1" href="{{route('vehicle.ShowHistory', $key->vehicle_id)}}">Historial</a>
-                  <a class="btn btn-outline-info" href="{{route('vehicle.edit', $key->vehicle_id )}}">Editar</a>
+                  <a class="btn btn-success" href="{{route('worksheet.create', $key->vehicle_id )}}">Nueva hoja</a>
+                  <a class="btn btn-outline-info  mx-1" href="{{route('vehicle.edit', $key->vehicle_id )}}">Editar</a>
                 </td>
-            </tr>
+              </tr>
             @empty
-            <tr>
+              <tr>
                 <td>Listado vacio</td>
-            </tr>
+              </tr>
             @endforelse
-        </tbody>
-    </table>
+          </tbody>
+        </table>
+      
+    </div>
 </div>
 
 @endsection

@@ -48,6 +48,8 @@ Route::resource('worktodo', 'WorkToDoController')->middleware('auth');
 Route::patch('worktodoUpdate/{work}', 'WorkToDoController@updateWork')->name('worktodoUpdate.update')->middleware('auth');
 /*worksheet route*/
 Route::resource('worksheet', 'WorksheetController')->middleware('auth');
+Route::get('worksheet/create/{vehicle}', 'WorksheetController@create')->name('worksheet.create')->middleware('auth');
+Route::get('worksheet/createclient/{vehicle}', 'WorksheetController@createWorsheetFromClient')->name('worksheet.createWorksheetFromClient')->middleware('auth');
 Route::get('worksheet/download/{worksheet}', 'WorksheetController@download')->name('worksheet.download')->middleware('auth');
 /*replacement Routes*/
 Route::resource('replacement', 'ReplacementController')->middleware('auth');

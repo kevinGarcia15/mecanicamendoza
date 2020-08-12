@@ -29,7 +29,7 @@
                 <th scope="col">Codigo</th>
                 <th scope="col">Vehículo</th>
                 <th class="hideDisplayIfSmall" scope="col">Color</th>
-                <th scope="col">Placa</th>
+                <th scope="col">Cliente</th>
                 <th class="hideDisplayIfSmall" scope="col">Estado</th>
                 <th scope="col">Progreso</th>
                 <th scope="col">Acciones</th>
@@ -53,10 +53,10 @@
                 <th scope="row">{{$key['workSheetCreated_at']->format('d/m/y')}}</th>
                 <th scope="row">{{$key['code']}}</th>
                 <td>
-                    {{$key['brand_name'].' '.$key['line_name']}}
+                    {{$key['brand_name'].' '.$key['line_name'].' PLACA: '.strtoupper($key['plateNumber'])}}
                 </td>
                 <td class="hideDisplayIfSmall">{{$key['color_name']}}</td>
-                <td>{{strtoupper($key['plateNumber'])}}</td>
+                <td>{{$key['first_name'].' '.$key['last_name']}}</td>
                 <th
                   class="{{$alert}} text-body hideDisplayIfSmall"
                   scope="row">{{$status}}

@@ -57,7 +57,7 @@
             Descargar en PDF
           </a>
         </div>
-      @elseif ($workSheetDetail[0]['statusWorksheet'] == 2)
+      @elseif ($workSheetDetail[0]['statusWorksheet'] == 2 || $workSheetDetail[0]['rol'] === 'Master')
           <div class="col-12 col-lg-7 mx-auto my-2">
             <button
             type="button"
@@ -77,7 +77,7 @@
         </div>
         @else
           <div class="d-flex justify-content-center  mx-auto">
-            <p class="alert alert-warning">Hoja de trabajo en progreso</p>
+            <p class="alert alert-warning">Hoja de trabajo en progreso. Responsable: {{$workSheetDetail[0]['name']}}</p>
           </div>
         @endif
       </div>

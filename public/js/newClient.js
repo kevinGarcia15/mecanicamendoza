@@ -242,6 +242,7 @@ $(document).ready(function() {
             );
         } else {
             $("#FilterName").empty();
+            $("#checkboxContainers").empty()
             $("#id_clientExist").val(0)
             $('#first_name').val("").removeAttr("disabled")
             $('#last_name').val("").removeAttr("disabled")

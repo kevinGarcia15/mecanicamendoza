@@ -89,6 +89,7 @@ class ClientController extends Controller
       }
       $message = 'Hoja de trabajo '.$newWorkSheet->code.', fue creado exitosamente. Llene las tareas a realizar';
       return redirect()->route('worktodo.show',$newWorkSheet)->with('status', $message);
+      //      return $request;
     }
 /*----------------------------------------------------------------------------*/
     private function clientValidate(){

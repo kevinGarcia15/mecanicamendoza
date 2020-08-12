@@ -29,6 +29,7 @@
             </div>
         </div>
       </form>
+
         @if ($vehicleInfo[0]['users_id'])
           <div class="bg-white py-3 px-4 my-3 shadow rounded">
             <div class="col-12 col-lg-6 my-2 mx-auto">

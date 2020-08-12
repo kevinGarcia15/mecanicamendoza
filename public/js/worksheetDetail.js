@@ -107,3 +107,77 @@ $(".btnEditWork").click(function() {
     $("#edithDescriptionWork").val(description);
     $("#edtihFormWork").attr("action", path);
 });
+
+/*Funcion para agregar una fila para ingresar una nueva hoja de trabajo*/
+$("#BtnaddRowReplacement").click(function() {
+    $("#addRowReplacement").append(
+        $("<div>")
+            .attr("id", "works")
+            .addClass("row newRow")
+            .append(
+                $("<div>")
+                    .addClass(
+                        "col-12 col-sm-12 col-xs-12 col-lg-2 col-xl-2 my-1"
+                    )
+                    .append(
+                        $("<input>")
+                            .attr("type", "number")
+                            .attr("required", "true")
+                            .attr("min", "1")
+                            .addClass("form-control")
+                            .attr("name", "quantity[]")
+                            .attr("value", "1")
+                    )
+            )
+            .append(
+                $("<div>")
+                    .addClass(
+                        "col-12 col-sm-12 col-xs-12 col-lg-7 col-xl-7 my-1"
+                    )
+                    .append(
+                        $("<input>")
+                            .attr("type", "text")
+                            .attr("required", "true")
+                            .addClass("form-control")
+                            .attr("name", "description[]")
+                            .attr("placeholder", "Código")
+                            .attr("value", "")
+                            .attr("placeholder", "Descripción del producto..")
+                    )
+            )
+            .append(
+                $("<div>")
+                    .addClass(
+                        "col-12 col-sm-12 col-xs-12 col-lg-2 col-xl-2 my-1"
+                    )
+                    .append(
+                        $("<input>")
+                            .attr("type", "number")
+                            .attr("required", "true")
+                            .attr("step", "any")
+                            .attr("min", "0")
+                            .addClass("form-control")
+                            .attr("name", "price[]")
+                            .attr("value", "0")
+                    )
+            )
+            .append(
+                $("<div>")
+                    .addClass("col-1 col-sm-1 col-lg-1")
+                    .append(
+                        $("<button>")
+                            .addClass("btn btn-danger btn-delete my-2")
+                            .append(
+                                $("<span>")
+                                    .addClass("material-icons")
+                                    .text("delete")
+                            )
+                    )
+            )
+    );
+    $(".btn-delete").click(function(e) {
+        e.preventDefault();
+        var row = $(this).parents(".newRow");
+        row.remove();
+    });
+});

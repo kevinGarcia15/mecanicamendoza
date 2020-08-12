@@ -1,7 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\{worksheet_db, work_to_do_db,replacement_db,balanceCustumer_db};
+use App\{worksheet_db,
+          work_to_do_db,
+          replacement_db,
+          balanceCustumer_db,
+          vehicle_db,client_db};
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
@@ -18,6 +22,7 @@ class WorksheetController extends Controller
       $work_to_do = work_to_do_db::get();
       $listworksheet = worksheet_db::
        join('vehicle_dbs', 'worksheet_dbs.vehicle_id', '=', 'vehicle_dbs.vehicle_id')
+       ->join('client_dbs', 'worksheet_dbs.client_id', '=', 'client_dbs.client_id')
        ->join('car_color_dbs', 'vehicle_dbs.color_id', '=', 'car_color_dbs.color_id')
        ->join('car_line_dbs', 'vehicle_dbs.line_id', '=', 'car_line_dbs.line_id')
        ->join('brand_car_dbs', 'car_line_dbs.brand_car_id', '=', 'brand_car_dbs.brand_id')
@@ -32,9 +37,25 @@ class WorksheetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+      $optionsAbailable = vehicle_db::
+        join('client_vehicle_dbs', 'vehicle_dbs.vehicle_id', '=', 'client_vehicle_dbs.vehicle_id')
+        ->join('client_dbs', 'client_vehicle_dbs.client_id', '=', 'client_dbs.client_id')
+        ->where('vehicle_dbs.vehicle_id', $id)->get();
+      return view('worksheet/OptionalWorksheetCreate/selectOptionsForCreateWorksheetClient', compact('optionsAbailable'));
+    }
+
+    public function createWorsheetFromClient($id)
+    {
+     $optionsAbailable = client_db::
+        join('client_vehicle_dbs', 'client_dbs.client_id', '=', 'client_vehicle_dbs.client_id')
+        ->join('vehicle_dbs', 'client_vehicle_dbs.vehicle_id', '=', 'vehicle_dbs.vehicle_id')
+        ->join('car_color_dbs', 'vehicle_dbs.color_id', '=', 'car_color_dbs.color_id')
+        ->join('car_line_dbs', 'vehicle_dbs.line_id', '=', 'car_line_dbs.line_id')
+        ->join('brand_car_dbs', 'car_line_dbs.brand_car_id', '=', 'brand_car_dbs.brand_id')
+        ->where('client_dbs.client_id', $id)->get();
+      return view('worksheet/OptionalWorksheetCreate/selectOptionsForCreateWorksheetVehicle', compact('optionsAbailable'));
     }
 
     /**

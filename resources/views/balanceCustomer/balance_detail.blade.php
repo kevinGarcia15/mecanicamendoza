@@ -17,7 +17,8 @@
         <strong>{{$listBalanceWorksheet[0]['address']}}
         </strong>
       </span><br>
-      <a href="{{route('client.edit', $listBalanceWorksheet[0]['client_id'])}}">Editar datos del cliente</a>
+      <a href="{{route('client.edit', $listBalanceWorksheet[0]['client_id'])}}">Editar datos del cliente</a><br>
+      <a href="{{route('worksheet.createWorksheetFromClient', $listBalanceWorksheet[0]['client_id'] )}}">Nueva hoja de trabajo</a>
       <br>
     </div>
 

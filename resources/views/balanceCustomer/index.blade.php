@@ -25,7 +25,7 @@
       <table class="table" id="balanceCustomerTable">
         <thead>
           <tr>
-            <th scope="col">Nombre</th>
+            <th style="width:200px">Nombre</th>
             <th scope="col">Telefono</th>
             <th scope="col">Direccion</th>
             <th scope="col">Deuda (GTQ)</th>
@@ -48,6 +48,7 @@
               <td class="{{$debtorCustomer}}">{{$key->total_balance}}</td>
               <td class="d-flex">
                 <a class="btn btn-primary mx-1" href="{{route('balance.show', $key->client_id )}}">Detalles</a>
+                <a class="btn btn-success mx-1" href="{{route('worksheet.createWorksheetFromClient', $key->client_id )}}">Nueva hoja</a>
                 <a class="btn btn-outline-info" href="{{route('client.edit', $key->client_id )}}">Editar</a>
               </td>
             </tr>

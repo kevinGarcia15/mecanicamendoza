@@ -1,28 +1,26 @@
 @php
   if ($workSheetDetail[0]['statusWorksheet'] == 0) {
     $btnHiden = 'btn-hide';
+    $formHide = 'd-none';
   }else {
     $btnHiden = '';
+    $formHide= '';
   }
 @endphp
 
 <div class="row">
     <div class="col-12 col-sm-10 col-lg-9 mx-auto">
         <h2 class="display-5 text-primary">Repuestos y Lubricantes</h2>
-        <hr>
-        <div class="col-12 col-lg-6 mx-auto">
-          <button
-            type="button"
-            class="btn btn-primary btn-block {{$btnHiden}}"
-            data-toggle="modal"
-            data-target="#newReplace"
-            data-whatever="@mdo"
-            >
-            Ingresar repuesto
-          </button>
-          @include('worksheet/_newReplaceModal',['textLabelPrice'=>'Ingrese el precio unitario'])
-          <br>
-        </div>
+<!--iNGRESAR REPUESTOS de un tiron--------------------------------------------->
+        <form class="{{$formHide}}" action="{{route('replacement.store')}}" method="POST">
+            @csrf
+          <div class="bg-white py-3 px-4 my-3 shadow rounded">
+              @include('worksheet/_insertReplacementForm')
+              <div class="col-12 col-lg-6 my-2 mx-auto">
+                  <button class="btn btn-primary btn-block {{$btnHiden}}" type="submit" name="button">Agregar Repuestos</button>
+              </div>
+          </div>
+        </form>
         <div class="table-responsive-lg">
           <table class="table">
             <thead>
@@ -89,6 +87,7 @@
             </tr>
           </tbody>
         </table>
+
 
         @if ($workSheetDetail[0]['statusWorksheet'] == 0)
           @php

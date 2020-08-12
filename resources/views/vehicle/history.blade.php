@@ -8,6 +8,11 @@
           ' Placa: '.strtoupper($vehicleWorksheetHistory[0]['plateNumber'])}}
         </h3>
     </div>
+    <a
+    class="btn btn-success my-2"
+    href="{{route('worksheet.create', $vehicleWorksheetHistory[0]['vehicle_id'])}}">
+    Nueva hoja de trabajo
+  </a><br>
     @forelse ($vehicleWorksheetHistory as $key)
       @php
         //manejador del estado de la hoja de trabajo
