@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\{work_to_do_db,worksheet_db,vehicle_db};
+use App\{work_to_do_db,worksheet_db,vehicle_db,User};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -35,8 +35,6 @@ class WorkToDoController extends Controller
      */
     public function store(Request $request)
     {
-//        var_dump($request['description']);
-//        echo $request['description'][0];
         DB::transaction(function()use($request){
           $countWorks = count($request['description']);
           for ($i=0; $i < $countWorks; $i++) {
@@ -45,8 +43,12 @@ class WorkToDoController extends Controller
               "worksheet_id"=> $request['worksheet_id'],
             ]);
           }
+/*cada vez que se agrega una tarea es fijado el status del worksheet como 1 osea en progreso*/
+          worksheet_db::where('worksheet_id', $request['worksheet_id'])
+           ->update([ 'statusWorksheet' => 1]);
         });
-        return back()->with('status', 'Datos ingresados exitosamente');
+        $countWorks = count($request['description']);
+        return back()->with('status', 'Haz ingresado '.$countWorks.' tareas exitosamente');
     }
 
     /**
@@ -57,11 +59,12 @@ class WorkToDoController extends Controller
      */
     public function show($newWorkSheet)
     {
+      $responsable = User::get();
       $worksCreated = work_to_do_db::where('worksheet_id', $newWorkSheet)->get();
       $vehicleInfo = worksheet_db::
                 join('vehicle_dbs', 'vehicle_dbs.vehicle_id', '=', 'worksheet_dbs.vehicle_id')
                 ->where('worksheet_id', $newWorkSheet)->get();
-      return view('client/fillWorkToDo', compact('newWorkSheet','worksCreated','vehicleInfo'));
+      return view('client/fillWorkToDo', compact('newWorkSheet','worksCreated','vehicleInfo','responsable'));
     }
 
     /**
@@ -84,7 +87,22 @@ class WorkToDoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      if ($request['statusWork'] == 1) {
+/*cada vez que se le cambia el estado a una tarea a en progreso, cambiar el estado del worksheet*/
+        worksheet_db::where('worksheet_id', $request['worksheet_id'])
+         ->update([ 'statusWorksheet' => 1]);
+      }
+      work_to_do_db::where('worktodo_id', $id)
+       ->update([ 'statusWork' => $request['statusWork'] ]);
+      return back()->with('status','El elemento fue actualizado exitosamente');
+    }
+
+    public function updateWork(Request $request, $id)
+    {
+      work_to_do_db::where('worktodo_id', $id)
+       ->update(['description' => $request['description']]);
+
+      return back()->with('status','el elemento fué actualizado exitosamente');
     }
 
     /**

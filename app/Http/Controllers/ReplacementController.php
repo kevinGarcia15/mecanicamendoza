@@ -46,7 +46,8 @@ class ReplacementController extends Controller
           ]);
         }
       });
-      return back()->with('status', 'Elemento creado exitosamente');
+      $countReplacement = count($request['quantity']);
+      return back()->with('status', 'Se han ingresado '.$countReplacement.' repusetos y lubricantes');
     }
 
     /**
@@ -80,7 +81,13 @@ class ReplacementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      replacement_db::where('remplacement_id', $id)
+       ->update(['quantity' => $request['quantity'],
+                 'description' => $request['description'],
+                 'price' => $request['price']
+                ]);
+
+      return back()->with('status','el elemento fué actualizado exitosamente');
     }
 
     /**

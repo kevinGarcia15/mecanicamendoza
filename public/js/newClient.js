@@ -1,7 +1,119 @@
 /*Archivo js para las funciones de la vista newClient.blade.php*/
-$(document).ready(function() {
+/*Funcoin para establecer valores en inputs con relzacion al nombre del cliente*/
+function setValuesClientInput(id_cliente) {
   var screen = $('#loading-screen');
   configureLoadingScreen(screen);
+  if ($.trim(id_cliente) != "") {
+      $.get(
+          "clientexistWhitName", //ruta de la peticion
+          {
+              cliente_id: id_cliente //valores a pasar
+          },
+          function(response) {
+            $("#FilterName").empty();
+            $("#checkboxContainers").empty();
+            $("#id_clientExist").val(response[0]['client_id'])
+            $('#first_name').val(response[0]['first_name'])
+            $('#last_name').val(response[0]['last_name']).attr("disabled", "true")
+            $('#address').val(response[0]['address']).attr("disabled", "true")
+            $('#phone').val(response[0]['phone']).attr("disabled", "true")
+            $("#checkboxContainers")
+              .append(
+                $('<h3>')
+                  .addClass('display-5 text-primary')
+                  .text('Vehículos asociados a este cliente')
+              )
+            /*Muestra los vehiculos que le pertenecen al cliente seleccionado*/
+            for (var i = 0; i < response.length; i++) {
+              var plateNumber = response[i]["plateNumber"].toUpperCase()
+                $("#checkboxContainers")
+                  .append(
+                    $("<a>")
+                        .attr("href", "#vehicleForm")
+                        .attr(
+                            "onclick",
+                            'setValuesIntoPlateNumber("' + response[i]["plateNumber"] + '")'
+                        )
+                        .text(
+                            `${response[i]["brand_name"]} ${response[i]["line_name"]}
+                             ${response[i]["color_name"]} ${response[i]["model"]} PLACA: ${plateNumber}`
+                        )
+                        .append($("<br>"))
+                );
+            }
+          }
+      );
+  } else {
+    $("#id_clientExist").val(0)
+      $("#FilterName").empty();
+  }
+}
+/*Al seleccionar el enlace de vehiculos asociados lo fija en el input plateNumber*/
+function setValuesIntoPlateNumber(plateNumber){
+  console.log(plateNumber)
+  $('#plateNumber').val(plateNumber)
+  findPlateNumber()
+}
+
+/*funcion para buscar si existe un vheiculo con ese numero de placa*/
+ function findPlateNumber() {
+  var screen = $('#loading-screen');
+  configureLoadingScreen(screen);
+    var plateNumber = $('#plateNumber').val();
+    if ($.trim(plateNumber) != "") {
+        //no esta vacio
+        $.get(
+            "vehicle", //ruta de la peticion
+            {
+                plateNumber: plateNumber //valores a pasar
+            },
+            function(response) {
+                if (response.length != 0) {//si hay valores existe vehiculo
+                    $("#model").attr("disabled", "true").hide();
+                    $("#id_vehicleExist").val(response[0]['vehicle_id'])
+                    lookSelectInput(response, "color_name");
+                    lookSelectInput(response, "line_name");
+                    lookSelectInput(response, "brand_name");
+                    showInfoInList(response);
+                } else {
+                    $("#id_vehicleExist").val(0)
+                    unlookSelectImput("color_name");
+                    unlookSelectImput("line_name");
+                    unlookSelectImput("brand_name");
+                    $("#model").removeAttr("disabled").show();
+                    $("#vehicleInfo").hide();
+                }
+            }
+        );
+    }
+
+    function showInfoInList(response) {
+        $("#vehicleInfo").text("");
+        $("#vehicleInfo").text(
+            response[0]["brand_name"] +
+                " " +
+                response[0]["line_name"] +
+                " " +
+                response[0]["color_name"]
+        ).show().addClass('alert alert-success');
+    }
+    function lookSelectInput(response, name) {
+        $("#" + name)
+            .hide()
+            .attr("disabled", "true");
+        $("."+name).hide()
+    }
+    function unlookSelectImput(name) {
+        $("#" + name)
+            .show()
+            .removeAttr("disabled");
+        $("."+name).show()
+    }
+}
+
+$(document).ready(function() {
+  // var screen = $('#loading-screen');
+  // configureLoadingScreen(screen);
 
     $("#addRow").click(function() {
         $("#rowWorks").append(
@@ -70,60 +182,10 @@ $(document).ready(function() {
         }
     });
 
-    /*funcion para buscar si existe un vheiculo con ese numero de placa*/
-    $("#plateNumber").on("change", function() {
-        var plateNumber = $(this).val();
-        if ($.trim(plateNumber) != "") {
-            //no esta vacio
-            $.get(
-                "vehicle", //ruta de la peticion
-                {
-                    plateNumber: plateNumber //valores a pasar
-                },
-                function(response) {
-                    if (response.length != 0) {//si hay valores
-                        $("#model").hide();
-                        $("#id_vehicleExist").val(response[0]['vehicle_id'])
-                        lookSelectInput(response, "color_name");
-                        lookSelectInput(response, "line_name");
-                        lookSelectInput(response, "brand_name");
-                        showInfoInList(response);
-                    } else {
-                        $("#id_vehicleExist").val(0)
-                        unlookSelectImput("color_name");
-                        unlookSelectImput("line_name");
-                        unlookSelectImput("brand_name");
-                        $("#model").show();
-                        $("#vehicleInfo").hide();
-                    }
-                }
-            );
-        }
-
-        function showInfoInList(response) {
-            $("#vehicleInfo").text("");
-            $("#vehicleInfo").text(
-                response[0]["brand_name"] +
-                    " " +
-                    response[0]["line_name"] +
-                    " " +
-                    response[0]["color_name"]
-            ).show();
-        }
-        function lookSelectInput(response, name) {
-            $("#" + name)
-                .hide()
-                .attr("disabled", "true");
-        }
-        function unlookSelectImput(name) {
-            $("#" + name)
-                .show()
-                .removeAttr("disabled");
-        }
-    });
-
     /*funcion para buscar si existe un cliente con numero de dpi existente*/
     $("#dpi").on("change", function() {
+      var screen = $('#loading-screen');
+      configureLoadingScreen(screen);
         var dpi = $(this).val();
         if ($.trim(dpi) != "") {
             //no esta vacio
@@ -151,14 +213,52 @@ $(document).ready(function() {
             );
         }
     });
-});
 
-function configureLoadingScreen(screen){
+    /*Funcion para busqueda de cliente mediante el nombre-------------------------*/
+    $("#first_name").keyup(function() {
+        var args = $(this).val();
+        if ($.trim(args) != "") {
+            $.get(
+                "clientexistWhitName", //ruta de la peticion
+                {
+                    name: args //valores a pasar
+                },
+                function(response) {
+                  $("#FilterName").empty();
+                  if (response != '0') {
+                    $.each(response, function(index, value) {
+                      $("#FilterName").append(
+                        "<a href='#' onclick='setValuesClientInput(" +
+                        index +
+                        ")'>" +
+                        value +
+                        "</a><br>"
+                      );
+                    });
+                  }else {
+                    $("#FilterName").text('No hay coincidencias');
+                  }
+                }
+            );
+        } else {
+            $("#FilterName").empty();
+            $("#checkboxContainers").empty()
+            $("#id_clientExist").val(0)
+            $('#first_name').val("").removeAttr("disabled")
+            $('#last_name').val("").removeAttr("disabled")
+            $('#address').val("").removeAttr("disabled")
+            $('#phone').val("").removeAttr("disabled")
+        }
+
+    });
+});
+/*Funcion para mostrar la carga de peticion en bd-----------------------------*/
+function configureLoadingScreen(screen) {
     $(document)
-        .ajaxStart(function () {
+        .ajaxStart(function() {
             screen.fadeIn();
         })
-        .ajaxStop(function () {
+        .ajaxStop(function() {
             screen.fadeOut();
         });
 }

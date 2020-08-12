@@ -18,7 +18,7 @@ class CreateWorkToDoDbsTable extends Migration
             $table->string('description');
             $table->boolean('statusWork')->default(1);
             $table->BigInteger('worksheet_id')->unsigned();
-            $table->foreign('worksheet_id')->references('worksheet_id')->on('worksheet_dbs');
+            $table->foreign('worksheet_id')->references('worksheet_id')->on('worksheet_dbs')->onDelete('cascade');
             $table->timestamps();
         });
     }

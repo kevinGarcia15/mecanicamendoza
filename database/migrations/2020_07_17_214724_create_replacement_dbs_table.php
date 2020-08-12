@@ -19,7 +19,7 @@ class CreateReplacementDbsTable extends Migration
             $table->string('description');
             $table->double('price', 10, 2);
             $table->BigInteger('worksheet_id')->unsigned();
-            $table->foreign('worksheet_id')->references('worksheet_id')->on('worksheet_dbs');
+            $table->foreign('worksheet_id')->references('worksheet_id')->on('worksheet_dbs')->onDelete('cascade');
             $table->timestamps();
         });
     }

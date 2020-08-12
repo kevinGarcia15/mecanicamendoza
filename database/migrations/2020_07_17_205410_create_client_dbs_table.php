@@ -15,11 +15,12 @@ class CreateClientDbsTable extends Migration
     {
         Schema::create('client_dbs', function (Blueprint $table) {
             $table->id('client_id');
-            $table->string('dpi')->unique();
+            $table->string('dpi')->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('address');
             $table->string('phone');
+            $table->double('total_balance', 11, 2)->default(0);
             $table->timestamps();
         });
     }

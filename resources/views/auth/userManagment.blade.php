@@ -7,11 +7,11 @@
             <img class="img-fluid mb-4" src="./img/userManagment.svg" alt="Home">
         </div>
         <div class="col-12 col-lg-6">
-            <h1 class="display-5 text-primary">Gestion de usuarios</h1>
+            <h1 class="display-5 text-primary">Gestión de usuarios</h1>
             <p class="lead text-secondary">Puedes activar o suspender a uno o
               varios usuarios para tener un control de quienes acceden al sistema.
             </p>
-            <p class="lead text-secondary">Puedes ingresar nuevos usuarios clickando el boton "Nuevo usuario"</p>
+            <p class="lead text-secondary">Puedes ingresar nuevos usuarios clicando el botón "Nuevo usuario"</p>
             <a class="btn btn-lg btn-primary" href="{{ route('register') }}">Nuevo usuario</a>
         </div>
     </div>
@@ -27,13 +27,24 @@
                     <span>
                         {{$key['email']}}
                     </span>
+                    <span>
+                        <strong>Rol: </strong> {{$key['rol']}}
+                    </span>
                 </div>
                 @if ($key['is_enabled'] == 1)
                 <form class="" action="{{route('user.update', $key)}}" method="post">
                     @method('PATCH')
                     @csrf
                     <input type="hidden" name="changeStatus" value="0">
-                    <button type="submit" name="button" class="btn btn-danger">Suspender</button>
+                    <button
+                      type="submit"
+                      name="button"
+                      class="btn btn-danger my-1"
+                        {{($key->id === Auth::user()->id) ? 'disabled' : ""}}
+                      >
+                      Suspender
+                    </button>
+                    <a href="{{route('user.edit', $key)}}" class="btn btn-primary">Editar</a>
                 </form>
                 @else
                 <form class="" action="{{route('user.update', $key)}}" method="post">

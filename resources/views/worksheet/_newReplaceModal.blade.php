@@ -36,10 +36,11 @@
                         <input
                           type="number"
                           required
+                          min="1"
                           class="form-control"
                           id="quantity"
                           name="quantity[]"
-                          value="{{old('quantity[]')}}">
+                          value="1">
                           {!! $errors->first('quantity[]', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
 
                           <label
@@ -61,17 +62,16 @@
                               for="recipient-name"
                               class="col-form-label"
                               >
-                              Ingrese el precio
+                              {{$textLabelPrice}}
                             </label>
                             <input
                               type="number"
                               step="any"
                               min="0"
-                              required
                               class="form-control"
                               id="price"
                               name="price[]"
-                              value="{{old('price[]')}}">
+                              value="0">
                               {!! $errors->first('price[]', '<span class="invalid-feedback" role="alert"><strong>:message</strong></span>')!!}
 
                     </div>

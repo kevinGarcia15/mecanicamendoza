@@ -49753,6 +49753,18 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 var app = new Vue({
   el: '#app'
 });
+$(document).ready(function () {
+  $('.fixed-action-btn').floatingActionButton();
+});
+$(window).resize(function () {
+  var win = $(this); //this = window
+
+  if (win.width() <= 820) {
+    $('.hideDisplayIfSmall').hide();
+  } else {
+    $('.hideDisplayIfSmall').show();
+  }
+});
 
 /***/ }),
 
